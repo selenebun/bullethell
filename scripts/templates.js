@@ -78,7 +78,7 @@ SHIP.player = {
     // Display
     model: MODEL.player,
     // Physics
-    r: 11,
+    r: 10,
     // Stats
     hp: 3,
     // Methods
