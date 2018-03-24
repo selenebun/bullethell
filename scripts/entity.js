@@ -18,7 +18,7 @@ class Entity {
 
     // Call all necessary methods each frame
     act() {
-        this.update();
+        if (!paused && (sTime === 0 || frameCount % 2)) this.update();
         this.display();
         if (offscreen(this.pos.x, this.pos.y, this.radius)) this.dead = true;
     }

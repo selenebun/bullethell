@@ -66,7 +66,13 @@ SHIP.player = {
     // Physics
     radius: 14,
     // Stats
-    hp: 3
+    hp: 3,
+    // Methods
+    damage: function(amt) {
+        if (bTime > 0) return;
+        if (typeof amt === 'undefined') amt = 1;
+        this.hp > 0 ? this.hp -= amt : this.dead = true;
+    }
 };
 
 

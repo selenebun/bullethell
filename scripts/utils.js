@@ -7,8 +7,6 @@ function applyTemplate(obj, template) {
         let key = keys[i];
         obj[key] = template[key];
     }
-
-    console.log(obj);
 }
 
 // Run the main loop for an array of entities
@@ -26,4 +24,11 @@ function mainLoop(arr) {
 // Check if point is offscreen
 function offscreen(x, y, r) {
     return (x + r < 0 || x - r > width || y + r < 0 || y - r > height);
+}
+
+// Pad a number with leading zeroes
+function pad(num, len) {
+    let str = num.toString();
+    if (str.length > len) len = str.length;
+    return '0'.repeat(len - str.length) + str;
 }
