@@ -21,7 +21,7 @@ MODEL.player = function() {
     // Exhaust
     fill('#E74C3C');
     noStroke();
-    triangle(-3, 14, 3, 14, random(-1, 1), random(20, 24));
+    triangle(-3, 14, 3, 14, random(-2, 2), random(20, 24));
 
     // Thruster
     fill('#7C8A99');
