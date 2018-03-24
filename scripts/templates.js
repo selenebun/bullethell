@@ -63,7 +63,7 @@ BULLET.basic = {
     // Display
     model: MODEL.basicBullet,
     // Physics
-    r: 6
+    r: 4
 };
 
 
