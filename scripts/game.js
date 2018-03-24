@@ -15,6 +15,8 @@ let slowdowns = 2;
 let sTime = 0;
 let sDuration = 60;
 
+let plSpeed = 2.5;
+
 let paused = false;
 let showFPS = false;
 let showHitbox = false;
@@ -52,7 +54,7 @@ function resetEntities() {
 
     // Spawn bullets
     for (let i = 0; i < 50; i++) {
-        bullets.push(new Bullet(random(width), random(height), PI/4, 3, BULLET.basic));
+        bullets.push(new Bullet(random(width), random(height), PI/4, 2, BULLET.basic));
     }
 }
 
@@ -110,15 +112,11 @@ function draw() {
 
 function keyPressed() {
     if (key === 'C') bomb();
-    
     if (key === 'F') {
         showFPS = !showFPS;
         document.getElementById('debug').style.display = showFPS ? 'block' : 'none';
     }
-
     if (key === 'H') showHitbox = !showHitbox;
-
     if (key === 'P') paused = !paused;
-
     if (key === 'X') slowdown();
 }

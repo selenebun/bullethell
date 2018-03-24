@@ -8,15 +8,20 @@ const WEAPON = {};
 
 // Models
 
-MODEL.basicBullet = function(e) {
+MODEL.basicBullet = function() {
     fill('#ECF0F1');
     noStroke();
-    ellipse(e.pos.x, e.pos.y, e.radius, e.radius);
+    ellipse(this.pos.x, this.pos.y, this.r, this.r);
 };
 
-MODEL.player = function(e) {
+MODEL.player = function() {
     push();
-    translate(e.pos.x, e.pos.y);
+    translate(this.pos.x, this.pos.y);
+
+    // Exhaust
+    fill('#E74C3C');
+    noStroke();
+    triangle(-3, 14, 3, 14, random(-1, 1), random(20, 24));
 
     // Thruster
     fill('#7C8A99');
@@ -44,6 +49,13 @@ MODEL.player = function(e) {
 
 // AI
 
+AI.player = function() {
+    if (keyIsDown(RIGHT_ARROW)) this.pos.x += plSpeed;
+    if (keyIsDown(LEFT_ARROW)) this.pos.x -= plSpeed;
+    if (keyIsDown(DOWN_ARROW)) this.pos.y += plSpeed;
+    if (keyIsDown(UP_ARROW)) this.pos.y -= plSpeed;
+};
+
 
 // Bullets
 
@@ -51,7 +63,7 @@ BULLET.basic = {
     // Display
     model: MODEL.basicBullet,
     // Physics
-    radius: 6
+    r: 6
 };
 
 
@@ -61,10 +73,12 @@ BULLET.basic = {
 // Ships
 
 SHIP.player = {
+    // AI
+    ai: AI.player,
     // Display
     model: MODEL.player,
     // Physics
-    radius: 14,
+    r: 14,
     // Stats
     hp: 3,
     // Methods

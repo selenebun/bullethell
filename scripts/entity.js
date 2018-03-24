@@ -7,7 +7,7 @@ class Entity {
         // Physics
         this.pos = createVector(x, y);
         this.vel = createVector();
-        this.radius = 0;
+        this.r = 0;
 
         // Substitute properties from template
         applyTemplate(this, template);
@@ -20,30 +20,30 @@ class Entity {
     act() {
         if (!paused && (sTime === 0 || frameCount % 2)) this.update();
         this.display();
-        if (offscreen(this.pos.x, this.pos.y, this.radius)) this.dead = true;
+        if (offscreen(this.pos.x, this.pos.y, this.r)) this.dead = true;
     }
 
     // Check for entity colliding with hitbox
     collide(e) {
         let d = this.pos.dist(e.pos);
-        return d < this.radius + e.radius;
+        return d < this.r + e.r;
     }
 
     // Check if point is inside hitbox
     contains(x, y) {
         let d = dist(this.pos.x, this.pos.y, x, y);
-        return d < this.radius;
+        return d < this.r;
     }
 
     // Display entity, hitbox, etc.
     display() {
-        this.model(this);
+        this.model();
 
         // Display hitbox
         if (showHitbox) {
             fill(255, 63);
             stroke(255);
-            ellipse(this.pos.x, this.pos.y, this.radius, this.radius);
+            ellipse(this.pos.x, this.pos.y, this.r, this.r);
         }
     }
 
@@ -51,7 +51,7 @@ class Entity {
     init() {}
 
     // Display entity
-    model(e) {}
+    model() {}
 
     // Do something when entity dies
     onDeath() {}
