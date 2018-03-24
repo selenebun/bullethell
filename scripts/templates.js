@@ -50,10 +50,32 @@ MODEL.player = function() {
 // AI
 
 AI.player = function() {
-    if (keyIsDown(RIGHT_ARROW)) this.pos.x += plSpeed;
-    if (keyIsDown(LEFT_ARROW)) this.pos.x -= plSpeed;
-    if (keyIsDown(DOWN_ARROW)) this.pos.y += plSpeed;
-    if (keyIsDown(UP_ARROW)) this.pos.y -= plSpeed;
+    let c = 1 / sqrt(2);
+    if (keyIsDown(RIGHT_ARROW)) {
+        if (keyIsDown(UP_ARROW)) {
+            this.pos.x += plSpeed * c;
+            this.pos.y -= plSpeed * c;
+        } else if (keyIsDown(DOWN_ARROW)) {
+            this.pos.x += plSpeed * c;
+            this.pos.y += plSpeed * c;
+        } else {
+            this.pos.x += plSpeed;
+        }
+    } else if (keyIsDown(LEFT_ARROW)) {
+        if (keyIsDown(UP_ARROW)) {
+            this.pos.x -= plSpeed * c;
+            this.pos.y -= plSpeed * c;
+        } else if (keyIsDown(DOWN_ARROW)) {
+            this.pos.x -= plSpeed * c;
+            this.pos.y += plSpeed * c;
+        } else {
+            this.pos.x -= plSpeed;
+        }
+    } else if (keyIsDown(DOWN_ARROW)) {
+        this.pos.y += plSpeed;
+    } else if (keyIsDown(UP_ARROW)) {
+        this.pos.y -= plSpeed;
+    }
 };
 
 
@@ -78,7 +100,7 @@ SHIP.player = {
     // Display
     model: MODEL.player,
     // Physics
-    r: 10,
+    r: 8,
     // Stats
     hp: 3,
     // Methods
