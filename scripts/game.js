@@ -36,6 +36,13 @@ function resetEntities() {
     }
 }
 
+// Updaet game status on sidebar
+function updateStatus() {
+    document.getElementById('level').innerHTML = 'Level 1';
+    document.getElementById('hp').innerHTML = 'HP: ' + pl.hp + '/' + pl.maxHp;
+    document.getElementById('score').innerHTML = 'Score: 0';
+}
+
 
 /* Main p5.js functions */
 
@@ -54,6 +61,7 @@ function draw() {
     background(bg);
 
     // Update status display
+    updateStatus();
     calcFPS();
 
     // Update entities

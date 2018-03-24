@@ -64,7 +64,9 @@ SHIP.player = {
     // Display
     model: MODEL.player,
     // Physics
-    radius: 14
+    radius: 14,
+    // Stats
+    hp: 3
 };
 
 
