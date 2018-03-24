@@ -105,10 +105,11 @@ SHIP.player = {
     hp: 3,
     // Methods
     borders: function() {
-        if (this.pos.x - this.r < 0) this.pos.x = this.r;
-        if (this.pos.x + this.r > width) this.pos.x = width - this.r;
-        if (this.pos.y - this.r < 0) this.pos.y = this.r;
-        if (this.pos.y + this.r > height) this.pos.y = height - this.r;
+        let r = this.r * 2;
+        if (this.pos.x - r < 0) this.pos.x = r;
+        if (this.pos.x + r > width) this.pos.x = width - r;
+        if (this.pos.y - r < 0) this.pos.y = r;
+        if (this.pos.y + r > height) this.pos.y = height - r;
     },
     damage: function(amt) {
         if (bTime > 0) return;
