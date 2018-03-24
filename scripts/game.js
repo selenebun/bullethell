@@ -15,7 +15,7 @@ let slowdowns = 2;
 let sTime = 0;
 let sDuration = 60;
 
-let plSpeed = 2.5;
+let plSpeed = 3;
 
 let paused = false;
 let showFPS = false;
