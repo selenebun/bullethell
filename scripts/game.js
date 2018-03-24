@@ -50,12 +50,7 @@ function resetEntities() {
     enemies = [];
     powerups = [];
 
-    pl = new Ship(width/2, height/2, SHIP.player);
-
-    // Spawn bullets
-    for (let i = 0; i < 50; i++) {
-        bullets.push(new Bullet(random(width), random(height), PI/4, 2, BULLET.basic));
-    }
+    pl = new Ship(width/2, 3 * height/4, SHIP.player);
 }
 
 // Use a slowdown
