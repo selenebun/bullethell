@@ -35,7 +35,7 @@ MODEL.player = function(e) {
     triangle(-1, 3, -1, -24, -12, 6);
 
     // Canopy
-    fill('#29C5FF');
+    fill('#19B5FE');
     ellipse(0, 1, 6, 8);
 
     pop();
