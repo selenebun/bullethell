@@ -2,6 +2,7 @@ let bullets;
 let enemies;
 let pl;
 let powerups;
+let ps;
 
 let bg = [0, 0, 0];
 
@@ -49,8 +50,15 @@ function resetEntities() {
     bullets = [];
     enemies = [];
     powerups = [];
+    ps = [];
 
     pl = new Ship(width/2, 3 * height/4, SHIP.player);
+
+    for (let i = 0; i < 3; i++) {
+        let x = random(width);
+        let y = random(height/2);
+        enemies.push(new Ship(x, y, SHIP.basicEnemy));
+    }
 }
 
 // Use a slowdown
@@ -65,7 +73,7 @@ function slowdown() {
 function updateStatus() {
     document.getElementById('level').innerHTML = 'Level: ' + level;
     document.getElementById('score').innerHTML = 'Score: ' + pad(score, 7);
-    document.getElementById('hp').innerHTML = 'HP: ' + pl.hp + '/' + pl.maxHp;
+    document.getElementById('hp').innerHTML = 'HP: ' + (pl.hp + 1) + '/' + (pl.maxHp + 1);
     document.getElementById('bombs').innerHTML = 'Bombs: ' + bombs;
     document.getElementById('slowdowns').innerHTML = 'Slowdowns: ' + slowdowns;
 }
@@ -79,6 +87,7 @@ function setup() {
 
     // Set drawing modes
     ellipseMode(RADIUS);
+    rectMode(RADIUS);
 
     // Initialize entities
     resetEntities();
@@ -96,6 +105,7 @@ function draw() {
     mainLoop(enemies);
     mainLoop(powerups);
     pl.act();
+    mainLoop(ps);
 
     // Update cooldowns
     if (bTime > 0) bTime--;
@@ -114,5 +124,4 @@ function keyPressed() {
     if (key === 'H') showHitbox = !showHitbox;
     if (key === 'P') paused = !paused;
     if (key === 'X') slowdown();
-    if (key === 'Z') pl.fire();
 }

@@ -2,13 +2,16 @@ class Ship extends Entity {
     constructor(x, y, template) {
         super(x, y);
 
+        // Display
+        this.color = '#E74C3C';
+
         // Misc
-        this.hp = 1;
+        this.hp = 0;
         this.isPlayer = false;
 
         // Stats
         this.cooldown = 0;      // ticks until able to fire again
-        this.fireCool = 5;     // cooldown between firing bullets
+        this.fireCool = 10;     // cooldown between firing bullets
 
         // Substitute properties from template
         applyTemplate(this, template);
@@ -29,10 +32,24 @@ class Ship extends Entity {
     // Dynamically update behavior
     ai() {}
 
+    // Border behavior
+    borders() {
+        let r = this.r * 2;
+        if (this.pos.x - r < 0) this.pos.x = r;
+        if (this.pos.x + r > width) this.pos.x = width - r;
+        if (this.pos.y - r < 0) this.pos.y = r;
+        if (this.pos.y + r > height) this.pos.y = height - r;
+    }
+
     // Deal damage
     damage(amt) {
         if (typeof amt === 'undefined') amt = 1;
         this.hp > 0 ? this.hp -= amt : this.dead = true;
+    }
+
+    // Create explosion particle effect
+    explode() {
+        ps.push(new ParticleSystem(this.pos.x, this.pos.y, PS.basicExplosion));
     }
 
     // Heal
@@ -47,6 +64,11 @@ class Ship extends Entity {
         if (this.cooldown > 0) return;
         this.cooldown = this.fireCool;
         this.weapon();
+    }
+
+    // Do something when entity dies
+    onDeath() {
+        this.explode();
     }
 
     // Update physics, age, etc.

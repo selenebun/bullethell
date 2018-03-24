@@ -1,7 +1,9 @@
 const AI = {};
 const BULLET = {};
 const MODEL = {};
+const PARTICLE = {};
 const POWERUP = {};
+const PS = {};
 const SHIP = {};
 const WEAPON = {};
 
@@ -14,9 +16,10 @@ MODEL.basicBullet = function() {
     ellipse(this.pos.x, this.pos.y, this.r, this.r);
 };
 
-MODEL.player = function() {
+MODEL.basicShip = function() {
     push();
     translate(this.pos.x, this.pos.y);
+    if (!this.isPlayer) rotate(PI);
 
     // Exhaust
     fill('#E74C3C');
@@ -40,16 +43,36 @@ MODEL.player = function() {
     triangle(-1, 3, -1, -24, -12, 6);
 
     // Canopy
-    fill('#19B5FE');
+    fill(this.color);
     ellipse(0, 1, 6, 8);
 
     pop();
 };
 
+MODEL.sqParticle = function() {
+    push();
+    translate(this.pos.x, this.pos.y);
+    rotate(this.angle);
+
+    fill(this.color.concat(this.lifespan));
+    stroke(0, this.lifespan);
+    rect(0, 0, this.r, this.r);
+
+    pop();
+}
+
 
 // AI
 
+AI.basicEnemy = function() {
+    if (random() < 0.05) this.fire();
+};
+
 AI.player = function() {
+    // Firing weapon (Z key)
+    if (keyIsDown(90)) this.fire();
+    
+    // Movement
     let c = 1 / sqrt(2);
     if (keyIsDown(RIGHT_ARROW)) {
         if (keyIsDown(UP_ARROW)) {
@@ -98,6 +121,11 @@ BULLET.small = {
 
 // Weapons
 
+WEAPON.basic = function() {
+    let dir = this.isPlayer ? -1 : 1;
+    bullets.push(new Bullet(this.pos.x, this.pos.y, dir * PI/2, 4, BULLET.basic, this.isPlayer));
+};
+
 WEAPON.smallBasic = function() {
     let dir = this.isPlayer ? -1 : 1;
     bullets.push(new Bullet(this.pos.x, this.pos.y, dir * PI/2, 5, BULLET.small, this.isPlayer));
@@ -116,40 +144,72 @@ WEAPON.smallShotgun = function() {
     bullets.push(new Bullet(this.pos.x, this.pos.y, dir * 3 * PI/4, 5, BULLET.small, this.isPlayer));
 };
 
-WEAPON.basic = function() {
-    let dir = this.isPlayer ? -1 : 1;
-    bullets.push(new Bullet(this.pos.x, this.pos.y, dir * PI/2, 5, BULLET.basic, this.isPlayer));
-};
-
 
 // Powerups
 
 
 // Ships
 
+SHIP.basicEnemy = {
+    // AI
+    ai: AI.basicEnemy,
+    // Display
+    model: MODEL.basicShip,
+    // Physics
+    r: 12,
+    // Stats
+    weapon: WEAPON.basic
+};
+
 SHIP.player = {
     // AI
     ai: AI.player,
     // Display
-    model: MODEL.player,
+    color: '#19B5FE',
+    model: MODEL.basicShip,
     // Misc
     isPlayer: true,
     // Physics
     r: 8,
     // Stats
-    hp: 3,
+    fireCool: 8,
+    hp: 2,
     weapon: WEAPON.smallBasic,
     // Methods
-    borders: function() {
-        let r = this.r * 2;
-        if (this.pos.x - r < 0) this.pos.x = r;
-        if (this.pos.x + r > width) this.pos.x = width - r;
-        if (this.pos.y - r < 0) this.pos.y = r;
-        if (this.pos.y + r > height) this.pos.y = height - r;
-    },
     damage: function(amt) {
         if (bTime > 0) return;
         if (typeof amt === 'undefined') amt = 1;
         this.hp > 0 ? this.hp -= amt : this.dead = true;
+        bTime = bDuration;
     }
+};
+
+
+// Particles
+
+PARTICLE.fire = {
+    // Display
+    model: MODEL.sqParticle,
+    // Methods
+    init: function() {
+        // Display
+        this.color = [200 + random(55), random(127), random(31)];
+
+        // Misc
+        this.decay = random(4, 8);
+
+        // Physics
+        this.angle = random(TWO_PI);
+        this.angVel = random(-2, 2);
+        this.r = random(3, 6);
+    }
+};
+
+
+// Particle systems
+
+PS.basicExplosion = {
+    num: 32,
+    pTemp: PARTICLE.fire,
+    speed: 3
 };
