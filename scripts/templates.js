@@ -88,6 +88,39 @@ BULLET.basic = {
     r: 5
 };
 
+BULLET.small = {
+    // Display
+    model: MODEL.basicBullet,
+    // Physics
+    r: 2,
+};
+
+
+// Weapons
+
+WEAPON.smallBasic = function() {
+    let dir = this.isPlayer ? -1 : 1;
+    bullets.push(new Bullet(this.pos.x, this.pos.y, dir * PI/2, 5, BULLET.small, this.isPlayer));
+};
+
+WEAPON.smallDual = function() {
+    let dir = this.isPlayer ? -1 : 1;
+    bullets.push(new Bullet(this.pos.x + 5, this.pos.y, dir * PI/2, 5, BULLET.small, this.isPlayer));
+    bullets.push(new Bullet(this.pos.x - 5, this.pos.y, dir * PI/2, 5, BULLET.small, this.isPlayer));
+};
+
+WEAPON.smallShotgun = function() {
+    let dir = this.isPlayer ? -1 : 1;
+    bullets.push(new Bullet(this.pos.x, this.pos.y, dir * PI/4, 5, BULLET.small, this.isPlayer));
+    bullets.push(new Bullet(this.pos.x, this.pos.y, dir * PI/2, 5, BULLET.small, this.isPlayer));
+    bullets.push(new Bullet(this.pos.x, this.pos.y, dir * 3 * PI/4, 5, BULLET.small, this.isPlayer));
+};
+
+WEAPON.basic = function() {
+    let dir = this.isPlayer ? -1 : 1;
+    bullets.push(new Bullet(this.pos.x, this.pos.y, dir * PI/2, 5, BULLET.basic, this.isPlayer));
+};
+
 
 // Powerups
 
@@ -99,10 +132,13 @@ SHIP.player = {
     ai: AI.player,
     // Display
     model: MODEL.player,
+    // Misc
+    isPlayer: true,
     // Physics
     r: 8,
     // Stats
     hp: 3,
+    weapon: WEAPON.smallBasic,
     // Methods
     borders: function() {
         let r = this.r * 2;
@@ -117,6 +153,3 @@ SHIP.player = {
         this.hp > 0 ? this.hp -= amt : this.dead = true;
     }
 };
-
-
-// Weapons

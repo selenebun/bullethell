@@ -4,10 +4,11 @@ class Ship extends Entity {
 
         // Misc
         this.hp = 1;
+        this.isPlayer = false;
 
         // Stats
         this.cooldown = 0;      // ticks until able to fire again
-        this.fireCool = 30;     // cooldown between firing bullets
+        this.fireCool = 5;     // cooldown between firing bullets
 
         // Substitute properties from template
         applyTemplate(this, template);
@@ -44,6 +45,7 @@ class Ship extends Entity {
     // Check cooldown and fire weapon
     fire() {
         if (this.cooldown > 0) return;
+        this.cooldown = this.fireCool;
         this.weapon();
     }
 

@@ -114,4 +114,5 @@ function keyPressed() {
     if (key === 'H') showHitbox = !showHitbox;
     if (key === 'P') paused = !paused;
     if (key === 'X') slowdown();
+    if (key === 'Z') pl.fire();
 }
