@@ -85,7 +85,7 @@ BULLET.basic = {
     // Display
     model: MODEL.basicBullet,
     // Physics
-    r: 4
+    r: 5
 };
 
 
@@ -104,6 +104,12 @@ SHIP.player = {
     // Stats
     hp: 3,
     // Methods
+    borders: function() {
+        if (this.pos.x - this.r < 0) this.pos.x = this.r;
+        if (this.pos.x + this.r > width) this.pos.x = width - this.r;
+        if (this.pos.y - this.r < 0) this.pos.y = this.r;
+        if (this.pos.y + this.r > height) this.pos.y = height - this.r;
+    },
     damage: function(amt) {
         if (bTime > 0) return;
         if (typeof amt === 'undefined') amt = 1;

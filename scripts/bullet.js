@@ -31,6 +31,11 @@ class Bullet extends Entity {
         this.collideShips();
     }
 
+    // Border behavior
+    borders() {
+        if (offscreen(this.pos.x, this.pos.y, this.r)) this.dead = true;
+    }
+
     // Check for collision with player or enemy ships
     collideShips() {
         let targets = this.fromPlayer ? enemies : [pl];

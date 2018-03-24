@@ -19,9 +19,12 @@ class Entity {
     // Call all necessary methods each frame
     act() {
         if (!paused && (sTime === 0 || frameCount % 2)) this.update();
-        this.display();
-        if (offscreen(this.pos.x, this.pos.y, this.r)) this.dead = true;
+        this.borders();
+        if (!this.dead) this.display();
     }
+
+    // Border behavior
+    borders() {}
 
     // Check for entity colliding with hitbox
     collide(e) {
