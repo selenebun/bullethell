@@ -7,6 +7,8 @@ function applyTemplate(obj, template) {
         let key = keys[i];
         obj[key] = template[key];
     }
+
+    console.log(obj);
 }
 
 // Run the main loop for an array of entities

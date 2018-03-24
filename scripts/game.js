@@ -21,6 +21,21 @@ function calcFPS() {
     document.getElementById('avgfps').innerHTML = 'Avg. FPS: ' + avgFPS.toFixed(1);
 }
 
+// Reset all entities
+// TODO spawn player
+function resetEntities() {
+    bullets = [];
+    enemies = [];
+    powerups = [];
+
+    pl = new Ship(width/2, height/2, SHIP.player);
+
+    // Spawn bullets
+    for (let i = 0; i < 50; i++) {
+        bullets.push(new Bullet(random(width), random(height), PI/4, 3, BULLET.basic));
+    }
+}
+
 
 /* Main p5.js functions */
 
@@ -30,6 +45,9 @@ function setup() {
 
     // Set drawing modes
     ellipseMode(RADIUS);
+
+    // Initialize entities
+    resetEntities();
 }
 
 function draw() {
@@ -37,6 +55,12 @@ function draw() {
 
     // Update status display
     calcFPS();
+
+    // Update entities
+    mainLoop(bullets);
+    mainLoop(enemies);
+    mainLoop(powerups);
+    pl.act();
 }
 
 

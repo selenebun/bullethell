@@ -37,7 +37,7 @@ class Entity {
 
     // Display entity, hitbox, etc.
     display() {
-        this.model();
+        this.model(this);
 
         // Display hitbox
         if (showHitbox) {
@@ -51,7 +51,7 @@ class Entity {
     init() {}
 
     // Display entity
-    model() {}
+    model(e) {}
 
     // Do something when entity dies
     onDeath() {}

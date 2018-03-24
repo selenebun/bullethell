@@ -54,5 +54,5 @@ class Ship extends Entity {
     }
 
     // Fire weapon
-    weapon()
+    weapon() {}
 }
