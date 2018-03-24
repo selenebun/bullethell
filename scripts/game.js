@@ -1,3 +1,8 @@
+let bullets;
+let enemies;
+let pl;
+let powerups;
+
 let bg = [0, 0, 0];
 
 let avgFPS = 0;

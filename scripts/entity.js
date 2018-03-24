@@ -53,6 +53,9 @@ class Entity {
     // Display entity
     model() {}
 
+    // Do something when entity dies
+    onDeath() {}
+
     // Update physics, age, etc.
     update() {
         this.pos.add(this.vel);
