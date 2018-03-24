@@ -1,0 +1,80 @@
+@font-face {
+    font-family: 'Source Code Pro';
+    src: url('fonts/SourceCodePro-Regular.ttf');
+}
+
+::-webkit-scrollbar {
+    display: none;
+}
+
+
+/* Colors */
+
+:root {
+    --accent: #F1C40F;
+    --bg: #1E003D;
+    --fg: #ECF0F1;
+    --sidebar: #4E046D;
+}
+
+
+/* Page structure */
+
+html, body {
+    margin: 0;
+}
+
+body {
+    background-color: var(--bg);
+    color: var(--fg);
+    display: flex;
+    flex-direction: row;
+    font-family: 'Source Code Pro', monospace;
+    line-height: 1.6;
+    min-height: 100vh;
+}
+
+#game {
+    align-items: center;
+    display: flex;
+    flex: 1;
+}
+
+#sidebar {
+    background-color: var(--sidebar);
+    display: flex;
+    flex-direction: column;
+    max-height: 100vh;
+    overflow-y: scroll;
+}
+
+header, main, footer {
+    padding: 16px;
+}
+
+main {
+    flex: 1;
+}
+
+footer {
+    padding-bottom: 0;
+}
+
+
+/* Page content */
+
+canvas {
+    border: 1px solid var(--accent);
+    display: block;
+    margin: 0 auto;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    color: var(--accent);
+    line-height: 1.2;
+    text-align: center;
+}
+
+#copyright {
+    text-align: center;
+}
