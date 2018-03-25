@@ -76,28 +76,28 @@ AI.player = function() {
     let c = 1 / sqrt(2);
     if (keyIsDown(RIGHT_ARROW)) {
         if (keyIsDown(UP_ARROW)) {
-            this.pos.x += plSpeed * c;
-            this.pos.y -= plSpeed * c;
+            this.pos.x += this.speed * c;
+            this.pos.y -= this.speed * c;
         } else if (keyIsDown(DOWN_ARROW)) {
-            this.pos.x += plSpeed * c;
-            this.pos.y += plSpeed * c;
+            this.pos.x += this.speed * c;
+            this.pos.y += this.speed * c;
         } else {
-            this.pos.x += plSpeed;
+            this.pos.x += this.speed;
         }
     } else if (keyIsDown(LEFT_ARROW)) {
         if (keyIsDown(UP_ARROW)) {
-            this.pos.x -= plSpeed * c;
-            this.pos.y -= plSpeed * c;
+            this.pos.x -= this.speed * c;
+            this.pos.y -= this.speed * c;
         } else if (keyIsDown(DOWN_ARROW)) {
-            this.pos.x -= plSpeed * c;
-            this.pos.y += plSpeed * c;
+            this.pos.x -= this.speed * c;
+            this.pos.y += this.speed * c;
         } else {
-            this.pos.x -= plSpeed;
+            this.pos.x -= this.speed;
         }
     } else if (keyIsDown(DOWN_ARROW)) {
-        this.pos.y += plSpeed;
+        this.pos.y += this.speed;
     } else if (keyIsDown(UP_ARROW)) {
-        this.pos.y -= plSpeed;
+        this.pos.y -= this.speed;
     }
 };
 
@@ -174,6 +174,7 @@ SHIP.player = {
     // Stats
     fireCool: 8,
     hp: 2,
+    speed: 4,
     weapon: WEAPON.smallBasic,
     // Methods
     damage: function(amt) {

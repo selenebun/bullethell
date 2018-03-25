@@ -12,6 +12,8 @@ class Ship extends Entity {
         // Stats
         this.cooldown = 0;      // ticks until able to fire again
         this.fireCool = 10;     // cooldown between firing bullets
+        this.speed = 3;         // movement speed
+        this.points = 0;
 
         // Substitute properties from template
         applyTemplate(this, template);
