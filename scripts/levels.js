@@ -10,6 +10,6 @@ const LEVEL = [
         powerupWeight: [],
         spawnCoolMin: 60,
         spawnCoolMax: 120,
-        spawnCount: 60
+        spawnCount: 40
     }
 ];
