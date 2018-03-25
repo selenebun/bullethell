@@ -65,7 +65,8 @@ MODEL.sqParticle = function() {
 // AI
 
 AI.basicEnemy = function() {
-    if (random() < 0.05) this.fire();
+    this.pos.y += this.speed;
+    if (random() < 0.03) this.fire();
 };
 
 AI.player = function() {
@@ -150,7 +151,7 @@ WEAPON.smallShotgun = function() {
 
 // Ships
 
-SHIP.basicEnemy = {
+SHIP.basic = {
     // AI
     ai: AI.basicEnemy,
     // Display
@@ -158,8 +159,18 @@ SHIP.basicEnemy = {
     // Physics
     r: 12,
     // Stats
-    weapon: WEAPON.basic
+    weapon: WEAPON.basic,
+    // Methods
+    init: function() {
+        this.speed = random(0.5, 2);
+    }
 };
+
+SHIP.bomber = {};
+
+SHIP.boss1 = {};
+
+SHIP.patroller = {};
 
 SHIP.player = {
     // AI
@@ -177,11 +188,21 @@ SHIP.player = {
     speed: 4,
     weapon: WEAPON.smallBasic,
     // Methods
+    borders: function() {
+        let r = this.r * 2;
+        if (this.pos.x - r < 0) this.pos.x = r;
+        if (this.pos.x + r > width) this.pos.x = width - r;
+        if (this.pos.y - r < 0) this.pos.y = r;
+        if (this.pos.y + r > height) this.pos.y = height - r;
+    },
     damage: function(amt) {
         if (bTime > 0) return;
         if (typeof amt === 'undefined') amt = 1;
         this.hp > 0 ? this.hp -= amt : this.dead = true;
         bTime = bDuration;
+    },
+    onDeath: function() {
+        loadLevel();
     }
 };
 

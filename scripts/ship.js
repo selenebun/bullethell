@@ -39,18 +39,29 @@ class Ship extends Entity {
         let r = this.r * 2;
         if (this.pos.x - r < 0) this.pos.x = r;
         if (this.pos.x + r > width) this.pos.x = width - r;
-        if (this.pos.y - r < 0) this.pos.y = r;
-        if (this.pos.y + r > height) this.pos.y = height - r;
+        if (this.pos.y - r > height) this.dead = true;
+    }
+
+    // Check for collision with enemy ships
+    collideShips() {
+        for (let i = 0; i < enemies.length; i++) {
+            let e = enemies[i];
+            if (this.collide(e)) {
+                this.damage();
+                return;
+            }
+        }
     }
 
     // Deal damage
     damage(amt) {
         if (typeof amt === 'undefined') amt = 1;
-        this.hp > 0 ? this.hp -= amt : this.dead = true;
+        this.hp > 0 ? this.hp -= amt : this.explode();
     }
 
     // Create explosion particle effect
     explode() {
+        this.dead = true;
         ps.push(new ParticleSystem(this.pos.x, this.pos.y, PS.basicExplosion));
     }
 
@@ -69,9 +80,7 @@ class Ship extends Entity {
     }
 
     // Do something when entity dies
-    onDeath() {
-        this.explode();
-    }
+    onDeath() {}
 
     // Update physics, age, etc.
     update() {

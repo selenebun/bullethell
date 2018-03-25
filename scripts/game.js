@@ -4,10 +4,14 @@ let pl;
 let powerups;
 let ps;
 
-let bg = [0, 0, 0];
+let bg = 0;
 
-let level = 1;
-let score = 0;
+let level = 0;
+let score;
+
+let curLevel;
+let spawnCooldown = 60;
+let toSpawn;
 
 let bombs = 2;
 let bTime = 0;
@@ -42,8 +46,18 @@ function calcFPS() {
     document.getElementById('avgfps').innerHTML = 'Avg. FPS: ' + avgFPS.toFixed(1);
 }
 
+// Load current level
+function loadLevel() {
+    curLevel = LEVEL[level];
+    bg = curLevel.bg;
+    toSpawn = curLevel.spawnCount;
+    resetEntities();
+    score = 0;
+    bTime = 0;
+    sTime = 0;
+}
+
 // Reset all entities
-// TODO spawn player
 function resetEntities() {
     bullets = [];
     enemies = [];
@@ -51,12 +65,6 @@ function resetEntities() {
     ps = [];
 
     pl = new Ship(width/2, 3 * height/4, SHIP.player);
-
-    for (let i = 0; i < 3; i++) {
-        let x = random(width);
-        let y = random(height/2);
-        enemies.push(new Ship(x, y, SHIP.basicEnemy));
-    }
 }
 
 // Use a slowdown
@@ -67,9 +75,20 @@ function slowdown() {
     }
 }
 
+// Spawn an enemy
+function spawnEnemy() {
+    toSpawn--;
+    if (toSpawn > 0) {
+        spawnCooldown = randint(curLevel.spawnCoolMin, curLevel.spawnCoolMax);
+        let type = randWeight(curLevel.enemy, curLevel.enemyWeight);
+        enemies.push(new Ship(random(width), -30, SHIP[type]));
+    } else {
+    }
+}
+
 // Updaet game status on sidebar
 function updateStatus() {
-    document.getElementById('level').innerHTML = 'Level: ' + level;
+    document.getElementById('level').innerHTML = 'Level: ' + (level + 1);
     document.getElementById('score').innerHTML = 'Score: ' + pad(score, 7);
     document.getElementById('hp').innerHTML = 'HP: ' + (pl.hp + 1) + '/' + (pl.maxHp + 1);
     document.getElementById('bombs').innerHTML = 'Bombs: ' + bombs;
@@ -88,7 +107,7 @@ function setup() {
     rectMode(RADIUS);
 
     // Initialize entities
-    resetEntities();
+    loadLevel();
 }
 
 function draw() {
@@ -98,12 +117,17 @@ function draw() {
     updateStatus();
     calcFPS();
 
+    // Spawn enemies
+    if (toSpawn > 0) spawnCooldown > 0 ? spawnCooldown-- : spawnEnemy();
+
     // Update entities
     mainLoop(bullets);
     mainLoop(enemies);
     mainLoop(powerups);
     pl.act();
+    pl.collideShips();
     mainLoop(ps);
+    if (pl.dead) pl.onDeath();
 
     // Update cooldowns
     if (bTime > 0) bTime--;

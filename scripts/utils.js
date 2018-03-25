@@ -32,3 +32,23 @@ function pad(num, len) {
     if (str.length > len) len = str.length;
     return '0'.repeat(len - str.length) + str;
 }
+
+// Returns a random integer, using the same arguments as p5js random()
+function randint() {
+    return floor(random(...arguments));
+}
+
+// Returns a random item from an array using a second array of weights
+function randWeight(arr, weight) {
+    // Get total weight
+    let total = weight.reduce(function(prev, cur) {
+        return prev + cur;
+    });
+
+    let r = random(total);
+    let weightSum = 0;
+    for (let i = 0; i < arr.length; i++) {
+        weightSum += weight[i];
+        if (r <= weightSum) return arr[i];
+    }
+}
