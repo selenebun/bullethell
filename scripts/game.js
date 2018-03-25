@@ -30,7 +30,7 @@ let numFPS = 0;
 
 // Use a bomb
 function bomb() {
-    if (bombs > 0) {
+    if (bombs > 0 && !paused) {
         bombs--;
         bullets = [];
         bTime = bDuration;
@@ -69,7 +69,7 @@ function resetEntities() {
 
 // Use a slowdown
 function slowdown() {
-    if (slowdowns > 0) {
+    if (slowdowns > 0 && !paused) {
         slowdowns--;
         sTime = sDuration;
     }
@@ -118,7 +118,7 @@ function draw() {
     calcFPS();
 
     // Spawn enemies
-    if (toSpawn > 0) spawnCooldown > 0 ? spawnCooldown-- : spawnEnemy();
+    if (!paused && toSpawn > 0) spawnCooldown > 0 ? spawnCooldown-- : spawnEnemy();
 
     // Update entities
     mainLoop(bullets);
@@ -130,8 +130,8 @@ function draw() {
     if (pl.dead) pl.onDeath();
 
     // Update cooldowns
-    if (bTime > 0) bTime--;
-    if (sTime > 0) sTime--;
+    if (!paused && bTime > 0) bTime--;
+    if (!paused && sTime > 0) sTime--;
 }
 
 
