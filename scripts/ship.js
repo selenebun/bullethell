@@ -56,7 +56,12 @@ class Ship extends Entity {
     // Deal damage
     damage(amt) {
         if (typeof amt === 'undefined') amt = 1;
-        this.hp > 0 ? this.hp -= amt : this.explode();
+        if (this.hp > 0) {
+            this.hp -= amt;
+        } else {
+            if (!this.isPlayer) score += this.points;
+            this.explode();
+        }
     }
 
     // Create explosion particle effect

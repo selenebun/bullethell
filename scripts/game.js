@@ -20,6 +20,8 @@ let slowdowns = 2;
 let sTime = 0;
 let sDuration = 60;
 
+let ceiling = -20;
+
 let paused = false;
 let showFPS = false;
 let showHitbox = false;
@@ -80,7 +82,7 @@ function spawnEnemy() {
     if (toSpawn > 0) {
         spawnCooldown = randint(curLevel.spawnCoolMin, curLevel.spawnCoolMax);
         let type = randWeight(curLevel.enemy, curLevel.enemyWeight);
-        enemies.push(new Ship(random(width), -30, SHIP[type]));
+        enemies.push(new Ship(random(width), ceiling, SHIP[type]));
     } else {
     }
     toSpawn--;
@@ -89,7 +91,7 @@ function spawnEnemy() {
 // Updaet game status on sidebar
 function updateStatus() {
     document.getElementById('level').innerHTML = 'Level: ' + (level + 1);
-    document.getElementById('score').innerHTML = 'Score: ' + pad(score, 7);
+    document.getElementById('score').innerHTML = 'Score: ' + score;
     document.getElementById('hp').innerHTML = 'HP: ' + (pl.hp + 1) + '/' + (pl.maxHp + 1);
     document.getElementById('bombs').innerHTML = 'Bombs: ' + bombs;
     document.getElementById('slowdowns').innerHTML = 'Slowdowns: ' + slowdowns;

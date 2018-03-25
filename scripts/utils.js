@@ -26,13 +26,6 @@ function offscreen(x, y, r) {
     return (x + r < 0 || x - r > width || y + r < 0 || y - r > height);
 }
 
-// Pad a number with leading zeroes
-function pad(num, len) {
-    let str = num.toString();
-    if (str.length > len) len = str.length;
-    return '0'.repeat(len - str.length) + str;
-}
-
 // Returns a random integer, using the same arguments as p5js random()
 function randint() {
     return floor(random(...arguments));

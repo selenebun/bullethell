@@ -202,7 +202,7 @@ WEAPON.basic = function() {
 };
 
 WEAPON.bomb = function() {
-    bullets.push(new Bullet(this.pos.x, this.pos.y, PI/2, 0, BULLET.bomb, this.isPlayer));
+    bullets.push(new Bullet(this.pos.x, this.pos.y, 0, 0, BULLET.bomb, this.isPlayer));
 };
 
 WEAPON.shotgun = function() {
@@ -244,6 +244,7 @@ SHIP.basic = {
     // Physics
     r: 12,
     // Stats
+    points: 100,
     weapon: WEAPON.basic,
     // Methods
     init: function() {
@@ -259,7 +260,8 @@ SHIP.bomber = {
     // Physics
     r: 12,
     // Stats
-    hp: 2,
+    hp: 1,
+    points: 300,
     weapon: WEAPON.bomb,
     // Methods
     borders() {
