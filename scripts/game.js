@@ -77,13 +77,13 @@ function slowdown() {
 
 // Spawn an enemy
 function spawnEnemy() {
-    toSpawn--;
     if (toSpawn > 0) {
         spawnCooldown = randint(curLevel.spawnCoolMin, curLevel.spawnCoolMax);
         let type = randWeight(curLevel.enemy, curLevel.enemyWeight);
         enemies.push(new Ship(random(width), -30, SHIP[type]));
     } else {
     }
+    toSpawn--;
 }
 
 // Updaet game status on sidebar
