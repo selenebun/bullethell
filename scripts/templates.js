@@ -216,9 +216,16 @@ AI.boss1 = function() {
         this.fire();
     } else if (this.state === 'up') {
         this.pos.y -= this.speed;
-        pl.pos.y = lerp(pl.pos.y, 3 * height/4, 0.05);
         if (this.pos.y <= height/8) {
             this.pos.y = height/8;
+            this.state = 'clear';
+            this.timeLeft = 60;
+        }
+    } else if (this.state === 'clear') {
+        pl.pos.y = lerp(pl.pos.y, 3 * height/4, 0.05);
+        if (this.timeLeft > 0) {
+            this.timeLeft--;
+        } else {
             this.state = 'sideways';
             this.goLeft = random() < 0.5;
             this.timeLeft = 720;
@@ -468,7 +475,7 @@ SHIP.boss1 = {
     r: 24,
     // Stats
     fireCool: 35,
-    hp: 40,
+    hp: 5,
     points: 2000,
     speed: 1,
     weapon: WEAPON.boss1,
@@ -501,7 +508,7 @@ SHIP.player = {
     r: 8,
     // Stats
     fireCool: 8,
-    hp: 5,
+    hp: 50,
     speed: 4,
     weapon: WEAPON.smallBasic,
     // Methods
