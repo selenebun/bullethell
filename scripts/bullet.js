@@ -2,6 +2,10 @@ class Bullet extends Entity {
     constructor(x, y, angle, speed, template, fromPlayer) {
         super(x, y);
 
+        // Display
+        this.color = '#ECF0F1';
+        this.model = MODEL.basicBullet;
+
         // Misc
         this.fromPlayer = fromPlayer;
 

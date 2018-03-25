@@ -20,7 +20,7 @@ let slowdowns = 2;
 let sTime = 0;
 let sDuration = 60;
 
-let ceiling = -20;
+let ceiling = -50;
 
 let paused = false;
 let showFPS = false;
@@ -79,13 +79,15 @@ function slowdown() {
 
 // Spawn an enemy
 function spawnEnemy() {
+    if (toSpawn === 1 && (enemies.length > 0)) return;
+    toSpawn--;
     if (toSpawn > 0) {
         spawnCooldown = randint(curLevel.spawnCoolMin, curLevel.spawnCoolMax);
         let type = randWeight(curLevel.enemy, curLevel.enemyWeight);
         enemies.push(new Ship(random(width), ceiling, SHIP[type]));
     } else {
+        enemies.push(new Ship(width/2, ceiling, SHIP[curLevel.boss]));
     }
-    toSpawn--;
 }
 
 // Updaet game status on sidebar

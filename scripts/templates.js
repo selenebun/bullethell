@@ -11,7 +11,7 @@ const WEAPON = {};
 // Models
 
 MODEL.basicBullet = function() {
-    fill('#ECF0F1');
+    fill(this.color);
     noStroke();
     ellipse(this.pos.x, this.pos.y, this.r, this.r);
 };
@@ -48,8 +48,8 @@ MODEL.basicShip = function() {
     pop();
 };
 
-MODEL.bombBullet = function() {
-    fill('#E67E22');
+MODEL.eggBullet = function() {
+    fill(this.color);
     ellipse(this.pos.x, this.pos.y, 6, 8);
 };
 
@@ -85,6 +85,50 @@ MODEL.bomber = function() {
     pop();
 };
 
+MODEL.boss1 = function() {
+    push();
+    translate(this.pos.x, this.pos.y);
+    if (!this.isPlayer) rotate(PI);
+
+    // Exhaust
+    fill('#E74C3C');
+    noStroke();
+    triangle(9, 26, 23, 26, random(14, 18), random(32, 36));
+    triangle(-9, 26, -23, 26, random(-14, -18), random(32, 36));
+
+    // Thrusters
+    fill('#7C8A99');
+    stroke(0);
+    rect(15.5, 26, 8, 3);
+    rect(-16.5, 26, 8, 3);
+
+    // Front fins
+    fill('#7F8C8D');
+    triangle(4, 0, 4, -38, 24, 0);
+    triangle(-4, 0, -4, -38, -24, 0);
+
+    // Wings
+    fill('#BDC3C7');
+    triangle(0, 4, 10, 24, 36, -16);
+    triangle(0, 4, -10, 24, -36, -16);
+
+    // Rear fin
+    fill('#95A5A6');
+    beginShape();
+    vertex(0, 0);
+    vertex(30, 16);
+    vertex(30, 26);
+    vertex(-30, 26);
+    vertex(-30, 16);
+    endShape(CLOSE);
+
+    // Canopy
+    fill(this.color);
+    ellipse(0, 4, 15, 17);
+
+    pop();
+};
+
 MODEL.sqParticle = function() {
     push();
     translate(this.pos.x, this.pos.y);
@@ -110,6 +154,77 @@ AI.bomber = function() {
     this.pos.x += this.goLeft ? this.speed : -this.speed;
     if (random() < 0.005) this.goLeft = !this.goLeft;
     if (random() < 0.008) this.fire();
+};
+
+AI.boss1 = function() {
+    if (this.state === 'nav') {
+        this.pos.y += this.speed;
+        pl.pos.y = lerp(pl.pos.y, 3 * height/4, 0.05);
+        if (this.pos.y >= height/8) {
+            this.pos.y = height/8;
+            this.state = 'sideways';
+            this.goLeft = random() < 0.5;
+            this.timeLeft = 720;
+        }
+    } else if (this.state === 'sideways') {
+        this.speed = lerp(this.speed, 3, 0.05);
+        this.pos.x += this.goLeft ? this.speed : -this.speed;
+
+        // Lightning wall
+        if (pl.pos.y - pl.r < height/4) pl.pos.y = height/4 + pl.r;
+        noFill();
+        stroke('#F9B32F');
+        strokeWeight(4);
+        beginShape();
+        for (let i = 0; i < 21; i++) {
+            vertex(width/20 * i, height/4 + random(-10, 10));
+        }
+        endShape();
+        strokeWeight(1);
+        
+        // Destroy player bullets
+        for (let i = 0; i < bullets.length; i++) {
+            let b = bullets[i];
+            if (b.fromPlayer && b.pos.y < height/4) b.dead = true;
+        }
+
+        this.fire();
+
+        if (this.timeLeft > 0) {
+            this.timeLeft--;
+        } else {
+            this.state = 'wait';
+            this.timeLeft = 120;
+        }
+    } else if (this.state === 'wait') {
+        this.pos.x = lerp(this.pos.x, width/2, 0.05);
+        if (this.timeLeft > 0) {
+            this.timeLeft--;
+        } else {
+            this.state = 'center';
+        }
+    } else if (this.state === 'center') {
+        this.pos.y += this.speed;
+        if (this.pos.y >= height/2) {
+            this.pos.y = height/2;
+            this.state = 'spiral';
+            this.fireCool = 10;
+            this.a = random(TWO_PI);
+            this.timeLeft = 60;
+        }
+    } else if (this.state === 'spiral') {
+        this.fire();
+    } else if (this.state === 'up') {
+        this.pos.y -= this.speed;
+        pl.pos.y = lerp(pl.pos.y, 3 * height/4, 0.05);
+        if (this.pos.y <= height/8) {
+            this.pos.y = height/8;
+            this.state = 'sideways';
+            this.goLeft = random() < 0.5;
+            this.timeLeft = 720;
+            this.fireCool = 35;
+        }
+    }
 };
 
 AI.player = function() {
@@ -157,7 +272,8 @@ BULLET.basic = {
 
 BULLET.bomb = {
     // Display
-    model: MODEL.bombBullet,
+    color: '#E67E22',
+    model: MODEL.eggBullet,
     // Physics
     r: 6,
     // Methods
@@ -186,6 +302,44 @@ BULLET.bomb = {
     }
 };
 
+BULLET.ricochet = {
+    // Display
+    color: '#2ECC71',
+    model: MODEL.basicBullet,
+    // Physics
+    r: 8,
+    // Methods
+    borders: function() {
+        if (this.bounces < 0) {
+            this.dead = true;
+            return;
+        }
+        if (this.pos.x - this.r < 0) {
+            this.pos.x = this.r;
+            this.vel.x *= -1;
+            this.bounces--;
+        }
+        if (this.pos.x + this.r > width) {
+            this.pos.x = width - this.r;
+            this.vel.x *= -1;
+            this.bounces--;
+        }
+        if (this.pos.y - this.r < 0) {
+            this.pos.y = this.r;
+            this.vel.y *= -1;
+            this.bounces--;
+        }
+        if (this.pos.y + this.r > height) {
+            this.pos.y = height - this.r;
+            this.vel.y *= -1;
+            this.bounces--;
+        }
+    },
+    init: function() {
+        this.bounces = 1;
+    }
+}
+
 BULLET.small = {
     // Display
     model: MODEL.basicBullet,
@@ -203,6 +357,28 @@ WEAPON.basic = function() {
 
 WEAPON.bomb = function() {
     bullets.push(new Bullet(this.pos.x, this.pos.y, 0, 0, BULLET.bomb, this.isPlayer));
+};
+
+WEAPON.boss1 = function() {
+    if (this.state === 'sideways') {
+        let angs = [PI/4, PI/2, 3*PI/4];
+        for (let i = 0; i < angs.length; i++) {
+            bullets.push(new Bullet(this.pos.x, this.pos.y, angs[i], 5, BULLET.ricochet));
+        }
+    } else if (this.state === 'spiral') {
+        for (let i = 0; i < 4; i++) {
+            a = this.a + PI/2 * i;
+            for (let j = 0; j < 3; j++) {
+                bullets.push(new Bullet(this.pos.x, this.pos.y, a + PI/12 * j, 5, BULLET.basic));
+            }
+        }
+        this.a += radians(10);
+        if (this.timeLeft > 0) {
+            this.timeLeft--;
+        } else {
+            this.state = 'up';
+        }
+    }
 };
 
 WEAPON.shotgun = function() {
@@ -282,7 +458,36 @@ SHIP.bomber = {
     }
 };
 
-SHIP.boss1 = {};
+SHIP.boss1 = {
+    // AI
+    ai: AI.boss1,
+    // Display
+    color: '#009B90',
+    model: MODEL.boss1,
+    // Physics
+    r: 24,
+    // Stats
+    fireCool: 35,
+    hp: 40,
+    points: 2000,
+    speed: 1,
+    weapon: WEAPON.boss1,
+    // Methods
+    borders() {
+        let r = this.r * 2;
+        if (this.pos.x - r < 0) {
+            this.pos.x = r;
+            this.goLeft = true;
+        }
+        if (this.pos.x + r > width) {
+            this.pos.x = width - r;
+            this.goLeft = false;
+        }
+    },
+    init: function() {
+        this.state = 'nav';
+    }
+};
 
 SHIP.player = {
     // AI
@@ -296,7 +501,7 @@ SHIP.player = {
     r: 8,
     // Stats
     fireCool: 8,
-    hp: 2,
+    hp: 5,
     speed: 4,
     weapon: WEAPON.smallBasic,
     // Methods
