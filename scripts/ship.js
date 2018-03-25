@@ -27,7 +27,7 @@ class Ship extends Entity {
 
     // Call all necessary methods each frame
     act() {
-        this.ai();
+        if (!paused && (sTime === 0 || frameCount % 2)) this.ai();
         super.act();
     }
 
