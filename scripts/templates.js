@@ -475,7 +475,7 @@ SHIP.boss1 = {
     r: 24,
     // Stats
     fireCool: 35,
-    hp: 5,
+    hp: 40,
     points: 2000,
     speed: 1,
     weapon: WEAPON.boss1,
@@ -508,7 +508,7 @@ SHIP.player = {
     r: 8,
     // Stats
     fireCool: 8,
-    hp: 50,
+    hp: 5,
     speed: 4,
     weapon: WEAPON.smallBasic,
     // Methods
