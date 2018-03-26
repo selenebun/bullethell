@@ -6,8 +6,8 @@ const LEVEL = [
         enemyWeight: [0.8, 0.2],
         powerup: [],
         powerupWeight: [],
-        spawnCoolMin: 60,
-        spawnCoolMax: 120,
-        spawnCount: 41
+        spawnCoolMin: 30,
+        spawnCoolMax: 100,
+        spawnCount: 61
     }
 ];

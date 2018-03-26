@@ -16,9 +16,9 @@ let toSpawn;
 let bombs = 2;
 let bTime = 0;
 let bDuration = 20;
-let slowdowns = 2;
+let slowdowns = 4;
 let sTime = 0;
-let sDuration = 60;
+let sDuration = 80;
 
 let ceiling = -50;
 
@@ -55,7 +55,9 @@ function loadLevel() {
     toSpawn = curLevel.spawnCount;
     resetEntities();
     score = 0;
+    bombs = 2;
     bTime = 0;
+    slowdowns = 4;
     sTime = 0;
 }
 

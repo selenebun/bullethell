@@ -425,7 +425,7 @@ SHIP.basic = {
     // Display
     model: MODEL.basicShip,
     // Physics
-    r: 12,
+    r: 14,
     // Stats
     points: 100,
     weapon: WEAPON.basic,
@@ -441,7 +441,7 @@ SHIP.bomber = {
     color: '#009C41',
     model: MODEL.bomber,
     // Physics
-    r: 12,
+    r: 14,
     // Stats
     hp: 1,
     points: 300,
@@ -462,6 +462,12 @@ SHIP.bomber = {
     init: function() {
         this.speed = random(1, 3);
         this.goLeft = random() < 0.5;
+    },
+    onDeath: function() {
+        let a = random(TWO_PI);
+        for (let i = 0; i < 6; i++) {
+            bullets.push(new Bullet(this.pos.x, this.pos.y, a + PI/3*i, 5, BULLET.basic));
+        }
     }
 };
 
@@ -472,7 +478,7 @@ SHIP.boss1 = {
     color: '#009B90',
     model: MODEL.boss1,
     // Physics
-    r: 24,
+    r: 28,
     // Stats
     fireCool: 35,
     hp: 40,
@@ -508,8 +514,8 @@ SHIP.player = {
     r: 8,
     // Stats
     fireCool: 8,
-    hp: 5,
-    speed: 4,
+    hp: 7,
+    speed: 5,
     weapon: WEAPON.smallBasic,
     // Methods
     borders: function() {
