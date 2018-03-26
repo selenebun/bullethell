@@ -373,13 +373,13 @@ WEAPON.boss1 = function() {
             bullets.push(new Bullet(this.pos.x, this.pos.y, angs[i], 5, BULLET.ricochet));
         }
     } else if (this.state === 'spiral') {
-        for (let i = 0; i < 4; i++) {
-            a = this.a + PI/2 * i;
+        for (let i = 0; i < 6; i++) {
+            a = this.a + PI/3 * i;
             for (let j = 0; j < 3; j++) {
                 bullets.push(new Bullet(this.pos.x, this.pos.y, a + PI/12 * j, 5, BULLET.basic));
             }
         }
-        this.a += radians(10);
+        this.a += radians(8);
         if (this.timeLeft > 0) {
             this.timeLeft--;
         } else {
