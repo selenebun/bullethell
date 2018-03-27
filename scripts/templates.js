@@ -490,7 +490,7 @@ SHIP.boss1 = {
     speed: 1,
     weapon: WEAPON.boss1,
     // Methods
-    borders() {
+    borders: function() {
         let r = this.r * 2;
         if (this.pos.x - r < 0) {
             this.pos.x = r;
@@ -503,6 +503,11 @@ SHIP.boss1 = {
     },
     init: function() {
         this.state = 'nav';
+    },
+    onDeath: function() {
+        bossActive = false;
+        bullets = [];
+        ps.push(new ParticleSystem(this.pos.x, this.pos.y, PS.confetti));
     }
 };
 
@@ -543,6 +548,31 @@ SHIP.player = {
 
 // Particles
 
+PARTICLE.confetti = {
+    // Display
+    model: MODEL.sqParticle,
+    // Methods
+    init: function() {
+        // Display
+        this.color = [random(255), random(255), random(255)];
+
+        // Misc
+        this.decay = random(2, 4);
+
+        // Physics
+        this.angle = random(TWO_PI);
+        this.angVel = random(-2, 2);
+        this.r = random(3, 6);
+    },
+    update: function() {
+        this.vel.add(0, 0.1);
+        this.pos.add(this.vel);
+        this.age++;
+        this.angle += this.angVel;
+        if (this.lifespan > 0) this.lifespan -= this.decay;
+    }
+};
+
 PARTICLE.fire = {
     // Display
     model: MODEL.sqParticle,
@@ -567,5 +597,11 @@ PARTICLE.fire = {
 PS.basicExplosion = {
     num: 32,
     pTemp: PARTICLE.fire,
+    speed: 3
+};
+
+PS.confetti = {
+    num: 256,
+    pTemp: PARTICLE.confetti,
     speed: 3
 };

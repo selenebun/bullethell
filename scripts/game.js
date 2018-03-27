@@ -9,6 +9,7 @@ let bg = 0;
 let level = 0;
 let score;
 
+let bossActive = false;
 let curLevel;
 let spawnCooldown = 60;
 let toSpawn;
@@ -39,6 +40,20 @@ function bomb() {
     }
 }
 
+// Display a health bar for an entity
+function healthBar(e) {
+    let h = e.hp / e.maxHp;
+    if (h === 0) return;
+    
+    let c = color('#D73C2C');
+    c.setAlpha(191);
+    fill(c);
+    noStroke();
+    rectMode(CENTER);
+    rect(width/2 - 0.5, 10, h * (width - 200), 10);
+    rectMode(RADIUS);
+}
+
 // Calculate current and average FPS and update sidebar
 function calcFPS() {
     let fps = frameRate();
@@ -50,6 +65,7 @@ function calcFPS() {
 
 // Load current level
 function loadLevel() {
+    bossActive = false;
     curLevel = LEVEL[level];
     bg = curLevel.bg;
     toSpawn = curLevel.spawnCount;
@@ -89,6 +105,7 @@ function spawnEnemy() {
         enemies.push(new Ship(random(width), ceiling, SHIP[type]));
     } else {
         enemies.push(new Ship(width/2, ceiling, SHIP[curLevel.boss]));
+        bossActive = true;
     }
 }
 
@@ -134,6 +151,9 @@ function draw() {
     pl.collideShips();
     mainLoop(ps);
     if (pl.dead) pl.onDeath();
+
+    // Draw boss health bar
+    if (bossActive && enemies.length > 0) healthBar(enemies[0]);
 
     // Update cooldowns
     if (!paused && bTime > 0) bTime--;
