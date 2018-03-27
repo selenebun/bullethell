@@ -208,14 +208,20 @@ AI.boss1 = function() {
         if (this.pos.y >= height/2) {
             this.pos.y = height/2;
             this.state = 'spiral';
-            this.fireCool = 10;
+            this.fireCool = 40;
             this.a = random(TWO_PI);
-            this.timeLeft = 60;
+            this.timeLeft = 1200;
         }
     } else if (this.state === 'spiral') {
         this.fire();
+        
+        if (this.timeLeft > 0) {
+            this.timeLeft--;
+        } else {
+            this.state = 'up';
+        }
     } else if (this.state === 'up') {
-        this.pos.y -= this.speed;
+        this.pos.y -= this.speed/4;
         if (this.pos.y <= height/8) {
             this.pos.y = height/8;
             this.state = 'clear';
@@ -372,19 +378,17 @@ WEAPON.boss1 = function() {
         for (let i = 0; i < angs.length; i++) {
             bullets.push(new Bullet(this.pos.x, this.pos.y, angs[i], 5, BULLET.ricochet));
         }
+
+        if (random() < 0.15) bullets.push(new Bullet(this.pos.x, this.pos.y, 0, 0, BULLET.bomb));
     } else if (this.state === 'spiral') {
         for (let i = 0; i < 6; i++) {
             a = this.a + PI/3 * i;
+            bullets.push(new Bullet(this.pos.x - 200, this.pos.y, a, 1, BULLET.basic));
             for (let j = 0; j < 3; j++) {
-                bullets.push(new Bullet(this.pos.x, this.pos.y, a + PI/12 * j, 5, BULLET.basic));
+                bullets.push(new Bullet(this.pos.x + 200, this.pos.y, -a + PI/12 * j, 2, BULLET.basic));
             }
         }
-        this.a += radians(8);
-        if (this.timeLeft > 0) {
-            this.timeLeft--;
-        } else {
-            this.state = 'up';
-        }
+        this.a += radians(10);
     }
 };
 
@@ -481,7 +485,7 @@ SHIP.boss1 = {
     r: 28,
     // Stats
     fireCool: 35,
-    hp: 40,
+    hp: 280,
     points: 2000,
     speed: 1,
     weapon: WEAPON.boss1,
