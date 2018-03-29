@@ -208,7 +208,7 @@ AI.boss1 = function() {
         if (this.pos.y >= height/2) {
             this.pos.y = height/2;
             this.state = 'spiral';
-            this.fireCool = 40;
+            this.fireCool = 60;
             this.a = random(TWO_PI);
             this.timeLeft = 1200;
         }
@@ -383,9 +383,9 @@ WEAPON.boss1 = function() {
     } else if (this.state === 'spiral') {
         for (let i = 0; i < 6; i++) {
             a = this.a + PI/3 * i;
-            bullets.push(new Bullet(this.pos.x - 200, this.pos.y, a, 1, BULLET.basic));
+            bullets.push(new Bullet(this.pos.x - 200, this.pos.y, a, 2, BULLET.basic));
             for (let j = 0; j < 3; j++) {
-                bullets.push(new Bullet(this.pos.x + 200, this.pos.y, -a + PI/12 * j, 2, BULLET.basic));
+                bullets.push(new Bullet(this.pos.x + 200, this.pos.y, -a + PI/12 * j, 1, BULLET.basic));
             }
         }
         this.a += radians(10);
@@ -520,7 +520,7 @@ SHIP.player = {
     // Misc
     isPlayer: true,
     // Physics
-    r: 8,
+    r: 6,
     // Stats
     fireCool: 8,
     hp: 7,
