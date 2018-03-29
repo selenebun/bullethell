@@ -565,7 +565,7 @@ PARTICLE.confetti = {
         this.r = random(3, 6);
     },
     update: function() {
-        this.vel.add(0, 0.1);
+        this.vel.add(0, 0.01);
         this.pos.add(this.vel);
         this.age++;
         this.angle += this.angVel;
