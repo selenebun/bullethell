@@ -146,14 +146,14 @@ MODEL.sqParticle = function() {
 
 AI.basicEnemy = function() {
     this.pos.y += this.speed;
-    if (random() < 0.03) this.fire();
+    if (random() < 0.02) this.fire();
 };
 
 AI.bomber = function() {
     this.pos.y += this.speed/4;
     this.pos.x += this.goLeft ? this.speed : -this.speed;
     if (random() < 0.005) this.goLeft = !this.goLeft;
-    if (random() < 0.008) this.fire();
+    if (random() < 0.007) this.fire();
 };
 
 AI.boss1 = function() {
