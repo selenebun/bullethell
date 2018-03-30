@@ -2,6 +2,14 @@
 let avgFPS = 0;
 let numFPS = 0;
 
+// Entities
+let boss;
+let bullets = [];
+let enemies;
+let items;
+let pl;
+let ps;
+
 // Game state
 let debugMode = false;
 let level = 0;
@@ -17,6 +25,12 @@ function calculateFPS() {
         document.getElementById('fps').innerHTML = 'FPS: ' + round(f);
         document.getElementById('avgfps').innerHTML = 'Avg. FPS: ' + avgFPS.toFixed(1);
     }
+}
+
+// Return whether game is not paused or slowed down that tick
+// TODO account for slowdown
+function isRunning() {
+    return !this.paused;
 }
 
 // Update game status on sidebar
@@ -42,13 +56,19 @@ function setup() {
     // Configure p5.js
     angleMode(DEGREES);
     ellipseMode(RADIUS);
+
+    bullets.push(new Bullet(width/2, height/2, -90, 3, false));
 }
 
 // TODO vary background
 function draw() {
     background(0);
 
+    // Update game status display
     status();
+
+    // Update and draw entities
+    loopOver(bullets);
 }
 
 function keyPressed() {
