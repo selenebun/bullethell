@@ -1,8 +1,8 @@
 class Entity {
     constructor(x, y) {
         // Display
-        this.model = null;
-
+        this.color = '#ECF0F1';
+        
         // Map boundaries
         this.mapBottom = height;
         this.mapLeft = 0;
@@ -16,6 +16,7 @@ class Entity {
 
         // Physics
         this.pos = createVector(x, y);
+        this.vel = createVector();
         this.r = 0;
     }
 
@@ -63,6 +64,9 @@ class Entity {
     // Any dynamic initialization to do
     init() {}
 
+    // Drawing function
+    model() {}
+
     // Events
     onDeath() {}
     onHitBottom() {}
@@ -79,5 +83,7 @@ class Entity {
     }
 
     // Update physics
-    update() {}
+    update() {
+        this.pos.add(this.vel);
+    }
 }

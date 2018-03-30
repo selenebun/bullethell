@@ -5,7 +5,7 @@ MODEL.ship = {};
 
 // Bullet models
 
-MODEL.bullet.basic = function() {
+MODEL.bullet.basic = function(isPlayer) {
     fill(this.color);
     noStroke();
     ellipse(this.pos.x, this.pos.y, this.r, this.r);
@@ -14,9 +14,10 @@ MODEL.bullet.basic = function() {
 
 // Ship models
 
-MODEL.ship.basic = function() {
+MODEL.ship.basic = function(isPlayer) {
     push();
     translate(this.pos.x, this.pos.y);
+    if (!isPlayer) rotate(180);
 
     // Exhaust
     fill('#E74C3C');

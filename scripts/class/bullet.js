@@ -1,10 +1,12 @@
 class Bullet extends Entity {
-    constructor(x, y, angle, speed, fromPlayer, relativeTo) {
+    constructor(x, y, angle, speed, fromPlayer) {
         super(x, y);
+
+        // Display
+        this.model = MODEL.bullet.basic;
 
         // Misc
         this.fromPlayer = Boolean(fromPlayer);
-        this.relativeTo = relativeTo;
         this.maxAge = -1;
         this.type = 'bullet';
 
@@ -18,17 +20,16 @@ class Bullet extends Entity {
     }
 
     // All operations to do per tick
-    // TODO enable collision detection
     act() {
         super.act();
-        //if (isRunning()) this.collideShips();
+        if (isRunning()) this.collideShips();
     }
 
     // Check for collision with player or enemy ships
     collideShips() {
         if (this.fromPlayer) {
             // Try to hit boss first
-            if (this.tryHit(boss)) return;
+            if (boss && boss.dead && this.tryHit(boss)) return;
 
             // If that fails, try to hit enemies
             for (let i = 0; i < enemies.length; i++) {
@@ -40,12 +41,18 @@ class Bullet extends Entity {
         }
     }
 
+    // Update all cooldowns
+    cooldown() {
+        super.cooldown();
+        if (this.maxAge !== -1 && this.age >= this.maxAge) {
+            this.dead = true;
+            this.onOldAge();
+        }
+    }
+
     // Display on the canvas
-    // TODO use model
-    // TODO use relative coordinates
     display() {
-        fill(255);
-        ellipse(this.pos.x, this.pos.y, this.r, this.r);
+        this.model();
         
         // Display hitbox
         if (debugMode) {
