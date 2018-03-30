@@ -520,7 +520,7 @@ SHIP.player = {
     // Misc
     isPlayer: true,
     // Physics
-    r: 6,
+    r: 8,
     // Stats
     fireCool: 8,
     hp: 7,
