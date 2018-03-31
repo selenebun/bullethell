@@ -91,7 +91,7 @@ class Player extends Ship {
 
     // Events
     onDeath() {
-        loadLevel();
+        reloadLevel();
     }
     onHitBottom() {
         this.pos.y = this.mapBottom - this.r * this.edgeRadius;

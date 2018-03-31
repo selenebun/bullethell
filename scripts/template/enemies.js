@@ -28,7 +28,7 @@ ENEMY.bomber = {
     hp: 1,
     maxSpeed: 3,
     minSpeed: 1,
-    points: 300,
+    points: 200,
     // Methods
     ai: function() {
         if (random() < 0.005) this.vel.x *= -1;
@@ -52,6 +52,6 @@ ENEMY.bomber = {
     },
     onKilled: function() {
         emitBullets(this.pos.x, this.pos.y, random(360), [0, 60, 120, 180, 240, 300], 5, 5, BULLET.basic);
-        ps.push(new ParticleSystem(this.pos.x, this.pos.y, PS.explosion));
+        ps.push(new ParticleSystem(this.pos.x, this.pos.y, PS.bigExplosion));
     }
 };

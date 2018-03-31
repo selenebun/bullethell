@@ -37,6 +37,14 @@ PARTICLE.fire = {
 
 // Particle systems
 
+PS.bigExplosion = {
+    // Misc
+    num: 64,
+    particleTemplate: PARTICLE.fire,
+    // Physcis
+    maxSpeed: 5
+};
+
 PS.confetti = {
     // Misc
     num: 256,

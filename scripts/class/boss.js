@@ -19,7 +19,7 @@ class Boss extends Ship {
         this.r = 28;
 
         // Stats
-        this.points = 2000;
+        this.points = 1000;
     }
 
     // All operations to do per tick
@@ -70,10 +70,10 @@ class Boss extends Ship {
     }
 
     // Events
-    // TODO next level
     onKilled() {
         pl.score += this.points;
         bullets = [];
+        loadLevel();
         ps.push(new ParticleSystem(this.pos.x, this.pos.y, PS.confetti));
     }
 

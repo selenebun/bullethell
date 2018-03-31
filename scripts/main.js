@@ -2,8 +2,11 @@
 const BG_COLOR = 0;
 const BOMB_COUNT = 2;
 const BOMB_FLASH_DURATION = 4;
+const BOMBS_PER_LEVEL = 1;
+const BOSS_GRACE_PERIOD = 60;
 const BOSS_SPAWN_DELAY = 300;
 const INVULN_TIME = 20;
+const MAP_HEIGHT = 650;
 const NUM_STARS = 300;
 const PLAYER_FIRE_RATE = 8;
 const PLAYER_HP = 7;
@@ -15,8 +18,6 @@ const SLOWDOWN_DURATION = 80;
 const SLOWDOWN_FRAME_SKIP = 2;
 const SLOWDOWN_WAIT_NEXT = 900;
 const SPAWN_GRACE_PERIOD = 60;
-const SPAWN_X = 300;
-const SPAWN_Y = 487;
 const UI_PANEL_HEIGHT = 100;
 const WORLD_CEILING = -50;
 
@@ -121,8 +122,24 @@ function isRunning() {
     return !paused && (slowTime === 0 || frameCount % SLOWDOWN_FRAME_SKIP);
 }
 
-// Load current level
+// Load a level
 function loadLevel() {
+    if (LEVEL[level + 1]) {
+        level++;
+        curLevel = LEVEL[level];
+        toSpawn = curLevel.spawnCount;
+        toSpawnBoss = true;
+
+        // Reset cooldowns
+        spawnTime = BOSS_GRACE_PERIOD;
+
+        // Reset powerups
+        bombs += BOMBS_PER_LEVEL;
+    }
+}
+
+// Respawn everything for current level
+function reloadLevel() {
     curLevel = LEVEL[level];
     toSpawn = curLevel.spawnCount;
     toSpawnBoss = true;
@@ -161,7 +178,7 @@ function spawnEnemy() {
 
 // Spawn the player at the correct coords
 function spawnPlayer() {
-    pl = new Player(SPAWN_X, SPAWN_Y);
+    pl = new Player(width/2, MAP_HEIGHT * 3/4);
     pl.init();
 }
 
@@ -256,7 +273,7 @@ function useSlowdown() {
 /* Main p5.js functions */
 
 function setup() {
-    let c = createCanvas(600, 650 + UI_PANEL_HEIGHT);
+    let c = createCanvas(600, MAP_HEIGHT + UI_PANEL_HEIGHT);
     c.parent('game');
 
     // Configure p5.js
@@ -267,7 +284,7 @@ function setup() {
     starfield = new Starfield(NUM_STARS);
 
     // Begin level
-    loadLevel();
+    reloadLevel();
 }
 
 function draw() {
@@ -320,7 +337,7 @@ function draw() {
 function keyPressed() {
     // Skip to boss fight
     if (key === 'B') {
-        clearEntities();
+        enemies = [];
         toSpawn = 0;
         spawnTime = SPAWN_GRACE_PERIOD;
     }

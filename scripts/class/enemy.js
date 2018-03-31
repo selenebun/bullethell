@@ -11,7 +11,7 @@ class Enemy extends Ship {
         // Stats
         this.maxSpeed = 3;
         this.minSpeed = 3;
-        this.points = 100;
+        this.points = 50;
     }
 
     // All operations to do per tick

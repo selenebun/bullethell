@@ -8,13 +8,13 @@ BOSS.boss0 = {
             nextStage: 'ricochet',
             ai: function(b) {
                 // Force player back
-                if (pl.pos.y < height * 3/4) {
-                    pl.pos.y = lerp(pl.pos.y, height * 3/4, 0.05);
+                if (pl.pos.y < MAP_HEIGHT * 3/4) {
+                    pl.pos.y = lerp(pl.pos.y, MAP_HEIGHT * 3/4, 0.05);
                 }
 
                 // Move to next stage once positioned correctly
-                if (b.pos.y >= height/8) {
-                    b.pos.y = height/8;
+                if (b.pos.y >= MAP_HEIGHT/8) {
+                    b.pos.y = MAP_HEIGHT/8;
                     b.vel.y = 0;
                     b.switchStage();
                 }
@@ -37,7 +37,7 @@ BOSS.boss0 = {
                 strokeWeight(4);
                 beginShape();
                 for (let i = 0; i < 21; i++) {
-                    vertex(width/20 * i, height/4 + random(-10, 10));
+                    vertex(width/20 * i, MAP_HEIGHT/4 + random(-10, 10));
                 }
                 endShape();
                 strokeWeight(1);
@@ -45,7 +45,7 @@ BOSS.boss0 = {
                 // Destroy player's bullets that go above wall
                 for (let i = 0; i < bullets.length; i++) {
                     let e = bullets[i];
-                    if (e.fromPlayer) e.mapTop = height/4;
+                    if (e.fromPlayer) e.mapTop = MAP_HEIGHT/4;
                 }
 
                 // Fire ricochet bullets
@@ -61,7 +61,7 @@ BOSS.boss0 = {
             init: function(b) {
                 b.fireRate = 35;
                 b.vel = createVector(randSign(), 0);
-                pl.mapTop = height/4;
+                pl.mapTop = MAP_HEIGHT/4;
             }
         },
         wait: {
@@ -74,8 +74,8 @@ BOSS.boss0 = {
         center: {
             nextStage: 'spiral',
             ai: function(b) {
-                if (b.pos.y >= height/2) {
-                    b.pos.y = height/2;
+                if (b.pos.y >= MAP_HEIGHT/2) {
+                    b.pos.y = MAP_HEIGHT/2;
                     b.vel.y = 0;
                     b.switchStage();
                 }
@@ -141,8 +141,8 @@ BOSS.boss0 = {
         up: {
             nextStage: 'clear',
             ai: function(b) {
-                if (b.pos.y <= height/8) {
-                    b.pos.y = height/8;
+                if (b.pos.y <= MAP_HEIGHT/8) {
+                    b.pos.y = MAP_HEIGHT/8;
                     b.vel.y = 0;
                     b.switchStage();
                 }
@@ -156,8 +156,8 @@ BOSS.boss0 = {
             timeLimit: 60,
             ai: function(b) {
                 // Force player back
-                if (pl.pos.y < height * 3/4) {
-                    pl.pos.y = lerp(pl.pos.y, height * 3/4, 0.05);
+                if (pl.pos.y < MAP_HEIGHT * 3/4) {
+                    pl.pos.y = lerp(pl.pos.y, MAP_HEIGHT * 3/4, 0.05);
                 }
             }
         }
@@ -166,7 +166,7 @@ BOSS.boss0 = {
     color: '#009B90',
     model: MODEL.ship.boss0,
     // Stats
-    hp: 280,
+    hp: 360,
     points: 2000,
     // Methods
     onHitLeft: function() {

@@ -8,5 +8,5 @@ LEVEL[0] = {
     itemWeight: [],
     spawnCount: 80,
     spawnTimeMax: 80,
-    spawnTimeMin: 10
+    spawnTimeMin: 20
 };
