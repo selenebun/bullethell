@@ -58,11 +58,6 @@ class Ship extends Entity {
         this.attack();
     }
 
-    // Pretty print HP and max HP
-    hpStr() {
-        return '' + (this.hp + 1) + '/' + (this.maxHp + 1);
-    }
-
     // Any dynamic initializations that need to be done
     init() {
         this.maxHp = this.hp;

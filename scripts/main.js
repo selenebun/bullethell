@@ -57,6 +57,18 @@ let toSpawnBoss;
 let bombs;
 
 
+// Display a health bar for a boss
+function bossHealthBar() {
+    let h = boss.hp / boss.maxHp;
+    if (h === 0) return;
+
+    let c = color(215, 60, 44, 191);
+    fill(c);
+    noStroke();
+    rectMode(CENTER);
+    rect(width/2 - 0.5, 10, h * (width - 200), 10);
+}
+
 // Calculate FPS and update sidebar
 function calculateFPS() {
     let f = frameRate();
@@ -88,17 +100,20 @@ function cooldown() {
     }
 }
 
-// Display a health bar for a boss
-function healthBar(e) {
-    let h = e.hp / e.maxHp;
-    if (e === 0) return;
+// Draw bomb
+function drawBomb(x, y) {
+    fill('#005C01');
+    stroke(0);
+    rectMode(CORNER);
+    rect(x, y, 20, 20);
+}
 
-    let c = color('#D73C2C');
-    c.setAlpha(191);
-    fill(c);
-    noStroke();
-    rectMode(CENTER);
-    rect(width/2 - 0.5, 10, h * (width - 200), 10);
+// Draw heart
+function drawHeart(x, y, empty) {
+    fill(empty ? 0 : '#D73C2C');
+    stroke(0);
+    rectMode(CORNER);
+    rect(x, y, 20, 20);
 }
 
 // Return whether game is not paused or slowed down that tick
@@ -125,36 +140,6 @@ function loadLevel() {
     // Reset powerups
     bombs = BOMB_COUNT;
     slowdownReady = true;
-}
-
-// Draw indicator of slowdown recharge status
-function slowdownIndicator() {
-    push();
-    translate(width - 50, height - 50);
-    rotate(180);
-
-    let loadPercent = (SLOWDOWN_WAIT_NEXT - nextSlowdownTime) / SLOWDOWN_WAIT_NEXT;
-    let angle = 360 * loadPercent;
-    
-    // Draw blue/green portion
-    if (angle > 0) {
-        if (angle === 360) {
-            fill(55, 219, 208, SLOWDOWN_ALPHA_FULL);
-        } else {
-            fill(55, 219, 208, SLOWDOWN_ALPHA);
-        }
-        stroke(0);
-        arc(0, 0, 40, 40, 90, 90 + angle);
-    }
-
-    // Draw red portion
-    if (angle < 360) {
-        fill(231, 76, 60, SLOWDOWN_ALPHA);
-        stroke(0);
-        arc(0, 0, 40, 40, 90 + angle, 90);
-    }
-
-    pop();
 }
 
 // Spawn a boss
@@ -189,6 +174,21 @@ function status() {
     calculateFPS();
 }
 
+// Draw player bombs
+function uiBombs() {
+    for (let i = 0; i < bombs; i++) {
+        drawBomb(20 + 30*i, height - UI_PANEL_HEIGHT + 60);
+    }
+}
+
+// Draw player health
+function uiHealth() {
+    let empty = pl.maxHp - (pl.hp - 1);
+    for (let i = pl.maxHp; i >= 0; i--) {
+        drawHeart(20 + 30*i, height - UI_PANEL_HEIGHT + 20, --empty > 0);
+    }
+}
+
 // Draw the UI panel
 function uiPanel() {
     // Draw grey rectangle
@@ -197,11 +197,40 @@ function uiPanel() {
     rectMode(CORNER);
     rect(0, height - UI_PANEL_HEIGHT, width, UI_PANEL_HEIGHT);
 
-    // Draw slowdown cooldown indicator
-    slowdownIndicator();
+    // Draw all UI panel elements
+    uiBombs();
+    uiHealth();
+    uiSlowdown();
+}
 
-    document.getElementById('hp').innerHTML = 'HP: ' + pl.hpStr();
-    document.getElementById('bombs').innerHTML = 'Bombs: ' + bombs;
+// Draw indicator of slowdown recharge status
+function uiSlowdown() {
+    push();
+    translate(width - 50, height - 50);
+    rotate(180);
+
+    let loadPercent = (SLOWDOWN_WAIT_NEXT - nextSlowdownTime) / SLOWDOWN_WAIT_NEXT;
+    let angle = 360 * loadPercent;
+    
+    // Draw blue/green portion
+    if (angle > 0) {
+        if (angle === 360) {
+            fill(55, 219, 208, SLOWDOWN_ALPHA_FULL);
+        } else {
+            fill(55, 219, 208, SLOWDOWN_ALPHA);
+        }
+        stroke(0);
+        arc(0, 0, 40, 40, 90, 90 + angle);
+    }
+
+    // Draw red portion
+    if (angle < 360) {
+        fill(231, 76, 60, SLOWDOWN_ALPHA);
+        stroke(0);
+        arc(0, 0, 40, 40, 90 + angle, 90);
+    }
+
+    pop();
 }
 
 // Use a bomb powerup
@@ -276,7 +305,7 @@ function draw() {
     uiPanel();
 
     // Draw boss health bar
-    if (boss) healthBar(boss);
+    if (boss) bossHealthBar();
 
     // Check for boss death
     if (boss && boss.dead) {

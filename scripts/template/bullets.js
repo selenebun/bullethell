@@ -14,6 +14,9 @@ BULLET.bomb = {
         this.dead = true;
         emitBullets(this.pos.x, this.pos.y, 0, [-45, -90, -135], 5, 5, BULLET.basic, this.fromPlayer);
         ps.push(new ParticleSystem(this.pos.x, this.pos.y, PS.explosion));
+    },
+    onHit: function() {
+        ps.push(new ParticleSystem(this.pos.x, this.pos.y, PS.explosion));
     }
 };
 
