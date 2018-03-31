@@ -31,7 +31,7 @@ class Starfield {
             if (isRunning()) {
                 s.y += s.dy;
                 if (s.y - s.r > height) {
-                    s.r = random();
+                    s.r = random(2);
                     s.x = random(width);
                     s.y = 0;
                     s.dy = random(10);
