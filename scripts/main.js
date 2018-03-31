@@ -103,7 +103,7 @@ function cooldown() {
 
 // Draw bomb
 function drawBomb(x, y) {
-    fill('#005C01');
+    fill('#007C21');
     stroke(0);
     rectMode(CORNER);
     rect(x, y, 20, 20);
