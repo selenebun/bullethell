@@ -9,7 +9,7 @@ class Starfield {
             this.stars.push({
                 noise: 10 * i,
                 deltaNoise: random(0.03),
-                r: random(),
+                r: random(2),
                 x: random(width),
                 y: random(height),
                 dy: random(10)
