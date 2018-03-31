@@ -9,6 +9,7 @@ class Ship extends Entity {
         this.boomSize = 32;
         this.boomSpeedMax = 3;
         this.boomSpeedMin = 0;
+        this.boomType = PS.explosion;
         this.model = MODEL.ship.basic;
 
         // Map boundaries
@@ -52,6 +53,11 @@ class Ship extends Entity {
             stroke(255);
             ellipse(this.pos.x, this.pos.y, this.r, this.r);
         }
+    }
+
+    // Create explosion particle effect
+    explode() {
+        ps.push(new ParticleSystem(this.pos.x, this.pos.y, this.boomSpeedMin, this.boomSpeedMax, this.boomSize, this.boomType));
     }
 
     // Fire weapon

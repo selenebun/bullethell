@@ -14,6 +14,7 @@ class Boss extends Ship {
         // Display
         this.boomSize = 256;
         this.boomSpeedMax = 4;
+        this.boomType = PS.confetti;
 
         // Misc
         this.emitters = [];
@@ -78,7 +79,7 @@ class Boss extends Ship {
         pl.score += this.points;
         bullets = [];
         loadLevel();
-        ps.push(new ParticleSystem(this.pos.x, this.pos.y, this.boomSpeedMin, this.boomSpeedMax, this.boomSize, PS.confetti));
+        this.explode();
     }
 
     // Trigger next stage of boss fight
