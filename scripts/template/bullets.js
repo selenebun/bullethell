@@ -10,12 +10,12 @@ BULLET.bomb = {
     gravY: 0.1,
     r: 6,
     // Methods
-    onHitBottom: function() {
+    onHitBottom() {
         this.dead = true;
         emitBullets(this.pos.x, this.pos.y, 0, [-45, -90, -135], 5, 5, BULLET.basic, this.fromPlayer);
         ps.push(new ParticleSystem(this.pos.x, this.pos.y, 0, 3, 32, PS.explosion));
     },
-    onHit: function() {
+    onHit() {
         ps.push(new ParticleSystem(this.pos.x, this.pos.y, 0, 3, 32, PS.explosion));
     }
 };
@@ -26,7 +26,7 @@ BULLET.ricochet = {
     // Physics
     r: 8,
     // Methods
-    cooldown: function() {
+    cooldown() {
         this.age++;
         if (this.maxAge !== -1 && this.age >= this.maxAge) {
             this.dead = true;
@@ -34,26 +34,26 @@ BULLET.ricochet = {
         }
         if (this.bounces < 0) this.dead = true;
     },
-    init: function() {
+    init() {
         this.bounces = 1;
         this.grav = createVector(this.gravX, this.gravY);
     },
-    onHitBottom: function() {
+    onHitBottom() {
         this.pos.y = this.mapBottom - this.r * this.edgeRadius;
         this.angle = -this.angle;
         this.bounces--;
     },
-    onHitLeft: function() {
+    onHitLeft() {
         this.pos.x = this.mapLeft + this.r * this.edgeRadius;
         this.angle = 180 - this.angle;
         this.bounces--;
     },
-    onHitRight: function() {
+    onHitRight() {
         this.pos.x = this.mapRight - this.r * this.edgeRadius;
         this.angle = 180 - this.angle;
         this.bounces--;
     },
-    onHitTop: function() {
+    onHitTop() {
         this.pos.y = this.mapTop + this.r * this.edgeRadius;
         this.angle = -this.angle;
         this.bounces--;

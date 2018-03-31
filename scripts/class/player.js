@@ -89,6 +89,13 @@ class Player extends Ship {
         }
     }
 
+    // Heal HP up to max
+    heal(amt) {
+        if (typeof amt === 'undefined') amt = 1;
+        if (this.hp < this.maxHp) this.hp += amt;
+        if (this.hp > this.maxHp) this.hp = this.maxHp;
+    }
+
     // Events
     onDeath() {
         reloadLevel();

@@ -1,5 +1,6 @@
 const MODEL = {};
 MODEL.bullet = {};
+MODEL.item = {};
 MODEL.particle = {};
 MODEL.ship = {};
 
@@ -16,6 +17,16 @@ MODEL.bullet.egg = function() {
     fill(this.color);
     noStroke();
     ellipse(this.pos.x, this.pos.y, this.r, this.r * 4/3);
+};
+
+
+// Item models
+
+MODEL.item.basic = function() {
+    fill(this.color);
+    stroke(0);
+    rectMode(RADIUS);
+    rect(this.pos.x, this.pos.y, this.r, this.r);
 }
 
 

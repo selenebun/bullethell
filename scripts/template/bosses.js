@@ -6,7 +6,7 @@ BOSS.boss0 = {
     stages: {
         enter: {
             nextStage: 'ricochet',
-            ai: function(b) {
+            ai(b) {
                 // Force player back
                 if (pl.pos.y < MAP_HEIGHT * 3/4) {
                     pl.pos.y = lerp(pl.pos.y, MAP_HEIGHT * 3/4, 0.05);
@@ -19,7 +19,7 @@ BOSS.boss0 = {
                     b.switchStage();
                 }
             },
-            init: function(b) {
+            init(b) {
                 b.speed = 1;
                 b.vel = createVector(0, b.speed);
             }
@@ -27,7 +27,7 @@ BOSS.boss0 = {
         ricochet: {
             nextStage: 'wait',
             timeLimit: 720,
-            ai: function(b) {
+            ai(b) {
                 b.speed = lerp(b.speed, 3, 0.05);
                 b.vel.setMag(b.speed);
 
@@ -51,14 +51,14 @@ BOSS.boss0 = {
                 // Fire ricochet bullets
                 b.fire();
             },
-            attack: function(b) {
+            attack(b) {
                 emitBullets(b.pos.x, b.pos.y, 90, [-45, 0, 45], 5, 5, BULLET.ricochet);
             },
-            finish: function(b) {
+            finish(b) {
                 b.vel.x = 0;
                 pl.mapTop = 0;
             },
-            init: function(b) {
+            init(b) {
                 b.fireRate = 35;
                 b.vel = createVector(randSign(), 0);
                 pl.mapTop = MAP_HEIGHT/4;
@@ -67,43 +67,43 @@ BOSS.boss0 = {
         wait: {
             nextStage: 'center',
             timeLimit: 120,
-            ai: function(b) {
+            ai(b) {
                 b.pos.x = lerp(b.pos.x, width/2, 0.05);
             }
         },
         center: {
             nextStage: 'spiral',
-            ai: function(b) {
+            ai(b) {
                 if (b.pos.y >= MAP_HEIGHT/2) {
                     b.pos.y = MAP_HEIGHT/2;
                     b.vel.y = 0;
                     b.switchStage();
                 }
             },
-            init: function(b) {
+            init(b) {
                 b.vel.y = b.speed;
             }
         },
         spiral: {
-            healthLimit: 0.5,
+            healthLimit: 0.3,
             nextStage: 'up',
             timeLimit: 1200,
-            ai: function(b) {
+            ai(b) {
                 b.fire();
             },
-            attack: function(b) {
+            attack(b) {
                 for (let i = 0; i < b.emitters.length; i++) {
                     b.emitters[i].fire();
                 }
             },
-            finish: function(b) {
+            finish(b) {
                 // Kill emitters
                 for (let i = 0; i < b.emitters.length; i++) {
                     b.emitters[i].dead = true;
                 }
                 b.emitters = [];
             },
-            init: function(b) {
+            init(b) {
                 // Make cooldown 0
                 b.fireRate = 0;
                 
@@ -140,21 +140,21 @@ BOSS.boss0 = {
         },
         up: {
             nextStage: 'clear',
-            ai: function(b) {
+            ai(b) {
                 if (b.pos.y <= MAP_HEIGHT/8) {
                     b.pos.y = MAP_HEIGHT/8;
                     b.vel.y = 0;
                     b.switchStage();
                 }
             },
-            init: function(b) {
+            init(b) {
                 b.vel = createVector(0, -b.speed/4);
             }
         },
         clear: {
             nextStage: 'ricochet',
             timeLimit: 60,
-            ai: function(b) {
+            ai(b) {
                 // Force player back
                 if (pl.pos.y < MAP_HEIGHT * 3/4) {
                     pl.pos.y = lerp(pl.pos.y, MAP_HEIGHT * 3/4, 0.05);
@@ -169,11 +169,11 @@ BOSS.boss0 = {
     hp: 360,
     points: 2000,
     // Methods
-    onHitLeft: function() {
+    onHitLeft() {
         this.pos.x = this.mapLeft + this.r * this.edgeRadius;
         this.vel.x *= -1;
     },
-    onHitRight: function() {
+    onHitRight() {
         this.pos.x = this.mapRight - this.r * this.edgeRadius;
         this.vel.x *= -1;
     }

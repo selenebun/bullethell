@@ -31,6 +31,14 @@ class Enemy extends Ship {
         if (this.collide(pl)) pl.damage();
     }
 
+    // Try to drop an item
+    dropItem() {
+        if (random() < curLevel.dropChance) {
+            let type = randWeight(curLevel.item, curLevel.itemWeight);
+            items.push(new Item(this.pos.x, this.pos.y, ITEM[type]));
+        }
+    }
+
     // Any dynamic initializations to do
     init() {
         this.speed = random(this.minSpeed, this.maxSpeed);
@@ -39,6 +47,7 @@ class Enemy extends Ship {
     // Events
     onKilled() {
         pl.score += this.points;
+        this.dropItem();
         this.explode();
     }
 }

@@ -7,13 +7,13 @@ ENEMY.basic = {
     maxSpeed: 2,
     minSpeed: 0.5,
     // Methods
-    ai: function() {
+    ai() {
         if (random() < 0.02) this.fire();
     },
-    attack: function() {
+    attack() {
         emitBullets(this.pos.x, this.pos.y, 90, [0], 4, 4, BULLET.basic);
     },
-    init: function() {
+    init() {
         this.maxHp = this.hp;
         this.speed = random(this.minSpeed, this.maxSpeed);
         this.vel = createVector(0, this.speed);
@@ -32,28 +32,29 @@ ENEMY.bomber = {
     minSpeed: 1,
     points: 200,
     // Methods
-    ai: function() {
+    ai() {
         if (random() < 0.005) this.vel.x *= -1;
         if (random() < 0.007) this.fire();
     },
-    attack: function() {
+    attack() {
         emitBullets(this.pos.x, this.pos.y, -90, [0], 0, 0, BULLET.bomb);
     },
-    init: function() {
+    init() {
         this.maxHp = this.hp;
         this.speed = random(this.minSpeed, this.maxSpeed);
         this.vel = createVector(this.speed * randSign(), this.speed/4);
     },
-    onHitLeft: function() {
+    onHitLeft() {
         this.pos.x = this.mapLeft + this.r * this.edgeRadius;
         this.vel.x *= -1;
     },
-    onHitRight: function() {
+    onHitRight() {
         this.pos.x = this.mapRight - this.r * this.edgeRadius;
         this.vel.x *= -1;
     },
-    onKilled: function() {
+    onKilled() {
         emitBullets(this.pos.x, this.pos.y, random(360), [0, 60, 120, 180, 240, 300], 5, 5, BULLET.basic);
+        this.dropItem();
         this.explode();
     }
 };

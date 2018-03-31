@@ -10,7 +10,7 @@ PARTICLE.confetti = {
     // Physics
     gravY: 0.01,
     // Methods
-    init: function() {
+    init() {
         this.color = [random(255), random(255), random(255)];
         this.decay = random(this.decayMin, this.decayMax);
         this.grav = createVector(this.gravX, this.gravY);
@@ -25,7 +25,7 @@ PARTICLE.fire = {
     decayMax: 8,
     decayMin: 4,
     // Methods
-    init: function() {
+    init() {
         this.angVel = random(-90, 90);
         this.color = [random(200, 255), random(127), random(31)];
         this.decay = random(this.decayMin, this.decayMax);
