@@ -50,7 +50,7 @@ PS.confetti = {
     num: 256,
     particleTemplate: PARTICLE.confetti,
     // Physics
-    maxSpeed: 3
+    maxSpeed: 4
 };
 
 PS.explosion = {
