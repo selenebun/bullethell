@@ -332,13 +332,6 @@ function draw() {
 }
 
 function keyPressed() {
-    // Skip to boss fight
-    if (key === 'B') {
-        enemies = [];
-        toSpawn = 0;
-        spawnTime = SPAWN_GRACE_PERIOD;
-    }
-
     // Use a bomb
     if (key === 'C') useBomb();
 
