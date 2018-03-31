@@ -31,6 +31,11 @@ class Entity {
         this.display();
     }
 
+    // Find angle to another entity
+    angleTo(e) {
+        return atan2(e.pos.y - this.pos.y, e.pos.x - this.pos.x);
+    }
+
     // Border behavior
     borders() {
         // Kill if outside map

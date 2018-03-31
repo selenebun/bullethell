@@ -30,7 +30,7 @@ class Bullet extends Entity {
     collideShips() {
         if (this.fromPlayer) {
             // Try to hit boss first
-            if (boss && boss.dead && this.tryHit(boss)) return;
+            if (boss && !boss.dead && this.tryHit(boss)) return;
 
             // If that fails, try to hit enemies
             for (let i = 0; i < enemies.length; i++) {

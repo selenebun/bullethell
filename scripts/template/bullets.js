@@ -17,6 +17,46 @@ BULLET.bomb = {
     }
 };
 
+BULLET.ricochet = {
+    // Display
+    color: '#2ECC71',
+    // Physics
+    r: 8,
+    // Methods
+    cooldown: function() {
+        this.age++;
+        if (this.maxAge !== -1 && this.age >= this.maxAge) {
+            this.dead = true;
+            this.onOldAge();
+        }
+        if (this.bounces < 0) this.dead = true;
+    },
+    init: function() {
+        this.bounces = 1;
+        this.grav = createVector(this.gravX, this.gravY);
+    },
+    onHitBottom: function() {
+        this.pos.y = this.mapBottom - this.r * this.edgeRadius;
+        this.vel.y *= -1;
+        this.bounces--;
+    },
+    onHitLeft: function() {
+        this.pos.x = this.mapLeft + this.r * this.edgeRadius;
+        this.vel.x *= -1;
+        this.bounces--;
+    },
+    onHitRight: function() {
+        this.pos.x = this.mapRight - this.r * this.edgeRadius;
+        this.vel.x *= -1;
+        this.bounces--;
+    },
+    onHitTop: function() {
+        this.pos.y = this.mapTop + this.r * this.edgeRadius;
+        this.vel.y *= -1;
+        this.bounces--;
+    }
+};
+
 BULLET.small = {
     // Physics
     r: 2

@@ -9,7 +9,7 @@ const PLAYER_RADIUS = 8;
 const PLAYER_SPEED = 5;
 const SLOWDOWN_DURATION = 80;
 const SLOWDOWN_FRAME_SKIP = 2;
-const SLOWDOWN_WAIT_NEXT = 1800;
+const SLOWDOWN_WAIT_NEXT = 900;
 const SPAWN_GRACE_PERIOD = 60;
 const WORLD_CEILING = -50;
 
@@ -42,7 +42,6 @@ let toSpawnBoss;
 
 // Powerups
 let bombs;
-let slowdownReady;
 
 
 // Calculate FPS and update sidebar
@@ -54,6 +53,15 @@ function calculateFPS() {
         document.getElementById('fps').innerHTML = 'FPS: ' + round(f);
         document.getElementById('avgfps').innerHTML = 'Avg. FPS: ' + avgFPS.toFixed(1);
     }
+}
+
+// Clear all entities (except player)
+function clearEntities() {
+    boss = null;
+    bullets = [];
+    enemies = [];
+    items = [];
+    ps = [];
 }
 
 // Update all cooldowns
@@ -70,6 +78,19 @@ function drawBackground() {
     flashTime > 0 ? background(255) : background(bg);
 }
 
+// Display a health bar for a boss
+function healthBar(e) {
+    let h = e.hp / e.maxHp;
+    if (e === 0) return;
+
+    let c = color('#D73C2C');
+    c.setAlpha(191);
+    fill(c);
+    noStroke();
+    rectMode(CENTER);
+    rect(width/2 - 0.5, 10, h * (width - 200), 10);
+}
+
 // Return whether game is not paused or slowed down that tick
 function isRunning() {
     return !paused && (slowTime === 0 || frameCount % SLOWDOWN_FRAME_SKIP);
@@ -83,11 +104,7 @@ function loadLevel() {
     toSpawnBoss = true;
 
     // Clear all entities
-    boss = null;
-    bullets = [];
-    enemies = [];
-    items = [];
-    ps = [];
+    clearEntities();
     spawnPlayer();
 
     // Reset cooldowns
@@ -102,7 +119,11 @@ function loadLevel() {
 }
 
 // Spawn a boss
-function spawnBoss() {}
+function spawnBoss() {
+    boss = new Boss(width/2, WORLD_CEILING);
+    applyTemplate(boss, BOSS[curLevel.boss]);
+    boss.init();
+}
 
 // Spawn an enemy
 function spawnEnemy() {
@@ -143,7 +164,7 @@ function useBomb() {
 
 // Use a slowdown powerup
 function useSlowdown() {
-    if (slowdownReady && !paused) {
+    if (nextSlowdownTime === 0 && !paused) {
         slowdownReady = false;
         slowTime = SLOWDOWN_DURATION;
         nextSlowdownTime = SLOWDOWN_WAIT_NEXT;
@@ -188,17 +209,32 @@ function draw() {
     loopOver(items);
     loopOver(bullets);
     loopOver(enemies);
+    if (boss) boss.act();
     pl.act();
     loopOver(ps);
 
     // Update all cooldowns
     cooldown();
 
+    // Draw boss health bar
+    if (boss) healthBar(boss);
+
+    // Check for boss death
+    if (boss && boss.dead) {
+        boss.onDeath();
+        boss = null;
+    }
+
     // Check for player death
     if (pl.dead) pl.onDeath();
 }
 
 function keyPressed() {
+    if (key === 'B') {
+        clearEntities();
+        toSpawn = 0;
+        spawnTime = SPAWN_GRACE_PERIOD;
+    }
     if (key === 'C') useBomb();
     if (key === 'D') {
         debugMode = !debugMode;
