@@ -8,7 +8,7 @@ class Item extends Entity {
 
         // Physics
         this.fallSpeed = 2;
-        this.r = 6;
+        this.r = 12;
 
         applyTemplate(this, template);
         this.init();
