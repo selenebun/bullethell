@@ -15,6 +15,9 @@ const SLOWDOWN_DURATION = 80;
 const SLOWDOWN_FRAME_SKIP = 2;
 const SLOWDOWN_WAIT_NEXT = 900;
 const SPAWN_GRACE_PERIOD = 60;
+const SPAWN_X = 300;
+const SPAWN_Y = 487;
+const UI_PANEL_HEIGHT = 100;
 const WORLD_CEILING = -50;
 
 // Background
@@ -125,7 +128,7 @@ function loadLevel() {
 }
 
 // Draw indicator of slowdown recharge status
-function slowdownRecharge() {
+function slowdownIndicator() {
     push();
     translate(width - 50, height - 50);
     rotate(180);
@@ -140,14 +143,14 @@ function slowdownRecharge() {
         } else {
             fill(55, 219, 208, SLOWDOWN_ALPHA);
         }
-        noStroke();
+        stroke(0);
         arc(0, 0, 40, 40, 90, 90 + angle);
     }
 
     // Draw red portion
     if (angle < 360) {
         fill(231, 76, 60, SLOWDOWN_ALPHA);
-        noStroke();
+        stroke(0);
         arc(0, 0, 40, 40, 90 + angle, 90);
     }
 
@@ -173,7 +176,7 @@ function spawnEnemy() {
 
 // Spawn the player at the correct coords
 function spawnPlayer() {
-    pl = new Player(width/2, height * 3/4);
+    pl = new Player(SPAWN_X, SPAWN_Y);
     pl.init();
 }
 
@@ -181,12 +184,24 @@ function spawnPlayer() {
 function status() {
     document.getElementById('level').innerHTML = 'Level: ' + (level + 1);
     document.getElementById('score').innerHTML = 'Score: ' + (pl.score);
-    document.getElementById('hp').innerHTML = 'HP: ' + pl.hpStr();
-    document.getElementById('bombs').innerHTML = 'Bombs: ' + bombs;
-    slowdownRecharge();
 
     // Debugging
     calculateFPS();
+}
+
+// Draw the UI panel
+function uiPanel() {
+    // Draw grey rectangle
+    fill(48);
+    stroke(241, 196, 15);
+    rectMode(CORNER);
+    rect(0, height - UI_PANEL_HEIGHT, width, UI_PANEL_HEIGHT);
+
+    // Draw slowdown cooldown indicator
+    slowdownIndicator();
+
+    document.getElementById('hp').innerHTML = 'HP: ' + pl.hpStr();
+    document.getElementById('bombs').innerHTML = 'Bombs: ' + bombs;
 }
 
 // Use a bomb powerup
@@ -212,7 +227,7 @@ function useSlowdown() {
 /* Main p5.js functions */
 
 function setup() {
-    let c = createCanvas(600, 650);
+    let c = createCanvas(600, 650 + UI_PANEL_HEIGHT);
     c.parent('game');
 
     // Configure p5.js
@@ -231,7 +246,7 @@ function draw() {
     flashTime > 0 ? background(255) : background(BG_COLOR);
     if (showStarfield) starfield.display();
 
-    // Update game status
+    // Update game status display
     status();
 
     // Spawn enemies or boss
@@ -256,6 +271,9 @@ function draw() {
 
     // Update all cooldowns
     cooldown();
+
+    // Draw UI panel
+    uiPanel();
 
     // Draw boss health bar
     if (boss) healthBar(boss);

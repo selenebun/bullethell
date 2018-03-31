@@ -5,7 +5,7 @@ class Entity {
         
         // Map boundaries
         this.edgeRadius = 1;
-        this.mapBottom = height;
+        this.mapBottom = height - UI_PANEL_HEIGHT;
         this.mapLeft = 0;
         this.mapRight = width;
         this.mapTop = 0;
