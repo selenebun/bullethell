@@ -14,6 +14,7 @@ ITEM.dualFire = {
     color: '#F1C40F',
     // Methods
     onPickup() {
+        pl.fireRate = 10;
         pl.attack = function() {
             emitBullets(this.pos.x - 5, this.pos.y, -90, [0], 5, 5, BULLET.small, true);
             emitBullets(this.pos.x + 5, this.pos.y, -90, [0], 5, 5, BULLET.small, true);
