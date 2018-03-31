@@ -74,11 +74,8 @@ function bossHealthBar() {
 function calculateFPS() {
     let f = frameRate();
     avgFPS += (f - avgFPS) / ++numFPS;
-
-    if (showFPS) {
-        document.getElementById('fps').innerHTML = 'FPS: ' + round(f);
-        document.getElementById('avgfps').innerHTML = 'Avg. FPS: ' + avgFPS.toFixed(1);
-    }
+    document.getElementById('fps').innerHTML = 'FPS: ' + round(f);
+    document.getElementById('avgfps').innerHTML = 'Avg. FPS: ' + avgFPS.toFixed(1);
 }
 
 // Clear all entities (except player)
@@ -188,7 +185,7 @@ function status() {
     document.getElementById('score').innerHTML = 'Score: ' + (pl.score);
 
     // Debugging
-    calculateFPS();
+    if (showFPS) calculateFPS();
 }
 
 // Draw player bombs
@@ -349,6 +346,10 @@ function keyPressed() {
     if (key === 'F') {
         showFPS = !showFPS;
         document.getElementById('debug').style.display = showFPS ? 'block' : 'none';
+        if (showFPS) {
+            avgFPS = 0;
+            numFPS = 0;
+        }
     }
 
     // Toggle hitbox display

@@ -26,7 +26,7 @@ MODEL.item.basic = function() {
     fill(this.color);
     stroke(0);
     rectMode(RADIUS);
-    rect(this.pos.x, this.pos.y, this.r/2, this.r/2);
+    rect(this.pos.x - 0.5, this.pos.y - 0.5, this.r/2, this.r/2);
 }
 
 
