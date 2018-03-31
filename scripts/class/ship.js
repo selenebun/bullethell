@@ -37,7 +37,7 @@ class Ship extends Entity {
     damage() {
         if (this.hp > 0) {
             this.hp--;
-        } else {
+        } else if (!this.dead) {
             this.dead = true;
             this.onKilled();
         }
