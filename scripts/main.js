@@ -9,6 +9,8 @@ const PLAYER_FIRE_RATE = 8;
 const PLAYER_HP = 7;
 const PLAYER_RADIUS = 8;
 const PLAYER_SPEED = 5;
+const SLOWDOWN_ALPHA = 95;
+const SLOWDOWN_ALPHA_FULL = 127;
 const SLOWDOWN_DURATION = 80;
 const SLOWDOWN_FRAME_SKIP = 2;
 const SLOWDOWN_WAIT_NEXT = 900;
@@ -75,9 +77,12 @@ function clearEntities() {
 // Update all cooldowns
 function cooldown() {
     if (flashTime > 0) flashTime--;
-    if (nextSlowdownTime > 0) nextSlowdownTime--;
-    if (slowTime > 0) slowTime--;
-    if (spawnTime > 0) spawnTime--;
+
+    if (isRunning()) {
+        if (nextSlowdownTime > 0 && slowTime === 0) nextSlowdownTime--;
+        if (slowTime > 0) slowTime--;
+        if (spawnTime > 0) spawnTime--;
+    }
 }
 
 // Display a health bar for a boss
@@ -119,6 +124,36 @@ function loadLevel() {
     slowdownReady = true;
 }
 
+// Draw indicator of slowdown recharge status
+function slowdownRecharge() {
+    push();
+    translate(width - 50, height - 50);
+    rotate(180);
+
+    let loadPercent = (SLOWDOWN_WAIT_NEXT - nextSlowdownTime) / SLOWDOWN_WAIT_NEXT;
+    let angle = 360 * loadPercent;
+    
+    // Draw blue/green portion
+    if (angle > 0) {
+        if (angle === 360) {
+            fill(55, 219, 208, SLOWDOWN_ALPHA_FULL);
+        } else {
+            fill(55, 219, 208, SLOWDOWN_ALPHA);
+        }
+        noStroke();
+        arc(0, 0, 40, 40, 90, 90 + angle);
+    }
+
+    // Draw red portion
+    if (angle < 360) {
+        fill(231, 76, 60, SLOWDOWN_ALPHA);
+        noStroke();
+        arc(0, 0, 40, 40, 90 + angle, 90);
+    }
+
+    pop();
+}
+
 // Spawn a boss
 function spawnBoss() {
     boss = new Boss(width/2, WORLD_CEILING);
@@ -142,12 +177,13 @@ function spawnPlayer() {
     pl.init();
 }
 
-// Update game status on sidebar
+// Update game status on displays
 function status() {
     document.getElementById('level').innerHTML = 'Level: ' + (level + 1);
     document.getElementById('score').innerHTML = 'Score: ' + (pl.score);
     document.getElementById('hp').innerHTML = 'HP: ' + pl.hpStr();
     document.getElementById('bombs').innerHTML = 'Bombs: ' + bombs;
+    slowdownRecharge();
 
     // Debugging
     calculateFPS();
