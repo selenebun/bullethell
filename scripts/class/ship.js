@@ -2,15 +2,31 @@ class Ship extends Entity {
     constructor(x, y) {
         super(x, y);
 
+        // Cooldowns
+        this.fireTime = 10;
+
         // Display
         this.model = MODEL.ship.basic;
+
+        // Map boundaries
+        this.edgeRadius = 2;
 
         // Misc
         this.type = 'ship';
 
         // Stats
+        this.fireRate = 10;
         this.hp = 0;
-        this.moveSpeed = 3;
+        this.speed = 3;
+    }
+
+    // The attack being used when firing
+    attack() {}
+
+    // Update all cooldowns
+    cooldown() {
+        super.cooldown();
+        if (this.fireTime > 0) this.fireTime--;
     }
 
     // Deal damage
@@ -36,7 +52,11 @@ class Ship extends Entity {
     }
 
     // Fire weapon
-    fire() {}
+    fire() {
+        if (this.fireTime > 0) return;
+        this.fireTime = this.fireRate;
+        this.attack();
+    }
 
     // Pretty print HP and max HP
     hpStr() {
@@ -50,4 +70,10 @@ class Ship extends Entity {
 
     // Events
     onKilled() {}
+    onHitLeft() {
+        this.pos.x = this.mapLeft + this.r * this.edgeRadius;
+    }
+    onHitRight() {
+        this.pos.x = this.mapRight - this.r * this.edgeRadius;
+    }
 }

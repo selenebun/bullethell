@@ -15,8 +15,9 @@ class Player extends Ship {
         this.r = PLAYER_RADIUS;
 
         // Stats
+        this.fireRate = PLAYER_FIRE_RATE;
         this.hp = PLAYER_HP;
-        this.moveSpeed = PLAYER_SPEED;
+        this.speed = PLAYER_SPEED;
         this.score = 0;
     }
 
@@ -26,10 +27,18 @@ class Player extends Ship {
         super.act();
     }
 
+    // The attack being used when firing
+    attack() {
+        emitBullets(this.pos.x, this.pos.y, -90, [0], 5, 5, BULLET.small, true);
+    }
+
     // Check for keypresses
-    // TODO firing weapon and powerups
     controls() {
-        let diag = this.moveSpeed / sqrt(2);
+        // Fire weapon (Z key)
+        if (keyIsDown(90)) this.fire();
+        
+        // Movement (arrow keys)
+        let diag = this.speed / sqrt(2);
         if (keyIsDown(RIGHT_ARROW)) {
             if (keyIsDown(UP_ARROW)) {
                 this.vel = createVector(diag, -diag);
@@ -82,15 +91,9 @@ class Player extends Ship {
 
     // Events
     onHitBottom() {
-        this.pos.y = height - this.r * 2;
-    }
-    onHitLeft() {
-        this.pos.x = this.r * 2;
-    }
-    onHitRight() {
-        this.pos.x = width - this.r * 2;
+        this.pos.y = this.mapBottom - this.r * this.edgeRadius;
     }
     onHitTop() {
-        this.pos.y = this.r * 2;
+        this.pos.y = this.mapTop + this.r * this.edgeRadius;
     }
 }

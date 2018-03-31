@@ -13,7 +13,8 @@ class Bullet extends Entity {
         // Physics
         this.acc = 0;
         this.angVel = 0;
-        this.grav = createVector();
+        this.gravX = 0;
+        this.gravY = 0;
         this.maxSpeed = 10;
         this.r = 5;
         this.vel = p5.Vector.fromAngle(radians(angle), speed);
@@ -60,6 +61,11 @@ class Bullet extends Entity {
             stroke(255);
             ellipse(this.pos.x, this.pos.y, this.r, this.r);
         }
+    }
+
+    // Any dynamic initializations to do
+    init() {
+        this.grav = createVector(this.gravX, this.gravY);
     }
 
     // Events

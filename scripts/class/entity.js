@@ -4,6 +4,7 @@ class Entity {
         this.color = '#ECF0F1';
         
         // Map boundaries
+        this.edgeRadius = 1;
         this.mapBottom = height;
         this.mapLeft = 0;
         this.mapRight = width;
@@ -41,7 +42,7 @@ class Entity {
         // Behavior when hitting walls
         let x = this.pos.x;
         let y = this.pos.y;
-        let r = this.r * 2;
+        let r = this.r * this.edgeRadius;
         if (x - r < this.mapLeft) this.onHitLeft();
         if (x + r > this.mapRight) this.onHitRight();
         if (y - r < this.mapTop) this.onHitTop();
