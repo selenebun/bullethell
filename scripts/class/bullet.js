@@ -12,12 +12,13 @@ class Bullet extends Entity {
 
         // Physics
         this.acc = 0;
+        this.angle = angle;
         this.angVel = 0;
         this.gravX = 0;
         this.gravY = 0;
         this.maxSpeed = 10;
         this.r = 5;
-        this.vel = p5.Vector.fromAngle(radians(angle), speed);
+        this.speed = speed;
     }
 
     // All operations to do per tick
@@ -84,10 +85,26 @@ class Bullet extends Entity {
 
     // Update physics
     update() {
+        // Apply gravity
+        this.vel.add(this.grav);
+
+        // Apply angular velocity and linear acceleration
+        this.angle += this.angVel;
+        this.speed = this.speed + this.acc;
+
+        // Combine gravity velocity vector and other properties
+        let v = p5.Vector.fromAngle(radians(this.angle), this.speed);
+        v = v.add(this.vel);
+
+        // Constrain to maxSpeed and apply to position
+        v.setMag(constrain(v.mag(), -this.maxSpeed, this.maxSpeed));
+        this.pos.add(v);
+        /*
         this.vel.add(this.grav);
         this.vel.rotate(this.angVel);
         let speed = constrain(this.vel.mag() + this.acc, -this.maxSpeed, this.maxSpeed);
         this.vel.setMag(speed);
         this.pos.add(this.vel);
+        */
     }
 }

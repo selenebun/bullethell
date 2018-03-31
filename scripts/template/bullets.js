@@ -37,22 +37,22 @@ BULLET.ricochet = {
     },
     onHitBottom: function() {
         this.pos.y = this.mapBottom - this.r * this.edgeRadius;
-        this.vel.y *= -1;
+        this.angle = -this.angle;
         this.bounces--;
     },
     onHitLeft: function() {
         this.pos.x = this.mapLeft + this.r * this.edgeRadius;
-        this.vel.x *= -1;
+        this.angle = 180 - this.angle;
         this.bounces--;
     },
     onHitRight: function() {
         this.pos.x = this.mapRight - this.r * this.edgeRadius;
-        this.vel.x *= -1;
+        this.angle = 180 - this.angle;
         this.bounces--;
     },
     onHitTop: function() {
         this.pos.y = this.mapTop + this.r * this.edgeRadius;
-        this.vel.y *= -1;
+        this.angle = -this.angle;
         this.bounces--;
     }
 };

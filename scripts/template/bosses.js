@@ -89,6 +89,9 @@ BOSS.boss0 = {
             nextStage: 'up',
             timeLimit: 1200,
             ai: function(b) {
+                b.fire();
+            },
+            attack: function(b) {
                 for (let i = 0; i < b.emitters.length; i++) {
                     b.emitters[i].fire();
                 }
@@ -101,6 +104,10 @@ BOSS.boss0 = {
                 b.emitters = [];
             },
             init: function(b) {
+                // Make cooldown 0
+                b.fireRate = 0;
+                
+                // Create emitters
                 let e1 = new Emitter(-200, 0, b);
                 let e2 = new Emitter(200, 0, b);
                 applyTemplate(e1, {
