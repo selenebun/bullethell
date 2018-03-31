@@ -44,7 +44,7 @@ class Ship extends Entity {
         this.model();
         
         // Display hitbox
-        if (debugMode) {
+        if (showHitboxes) {
             fill(255, 63);
             stroke(255);
             ellipse(this.pos.x, this.pos.y, this.r, this.r);

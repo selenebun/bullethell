@@ -1,8 +1,10 @@
 // Config
+const BG_COLOR = 0;
 const BOMB_COUNT = 2;
 const BOMB_FLASH_DURATION = 4;
 const BOSS_SPAWN_DELAY = 300;
 const INVULN_TIME = 20;
+const NUM_STARS = 300;
 const PLAYER_FIRE_RATE = 8;
 const PLAYER_HP = 7;
 const PLAYER_RADIUS = 8;
@@ -12,6 +14,9 @@ const SLOWDOWN_FRAME_SKIP = 2;
 const SLOWDOWN_WAIT_NEXT = 900;
 const SPAWN_GRACE_PERIOD = 60;
 const WORLD_CEILING = -50;
+
+// Background
+let starfield;
 
 // Cooldowns
 let flashTime;
@@ -23,6 +28,11 @@ let spawnTime;
 let avgFPS = 0;
 let numFPS = 0;
 
+// Debug mode
+let showFPS = false;
+let showHitboxes = false;
+let showStarfield = true;
+
 // Entities
 let boss;
 let bullets;
@@ -32,9 +42,7 @@ let pl;
 let ps;
 
 // Game state
-let bg;
 let curLevel;
-let debugMode = false;
 let level = 0;
 let paused = false;
 let toSpawn;
@@ -49,7 +57,7 @@ function calculateFPS() {
     let f = frameRate();
     avgFPS += (f - avgFPS) / ++numFPS;
 
-    if (debugMode) {
+    if (showFPS) {
         document.getElementById('fps').innerHTML = 'FPS: ' + round(f);
         document.getElementById('avgfps').innerHTML = 'Avg. FPS: ' + avgFPS.toFixed(1);
     }
@@ -70,12 +78,6 @@ function cooldown() {
     if (nextSlowdownTime > 0) nextSlowdownTime--;
     if (slowTime > 0) slowTime--;
     if (spawnTime > 0) spawnTime--;
-}
-
-// Draw the correct background
-// TODO procedurally generated scrolling background
-function drawBackground() {
-    flashTime > 0 ? background(255) : background(bg);
 }
 
 // Display a health bar for a boss
@@ -99,7 +101,6 @@ function isRunning() {
 // Load current level
 function loadLevel() {
     curLevel = LEVEL[level];
-    bg = curLevel.bg;
     toSpawn = curLevel.spawnCount;
     toSpawnBoss = true;
 
@@ -182,13 +183,17 @@ function setup() {
     angleMode(DEGREES);
     ellipseMode(RADIUS);
 
+    // Start background starfield
+    starfield = new Starfield(NUM_STARS);
+
     // Begin level
     loadLevel();
 }
 
 function draw() {
-    // Draw the appropriate background
-    drawBackground();
+    // Draw the background and starfield
+    flashTime > 0 ? background(255) : background(BG_COLOR);
+    if (showStarfield) starfield.display();
 
     // Update game status
     status();
@@ -230,16 +235,31 @@ function draw() {
 }
 
 function keyPressed() {
+    // Skip to boss fight
     if (key === 'B') {
         clearEntities();
         toSpawn = 0;
         spawnTime = SPAWN_GRACE_PERIOD;
     }
+
+    // Use a bomb
     if (key === 'C') useBomb();
-    if (key === 'D') {
-        debugMode = !debugMode;
-        document.getElementById('debug').style.display = debugMode ? 'block' : 'none';
+
+    // Toggle FPS display
+    if (key === 'F') {
+        showFPS = !showFPS;
+        document.getElementById('debug').style.display = showFPS ? 'block' : 'none';
     }
+
+    // Toggle hitbox display
+    if (key === 'H') showHitboxes = !showHitboxes;
+
+    // Pause
     if (key === 'P') paused = !paused;
+
+    // Toggle starfield
+    if (key === 'S') showStarfield = !showStarfield;
+
+    // Use a slowdown
     if (key === 'X') useSlowdown();
 }

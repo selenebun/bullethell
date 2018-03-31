@@ -10,4 +10,6 @@ A bullet hell game in HTML5 and JS, using the p5.js library. You can play it [he
 
 #### Debugging controls
 * B to skip to boss fight
-* D to toggle debug display
+* F to toggle FPS display
+* H to toggle displaying hitboxes
+* S to toggle starfield

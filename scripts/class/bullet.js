@@ -57,7 +57,7 @@ class Bullet extends Entity {
         this.model();
         
         // Display hitbox
-        if (debugMode) {
+        if (showHitboxes) {
             fill(255, 63);
             stroke(255);
             ellipse(this.pos.x, this.pos.y, this.r, this.r);
@@ -99,12 +99,5 @@ class Bullet extends Entity {
         // Constrain to maxSpeed and apply to position
         v.setMag(constrain(v.mag(), -this.maxSpeed, this.maxSpeed));
         this.pos.add(v);
-        /*
-        this.vel.add(this.grav);
-        this.vel.rotate(this.angVel);
-        let speed = constrain(this.vel.mag() + this.acc, -this.maxSpeed, this.maxSpeed);
-        this.vel.setMag(speed);
-        this.pos.add(this.vel);
-        */
     }
 }

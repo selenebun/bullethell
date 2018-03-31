@@ -1,7 +1,6 @@
 const LEVEL = [];
 
 LEVEL[0] = {
-    bg: 0,
     boss: 'boss0',
     enemy: ['basic', 'bomber'],
     enemyWeight: [0.8, 0.2],
