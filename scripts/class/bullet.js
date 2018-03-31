@@ -35,7 +35,7 @@ class Bullet extends Entity {
 
             // If that fails, try to hit enemies
             for (let i = 0; i < enemies.length; i++) {
-                if (this.tryHit(enemies[i])) return;
+                if (!enemies[i].dead && this.tryHit(enemies[i])) return;
             }
         } else {
             // Try to hit player
