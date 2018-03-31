@@ -6,6 +6,9 @@ class Ship extends Entity {
         this.fireTime = 10;
 
         // Display
+        this.boomSize = 32;
+        this.boomSpeedMax = 3;
+        this.boomSpeedMin = 0;
         this.model = MODEL.ship.basic;
 
         // Map boundaries

@@ -1,20 +1,19 @@
 class ParticleSystem extends Entity {
-    constructor(x, y, template) {
+    constructor(x, y, minSpeed, maxSpeed, num, template) {
         super(x, y);
 
         // Misc
-        this.num = 32;
         this.particles = [];
         this.particleTemplate = {};
         this.type = 'particleSystem';
 
         // Physics
-        this.maxSpeed = 0;
-        this.minSpeed = 0;
+        this.maxSpeed = minSpeed;
+        this.minSpeed = maxSpeed;
 
         applyTemplate(this, template);
         this.init();
-        this.addParticle(this.num);
+        this.addParticle(num);
     }
 
     // All operations to do per tick

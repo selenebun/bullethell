@@ -22,6 +22,8 @@ ENEMY.basic = {
 
 ENEMY.bomber = {
     // Display
+    boomSize: 64,
+    boomSpeedMax: 5,
     color: '#009C41',
     model: MODEL.ship.bomber,
     // Stats
@@ -52,6 +54,6 @@ ENEMY.bomber = {
     },
     onKilled: function() {
         emitBullets(this.pos.x, this.pos.y, random(360), [0, 60, 120, 180, 240, 300], 5, 5, BULLET.basic);
-        ps.push(new ParticleSystem(this.pos.x, this.pos.y, PS.bigExplosion));
+        ps.push(new ParticleSystem(this.pos.x, this.pos.y, this.boomSpeedMin, this.boomSpeedMax, this.boomSize, PS.explosion));
     }
 };

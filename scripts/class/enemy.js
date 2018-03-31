@@ -39,6 +39,6 @@ class Enemy extends Ship {
     // Events
     onKilled() {
         pl.score += this.points;
-        ps.push(new ParticleSystem(this.pos.x, this.pos.y, PS.explosion));
+        ps.push(new ParticleSystem(this.pos.x, this.pos.y, this.boomSpeedMin, this.boomSpeedMax, this.boomSize, PS.explosion));
     }
 }

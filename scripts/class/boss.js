@@ -11,6 +11,10 @@ class Boss extends Ship {
         this.healthCooldown = -1;
         this.nextStageTime = -1;
 
+        // Display
+        this.boomSize = 256;
+        this.boomSpeedMax = 4;
+
         // Misc
         this.emitters = [];
         this.type = 'boss';
@@ -74,7 +78,7 @@ class Boss extends Ship {
         pl.score += this.points;
         bullets = [];
         loadLevel();
-        ps.push(new ParticleSystem(this.pos.x, this.pos.y, PS.confetti));
+        ps.push(new ParticleSystem(this.pos.x, this.pos.y, this.boomSpeedMin, this.boomSpeedMax, this.boomSize, PS.confetti));
     }
 
     // Trigger next stage of boss fight
