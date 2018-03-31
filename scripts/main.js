@@ -6,7 +6,7 @@ const BOMBS_PER_LEVEL = 1;
 const BOSS_GRACE_PERIOD = 60;
 const BOSS_SPAWN_DELAY = 300;
 const INVULN_TIME = 20;
-const MAP_HEIGHT = 650;
+let MAP_HEIGHT = 650;
 const NUM_STARS = 300;
 const PLAYER_FIRE_RATE = 8;
 const PLAYER_HP = 7;
@@ -270,7 +270,11 @@ function useSlowdown() {
 /* Main p5.js functions */
 
 function setup() {
-    let c = createCanvas(600, MAP_HEIGHT + UI_PANEL_HEIGHT);
+    // Ensure game can fit vertically inside screen
+    let maxSize = MAP_HEIGHT + UI_PANEL_HEIGHT + 2;
+    let h = windowHeight > maxSize ? maxSize : windowHeight;
+    MAP_HEIGHT = h - UI_PANEL_HEIGHT - 2;
+    let c = createCanvas(600, h - 2);
     c.parent('game');
 
     // Configure p5.js
