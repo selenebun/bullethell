@@ -37,8 +37,8 @@ class Enemy extends Ship {
     }
 
     // Events
-    // TODO explosion effect
     onKilled() {
         pl.score += this.points;
+        ps.push(new ParticleSystem(this.pos.x, this.pos.y, PS.explosion));
     }
 }

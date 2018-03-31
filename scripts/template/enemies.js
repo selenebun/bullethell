@@ -52,5 +52,6 @@ ENEMY.bomber = {
     },
     onKilled: function() {
         emitBullets(this.pos.x, this.pos.y, random(360), [0, 60, 120, 180, 240, 300], 5, 5, BULLET.basic);
+        ps.push(new ParticleSystem(this.pos.x, this.pos.y, PS.explosion));
     }
 };

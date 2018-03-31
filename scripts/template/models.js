@@ -1,5 +1,6 @@
 const MODEL = {};
 MODEL.bullet = {};
+MODEL.particle = {};
 MODEL.ship = {};
 
 
@@ -16,6 +17,22 @@ MODEL.bullet.egg = function() {
     noStroke();
     ellipse(this.pos.x, this.pos.y, this.r, this.r * 4/3);
 }
+
+
+// Particle models
+
+MODEL.particle.square = function() {
+    push();
+    translate(this.pos.x, this.pos.y);
+    rotate(this.angle);
+
+    fill(this.color.concat(this.lifespan));
+    stroke(0, this.lifespan);
+    rectMode(RADIUS);
+    rect(0, 0, this.r, this.r);
+
+    pop();
+};
 
 
 // Ship models
@@ -66,6 +83,7 @@ MODEL.ship.bomber = function(isPlayer) {
     // Thruster
     fill('#7C8A99');
     stroke(0);
+    rectMode(RADIUS);
     rect(-0.5, 3.5, 6, 10);
 
     // Front fins

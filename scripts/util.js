@@ -39,3 +39,18 @@ function randInt() {
 function randSign() {
     return random() < 0.5 ? -1 : 1;
 }
+
+// Returns a random item from an array using a second array of weights
+function randWeight(arr, weight) {
+    // Get total weight
+    let total = weight.reduce(function(prev, cur) {
+        return prev + cur;
+    });
+
+    let r = random(total);
+    let weightSum = 0;
+    for (let i = 0; i < arr.length; i++) {
+        weightSum += weight[i];
+        if (r <= weightSum) return arr[i];
+    }
+}

@@ -8,6 +8,9 @@ class Boss extends Ship {
         this.stageIndex = 0;
         this.stages = {};
 
+        // Misc
+        this.type = 'boss';
+
         // Physics
         this.r = 28;
 

@@ -10,13 +10,14 @@ const PLAYER_SPEED = 5;
 const SLOWDOWN_DURATION = 80;
 const SLOWDOWN_FRAME_SKIP = 2;
 const SLOWDOWN_WAIT_NEXT = 1800;
+const SPAWN_GRACE_PERIOD = 60;
 const WORLD_CEILING = -50;
 
 // Cooldowns
-let flashTime = 0;
-let nextSlowdownTime = 0;
-let slowTime = 0;
-let spawnTime = 0;
+let flashTime;
+let nextSlowdownTime;
+let slowTime;
+let spawnTime;
 
 // Debug measurements
 let avgFPS = 0;
@@ -24,22 +25,24 @@ let numFPS = 0;
 
 // Entities
 let boss;
-let bullets = [];
-let enemies = [];
-let items = [];
+let bullets;
+let enemies;
+let items;
 let pl;
-let ps = [];
+let ps;
 
 // Game state
+let bg;
+let curLevel;
 let debugMode = false;
 let level = 0;
 let paused = false;
-let toSpawn = 80;
-let toSpawnBoss = true;
+let toSpawn;
+let toSpawnBoss;
 
 // Powerups
-let bombs = BOMB_COUNT;
-let slowdownReady = true;
+let bombs;
+let slowdownReady;
 
 
 // Calculate FPS and update sidebar
@@ -64,7 +67,7 @@ function cooldown() {
 // Draw the correct background
 // TODO procedurally generated scrolling background
 function drawBackground() {
-    flashTime > 0 ? background(255) : background(0);
+    flashTime > 0 ? background(255) : background(bg);
 }
 
 // Return whether game is not paused or slowed down that tick
@@ -72,15 +75,41 @@ function isRunning() {
     return !paused && (slowTime === 0 || frameCount % SLOWDOWN_FRAME_SKIP);
 }
 
+// Load current level
+function loadLevel() {
+    curLevel = LEVEL[level];
+    bg = curLevel.bg;
+    toSpawn = curLevel.spawnCount;
+    toSpawnBoss = true;
+
+    // Clear all entities
+    boss = null;
+    bullets = [];
+    enemies = [];
+    items = [];
+    ps = [];
+    spawnPlayer();
+
+    // Reset cooldowns
+    flashTime = 0;
+    nextSlowdownTime = 0;
+    slowTime = 0;
+    spawnTime = SPAWN_GRACE_PERIOD;
+
+    // Reset powerups
+    bombs = BOMB_COUNT;
+    slowdownReady = true;
+}
+
 // Spawn a boss
 function spawnBoss() {}
 
 // Spawn an enemy
-// TODO use values from current level + spawn times from level
 function spawnEnemy() {
-    spawnTime = randInt(10, 80);
+    spawnTime = randInt(curLevel.spawnTimeMin, curLevel.spawnTimeMax);
+    let type = randWeight(curLevel.enemy, curLevel.enemyWeight);
     let e = new Enemy(random(width), WORLD_CEILING);
-    applyTemplate(e, random() < 0.8 ? ENEMY.basic : ENEMY.bomber);
+    applyTemplate(e, ENEMY[type]);
     e.init();
     enemies.push(e);
 }
@@ -132,7 +161,8 @@ function setup() {
     angleMode(DEGREES);
     ellipseMode(RADIUS);
 
-    spawnPlayer();
+    // Begin level
+    loadLevel();
 }
 
 function draw() {
@@ -163,6 +193,9 @@ function draw() {
 
     // Update all cooldowns
     cooldown();
+
+    // Check for player death
+    if (pl.dead) pl.onDeath();
 }
 
 function keyPressed() {

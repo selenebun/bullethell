@@ -2,7 +2,6 @@ const BULLET = {};
 
 BULLET.basic = {};
 
-// TODO explosion effect
 BULLET.bomb = {
     // Display
     color: '#E67E22',
@@ -13,8 +12,8 @@ BULLET.bomb = {
     // Methods
     onHitBottom: function() {
         this.dead = true;
-        // TODO explosion effect
         emitBullets(this.pos.x, this.pos.y, 0, [-45, -90, -135], 5, 5, BULLET.basic, this.fromPlayer);
+        ps.push(new ParticleSystem(this.pos.x, this.pos.y, PS.explosion));
     }
 };
 
