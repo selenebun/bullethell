@@ -30,7 +30,8 @@ class Ship extends Entity {
     // Update all cooldowns
     cooldown() {
         super.cooldown();
-        if (this.fireTime > 0) this.fireTime--;
+        if (this.fireTime > 0) this.fireTime -= dt();
+        if (this.fireTime < 0) this.fireTime = 0;
     }
 
     // Deal damage

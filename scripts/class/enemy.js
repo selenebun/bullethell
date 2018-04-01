@@ -16,7 +16,7 @@ class Enemy extends Ship {
 
     // All operations to do per tick
     act() {
-        if (isRunning()) {
+        if (!paused) {
             this.ai();
             this.collidePlayer();
         }

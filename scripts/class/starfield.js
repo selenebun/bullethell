@@ -28,8 +28,8 @@ class Starfield {
             ellipse(s.x, s.y, s.r, s.r);
 
             // Update position
-            if (isRunning()) {
-                s.y += s.dy;
+            if (!paused) {
+                s.y += s.dy * dt();
                 if (s.y - s.r > height) {
                     s.r = random(2);
                     s.x = random(width);

@@ -23,7 +23,7 @@ class Entity {
 
     // All operations to do per tick
     act() {
-        if (isRunning()) {
+        if (!paused) {
             this.cooldown();
             this.update();
             this.borders();
@@ -61,7 +61,7 @@ class Entity {
 
     // Update cooldowns
     cooldown() {
-        this.age++;
+        this.age += dt();
     }
 
     // Display on the canvas
@@ -90,6 +90,6 @@ class Entity {
 
     // Update physics
     update() {
-        this.pos.add(this.vel);
+        this.pos.add(p5.Vector.mult(this.vel, dt()));
     }
 }

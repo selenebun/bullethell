@@ -23,7 +23,7 @@ class Player extends Ship {
 
     // All operations to do per tick
     act() {
-        if (isRunning()) this.controls();
+        if (!paused) this.controls();
         super.act();
     }
 
@@ -67,7 +67,8 @@ class Player extends Ship {
     // Update all cooldowns
     cooldown() {
         super.cooldown();
-        if (this.invulnTime > 0) this.invulnTime--;
+        if (this.invulnTime > 0) this.invulnTime -= dt();
+        if (this.invulnTime < 0) this.invulnTime = 0;
     }
 
     // Deal damage

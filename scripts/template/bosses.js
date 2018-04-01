@@ -9,7 +9,7 @@ BOSS.boss0 = {
             ai(b) {
                 // Force player back
                 if (pl.pos.y < MAP_HEIGHT * 3/4) {
-                    pl.pos.y = lerp(pl.pos.y, MAP_HEIGHT * 3/4, 0.05);
+                    pl.pos.y = lerp(pl.pos.y, MAP_HEIGHT * 3/4, 0.05*dt());
                 }
 
                 // Move to next stage once positioned correctly
@@ -28,7 +28,7 @@ BOSS.boss0 = {
             nextStage: 'wait',
             timeLimit: 720,
             ai(b) {
-                b.speed = lerp(b.speed, 3, 0.05);
+                b.speed = lerp(b.speed, 3, 0.05 * dt());
                 b.vel.setMag(b.speed);
 
                 // Draw a lightning wall
@@ -68,7 +68,7 @@ BOSS.boss0 = {
             nextStage: 'center',
             timeLimit: 120,
             ai(b) {
-                b.pos.x = lerp(b.pos.x, width/2, 0.05);
+                b.pos.x = lerp(b.pos.x, width/2, 0.05 * dt());
             }
         },
         center: {
@@ -157,7 +157,7 @@ BOSS.boss0 = {
             ai(b) {
                 // Force player back
                 if (pl.pos.y < MAP_HEIGHT * 3/4) {
-                    pl.pos.y = lerp(pl.pos.y, MAP_HEIGHT * 3/4, 0.05);
+                    pl.pos.y = lerp(pl.pos.y, MAP_HEIGHT * 3/4, 0.05 * dt());
                 }
             }
         }

@@ -16,7 +16,7 @@ class Item extends Entity {
 
     // All operations to do per tick
     act() {
-        if (isRunning()) this.collidePlayer();
+        if (!paused) this.collidePlayer();
         super.act();
     }
 

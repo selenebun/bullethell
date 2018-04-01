@@ -27,7 +27,7 @@ BULLET.ricochet = {
     r: 8,
     // Methods
     cooldown() {
-        this.age++;
+        this.age += dt();
         if (this.maxAge !== -1 && this.age >= this.maxAge) {
             this.dead = true;
             this.onOldAge();

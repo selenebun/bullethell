@@ -25,7 +25,7 @@ class Particle extends Entity {
     cooldown() {
         super.cooldown();
         if (this.lifespan > 0) {
-            this.lifespan -= this.decay;
+            this.lifespan -= this.decay * dt();
         } else {
             this.dead = true;
         }
@@ -45,8 +45,8 @@ class Particle extends Entity {
 
     // Update physics
     update() {
-        this.vel.add(this.grav);
+        this.vel.add(p5.Vector.mult(this.grav, dt()));
         super.update();
-        this.angle += this.angVel;
+        this.angle += this.angVel * dt();
     }
 }

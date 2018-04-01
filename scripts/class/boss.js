@@ -29,7 +29,7 @@ class Boss extends Ship {
 
     // All operations to do per tick
     act() {
-        if (isRunning()) {
+        if (!paused) {
             if (this.stage) this.stages[this.stage].ai(this);
             this.collidePlayer();
         }
@@ -44,12 +44,8 @@ class Boss extends Ship {
     // Update all cooldowns
     cooldown() {
         super.cooldown();
-        if (this.maxAge !== -1 && this.age >= this.maxAge) {
-            this.dead = true;
-            this.onOldAge();
-        }
-        if (this.nextStageTime > 0) this.nextStageTime--;
-        if (this.nextStageTime === 0) this.switchStage(this.nextStage);
+        if (this.nextStageTime > 0) this.nextStageTime -= dt();
+        if (this.nextStageTime <= 0 && this.nextStageTime > -1) this.switchStage(this.nextStage);
     }
 
     // Deal damage

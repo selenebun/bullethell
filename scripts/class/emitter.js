@@ -44,7 +44,8 @@ class Emitter extends Entity {
     // Update all cooldowns
     cooldown() {
         super.cooldown();
-        if (this.fireTime > 0) this.fireTime--;
+        if (this.fireTime > 0) this.fireTime -= dt();
+        if (this.fireTime < 0) this.fireTime = 0;
     }
 
     // Emit bullets
@@ -80,10 +81,10 @@ class Emitter extends Entity {
     // Update physics
     update() {
         super.update();
-        if (this.spinReversal && abs(this.angVel + this.angAcc) >= this.maxAngVel) {
+        if (this.spinReversal && (abs(this.angVel + this.angAcc) * dt()) >= this.maxAngVel) {
             this.angAcc *= -1;
         }
-        this.angVel += this.angAcc;
-        this.angle += this.angVel;
+        this.angVel += this.angAcc * dt();
+        this.angle += this.angVel * dt();
     }
 }

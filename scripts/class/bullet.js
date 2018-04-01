@@ -24,7 +24,7 @@ class Bullet extends Entity {
     // All operations to do per tick
     act() {
         super.act();
-        if (isRunning()) this.collideShips();
+        if (!paused) this.collideShips();
     }
 
     // Check for collision with player or enemy ships
@@ -86,18 +86,18 @@ class Bullet extends Entity {
     // Update physics
     update() {
         // Apply gravity
-        this.vel.add(this.grav);
+        this.vel.add(p5.Vector.mult(this.grav, dt()));
 
         // Apply angular velocity and linear acceleration
-        this.angle += this.angVel;
-        this.speed = this.speed + this.acc;
+        this.angle += this.angVel * dt();
+        this.speed += this.acc * dt();
 
         // Combine gravity velocity vector and other properties
         let v = p5.Vector.fromAngle(radians(this.angle), this.speed);
         v = v.add(this.vel);
 
         // Constrain to maxSpeed and apply to position
-        v.setMag(constrain(v.mag(), -this.maxSpeed, this.maxSpeed));
+        v.setMag(constrain(v.mag(), -this.maxSpeed, this.maxSpeed) * dt());
         this.pos.add(v);
     }
 }

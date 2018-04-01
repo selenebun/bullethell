@@ -6,7 +6,7 @@ const BOMBS_PER_LEVEL = 1;
 const BOSS_GRACE_PERIOD = 60;
 const BOSS_SPAWN_DELAY = 300;
 const INVULN_TIME = 20;
-let MAP_HEIGHT = 650;
+let   MAP_HEIGHT = 650;
 const NUM_STARS = 300;
 const PLAYER_FIRE_RATE = 8;
 const PLAYER_HP = 7;
@@ -14,8 +14,8 @@ const PLAYER_RADIUS = 8;
 const PLAYER_SPEED = 5;
 const SLOWDOWN_ALPHA = 95;
 const SLOWDOWN_ALPHA_FULL = 127;
+const SLOWDOWN_DT = 0.5;
 const SLOWDOWN_DURATION = 80;
-const SLOWDOWN_FRAME_SKIP = 2;
 const SLOWDOWN_WAIT_NEXT = 900;
 const SPAWN_GRACE_PERIOD = 60;
 const UI_PANEL_HEIGHT = 100;
@@ -91,11 +91,26 @@ function clearEntities() {
 function cooldown() {
     if (flashTime > 0) flashTime--;
 
-    if (isRunning()) {
-        if (nextSlowdownTime > 0 && slowTime === 0) nextSlowdownTime--;
-        if (slowTime > 0) slowTime--;
-        if (spawnTime > 0) spawnTime--;
+    if (!paused) {
+        if (nextSlowdownTime > 0 && slowTime === 0) nextSlowdownTime -= dt();
+        if (nextSlowdownTime < 0) nextSlowdownTime = 0;
+
+        if (slowTime > 0) slowTime -= dt();
+        if (slowTime < 0) slowTime = 0;
+
+        if (spawnTime > 0) spawnTime -= dt();
+        if (spawnTime < 0) spawnTime = 0;
     }
+}
+
+// Return current dt
+function dt() {
+    if (paused) {
+        return 0;
+    } else if (slowTime > 0) {
+        return 0.5;
+    }
+    return 1;
 }
 
 // Draw bomb
@@ -112,11 +127,6 @@ function drawHeart(x, y, empty) {
     stroke(0);
     rectMode(CORNER);
     rect(x, y, 20, 20);
-}
-
-// Return whether game is not paused or slowed down that tick
-function isRunning() {
-    return !paused && (slowTime === 0 || frameCount % SLOWDOWN_FRAME_SKIP);
 }
 
 // Load a level
@@ -297,7 +307,7 @@ function draw() {
     status();
 
     // Spawn enemies or boss
-    if (isRunning() && spawnTime === 0) {
+    if (!paused && spawnTime === 0) {
         if (toSpawn > 0) {
             toSpawn--;
             spawnEnemy();
