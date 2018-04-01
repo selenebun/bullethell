@@ -23,9 +23,13 @@ class Bullet extends Entity {
 
     // All operations to do per tick
     act() {
+        if (!paused) this.ai();
         super.act();
         if (!paused) this.collideShips();
     }
+
+    // Dynamically update behavior
+    ai() {}
 
     // Check for collision with player or enemy ships
     collideShips() {
