@@ -1,8 +1,9 @@
 class Starfield {
-    constructor(num) {
+    constructor(num, starSpeed) {
         this.alpha = LEVEL[0].alpha;
         this.bg = color(LEVEL[0].bg);
         this.color = color(LEVEL[0].color);
+        this.speed = starSpeed;
         this.delta = [];
         this.noise = [];
         this.stars = [];
@@ -15,7 +16,7 @@ class Starfield {
                 r: random(2),
                 x: random(width),
                 y: random(height),
-                dy: random(10)
+                dy: random(starSpeed)
             });
         }
     }
@@ -44,7 +45,7 @@ class Starfield {
                     s.r = random(2);
                     s.x = random(width);
                     s.y = 0;
-                    s.dy = random(10);
+                    s.dy = random(this.speed);
                 }
             }
 

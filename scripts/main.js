@@ -20,6 +20,7 @@ const SLOWDOWN_DURATION = 120;
 const SLOWDOWN_WAIT_NEXT = 600;
 const SPAWN_GRACE_PERIOD = 60;
 const STARFIELD_LERP = 0.04;
+const STARFIELD_SPEED = 10;
 const UI_PANEL_HEIGHT = 100;
 const WORLD_CEILING = -50;
 
@@ -343,7 +344,7 @@ function setup() {
     ellipseMode(RADIUS);
 
     // Start background starfield
-    starfield = new Starfield(NUM_STARS);
+    starfield = new Starfield(NUM_STARS, STARFIELD_SPEED);
 
     // Begin level
     resetGame();
