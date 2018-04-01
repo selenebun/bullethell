@@ -1,9 +1,8 @@
 // Config
-const BG_COLOR = 0;
 const BOMB_COUNT = 2;
 const BOMB_FLASH_DURATION = 4;
 const BOMBS_PER_LEVEL = 1;
-const BOSS_GRACE_PERIOD = 60;
+const BOSS_GRACE_PERIOD = 120;
 const BOSS_SPAWN_DELAY = 300;
 const INVULN_TIME = 20;
 let   MAP_HEIGHT = 650;
@@ -19,6 +18,7 @@ const SLOWDOWN_DT = 0.4;
 const SLOWDOWN_DURATION = 120;
 const SLOWDOWN_WAIT_NEXT = 600;
 const SPAWN_GRACE_PERIOD = 60;
+const STARFIELD_LERP = 0.01;
 const UI_PANEL_HEIGHT = 100;
 const WORLD_CEILING = -50;
 
@@ -350,7 +350,7 @@ function setup() {
 
 function draw() {
     // Draw the background and starfield
-    flashTime > 0 ? background(255) : background(BG_COLOR);
+    flashTime > 0 ? background(255) : background(starfield.bg);
     if (showStarfield) starfield.display();
 
     // Update game status display
