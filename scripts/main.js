@@ -3,7 +3,7 @@ const BOMB_COUNT = 2;
 const BOMB_FLASH_DURATION = 4;
 const BOMBS_PER_LEVEL = 1;
 const BOSS_GRACE_PERIOD = 120;
-const BOSS_SPAWN_DELAY = 300;
+const BOSS_SPAWN_DELAY = 120;
 const INVULN_TIME = 20;
 let   MAP_HEIGHT = 650;
 const MODEL_LINE_ALPHA = 127;
@@ -28,6 +28,7 @@ const WORLD_CEILING = -50;
 let starfield;
 
 // Cooldowns
+let bossTime;
 let flashTime;
 let nextSlowdownTime;
 let slowTime;
@@ -105,6 +106,11 @@ function cooldown() {
     if (flashTime > 0) flashTime--;
 
     if (!paused) {
+        if (bossTime > 0) {
+            bossTime -= dt();
+            if (bossTime <= 0) spawnBoss();
+        }
+
         if (nextSlowdownTime > 0 && slowTime === 0) nextSlowdownTime -= dt();
         if (nextSlowdownTime < 0) nextSlowdownTime = 0;
 
@@ -113,6 +119,11 @@ function cooldown() {
 
         if (spawnTime > 0) spawnTime -= dt();
         if (spawnTime < 0) spawnTime = 0;
+
+        if (toSpawnBoss && enemies.length === 0) {
+            toSpawnBoss = false;
+            bossTime = BOSS_SPAWN_DELAY;
+        }
     }
 }
 
@@ -154,7 +165,6 @@ function loadLevel() {
         level++;
         curLevel = LEVEL[level];
         toSpawn = curLevel.spawnCount;
-        toSpawnBoss = true;
 
         // Reset cooldowns
         spawnTime = BOSS_GRACE_PERIOD;
@@ -168,7 +178,6 @@ function loadLevel() {
 function reloadLevel() {
     curLevel = LEVEL[level];
     toSpawn = curLevel.spawnCount;
-    toSpawnBoss = true;
 
     // Clear all entities
     clearEntities();
@@ -360,15 +369,10 @@ function draw() {
     status();
 
     // Spawn enemies or boss
-    if (!paused && spawnTime === 0) {
-        if (toSpawn > 0) {
-            toSpawn--;
-            spawnEnemy();
-            if (toSpawn === 0) spawnTime = BOSS_SPAWN_DELAY;
-        } else if (toSpawnBoss && enemies.length === 0) {
-            toSpawnBoss = false;
-            spawnBoss();
-        }
+    if (!paused && spawnTime === 0 && toSpawn > 0) {
+        toSpawn--;
+        if (toSpawn === 0) toSpawnBoss = true;
+        spawnEnemy();
     }
 
     // Update and draw all entities
