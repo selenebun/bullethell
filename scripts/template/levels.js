@@ -3,8 +3,8 @@ const LEVEL = [];
 LEVEL[0] = {
     // Background
     alpha: 127,
-    bg: [0, 0, 0],
-    color: [255, 255, 255],
+    bg: 0,
+    color: 255,
     // Boss
     boss: 'boss0',
     // Enemies
