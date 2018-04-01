@@ -25,7 +25,7 @@ MODEL.bullet.egg = function() {
 MODEL.item.health = function() {
     // Draw base
     fill(this.color);
-    stroke(0);
+    stroke(0, MODEL_LINE_ALPHA);
     ellipse(this.pos.x, this.pos.y, 12, 12);
 
     // Draw cross
@@ -38,7 +38,7 @@ MODEL.item.health = function() {
 
 MODEL.item.square = function() {
     fill(this.color);
-    stroke(0);
+    stroke(0, MODEL_LINE_ALPHA);
     rectMode(RADIUS);
     rect(this.pos.x - 0.5, this.pos.y - 0.5, this.r/2, this.r/2);
 };
@@ -74,7 +74,7 @@ MODEL.ship.basic = function(isPlayer) {
 
     // Thruster
     fill('#7C8A99');
-    stroke(0);
+    stroke(0, MODEL_LINE_ALPHA);
     rectMode(RADIUS);
     rect(-0.5, 3.5, 6, 10);
 
@@ -107,7 +107,7 @@ MODEL.ship.bomber = function(isPlayer) {
 
     // Thruster
     fill('#7C8A99');
-    stroke(0);
+    stroke(0, MODEL_LINE_ALPHA);
     rectMode(RADIUS);
     rect(-0.5, 3.5, 6, 10);
 
@@ -144,7 +144,7 @@ MODEL.ship.boss0 = function(isPlayer) {
 
     // Thrusters
     fill('#7C8A99');
-    stroke(0);
+    stroke(0, MODEL_LINE_ALPHA);
     rectMode(RADIUS);
     rect(15.5, 26, 8, 3);
     rect(-16.5, 26, 8, 3);
