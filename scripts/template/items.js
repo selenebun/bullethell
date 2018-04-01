@@ -36,7 +36,7 @@ ITEM.points = {
     color: '#22A7F0',
     // Methods
     onPickup() {
-        pl.score += 100;
+        addScore(100);
     }
 };
 
@@ -45,6 +45,6 @@ ITEM.points2x = {
     color: '#FF6CA8',
     // Methods
     onPickup() {
-        pl.score += 200;
+        addScore(200);
     }
 };

@@ -72,7 +72,7 @@ class Boss extends Ship {
 
     // Events
     onKilled() {
-        score += this.points;
+        addScore(this.points);
         bullets = [];
         loadLevel();
         this.explode();

@@ -53,6 +53,7 @@ ENEMY.bomber = {
         this.vel.x *= -1;
     },
     onKilled() {
+        addScore(this.points);
         emitBullets(this.pos.x, this.pos.y, random(360), [0, 60, 120, 180, 240, 300], 5, 5, BULLET.basic);
         this.dropItem();
         this.explode();

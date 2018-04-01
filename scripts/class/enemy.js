@@ -46,7 +46,7 @@ class Enemy extends Ship {
 
     // Events
     onKilled() {
-        score += this.points;
+        addScore(this.points);
         this.dropItem();
         this.explode();
     }

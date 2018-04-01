@@ -12,6 +12,7 @@ const PLAYER_FIRE_RATE = 8;
 const PLAYER_HP = 7;
 const PLAYER_RADIUS = 8;
 const PLAYER_SPEED = 5;
+const SCORE_UPDATE_SPEED = 3;
 const SLOWDOWN_ALPHA = 95;
 const SLOWDOWN_ALPHA_FULL = 127;
 const SLOWDOWN_DT = 0.4;
@@ -53,12 +54,20 @@ let level;
 let lives;
 let paused = false;
 let score;
+let scoreMult;
+let scoreToAdd;
 let toSpawn;
 let toSpawnBoss;
 
 // Powerups
 let bombs;
 
+
+// Add a score
+function addScore(points) {
+    scoreToAdd += points;
+    setScoreStyle('#F1C40F', 'bold');
+}
 
 // Display a health bar for a boss
 function bossHealthBar() {
@@ -180,7 +189,16 @@ function resetGame() {
     level = 0;
     lives = 3;
     score = 0;
+    scoreMult = 1;
+    scoreToAdd = 0;
     reloadLevel();
+}
+
+// Set score text style
+function setScoreStyle(color, weight) {
+    let s = document.getElementById('score').style;
+    s.color = color;
+    s.fontWeight = weight;
 }
 
 // Spawn a boss
@@ -210,6 +228,7 @@ function spawnPlayer() {
 function status() {
     document.getElementById('level').innerHTML = 'Level: ' + (level + 1);
     document.getElementById('score').innerHTML = 'Score: ' + score;
+    document.getElementById('scoremult').innerHTML = 'Multiplier: ' + scoreMult + 'x';
     document.getElementById('lives').innerHTML = 'Lives: ' + lives;
 
     // Debugging
@@ -275,6 +294,19 @@ function uiSlowdown() {
     pop();
 }
 
+// Update the score by slowly adding
+function updateScore() {
+    if (scoreToAdd >= SCORE_UPDATE_SPEED) {
+        scoreToAdd -= SCORE_UPDATE_SPEED;
+        score += SCORE_UPDATE_SPEED * scoreMult;
+        if (scoreToAdd === 0) setScoreStyle('#ECF0F1', 'normal');
+    } else {
+        score += scoreToAdd * scoreMult;
+        scoreToAdd = 0;
+        setScoreStyle('#ECF0F1', 'normal');
+    }
+}
+
 // Use a bomb powerup
 function useBomb() {
     if (bombs > 0 && !paused) {
@@ -322,6 +354,7 @@ function draw() {
     if (showStarfield) starfield.display();
 
     // Update game status display
+    if (!paused) updateScore();
     status();
 
     // Spawn enemies or boss
