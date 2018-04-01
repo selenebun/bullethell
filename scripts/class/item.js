@@ -3,7 +3,7 @@ class Item extends Entity {
         super(x, y);
 
         // Display
-        this.model = MODEL.item.basic;
+        this.model = MODEL.item.square;
         this.type = 'item';
 
         // Physics

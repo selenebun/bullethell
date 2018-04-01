@@ -22,12 +22,26 @@ MODEL.bullet.egg = function() {
 
 // Item models
 
-MODEL.item.basic = function() {
+MODEL.item.health = function() {
+    // Draw base
+    fill(this.color);
+    stroke(0);
+    ellipse(this.pos.x, this.pos.y, 12, 12);
+
+    // Draw cross
+    fill('#ECF0F1');
+    noStroke();
+    rectMode(RADIUS);
+    rect(this.pos.x, this.pos.y, 8, 3);
+    rect(this.pos.x, this.pos.y, 3, 8);
+};
+
+MODEL.item.square = function() {
     fill(this.color);
     stroke(0);
     rectMode(RADIUS);
     rect(this.pos.x - 0.5, this.pos.y - 0.5, this.r/2, this.r/2);
-}
+};
 
 
 // Particle models

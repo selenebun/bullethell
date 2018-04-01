@@ -25,6 +25,9 @@ ITEM.dualFire = {
 ITEM.health = {
     // Display
     color: '#D73C2C',
+    model: MODEL.item.health,
+    // Physics
+    r: 16,
     // Methods
     onPickup() {
         pl.heal();
