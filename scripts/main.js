@@ -128,7 +128,7 @@ function dt() {
 // Draw bomb
 function drawBomb(x, y) {
     fill('#007C21');
-    stroke(0);
+    stroke(0, MODEL_LINE_ALPHA);
     rectMode(CORNER);
     rect(x, y, 20, 20);
 }
@@ -136,7 +136,7 @@ function drawBomb(x, y) {
 // Draw heart
 function drawHeart(x, y, empty) {
     fill(empty ? 0 : '#D73C2C');
-    stroke(0);
+    stroke(0, MODEL_LINE_ALPHA);
     rectMode(CORNER);
     rect(x, y, 20, 20);
 }
@@ -281,14 +281,14 @@ function uiSlowdown() {
         } else {
             fill(55, 219, 208, SLOWDOWN_ALPHA);
         }
-        stroke(0);
+        stroke(0, MODEL_LINE_ALPHA);
         arc(0, 0, 40, 40, 90, 90 + angle);
     }
 
     // Draw red portion
     if (angle < 360) {
         fill(231, 76, 60, SLOWDOWN_ALPHA);
-        stroke(0);
+        stroke(0, MODEL_LINE_ALPHA);
         arc(0, 0, 40, 40, 90 + angle, 90);
     }
 
