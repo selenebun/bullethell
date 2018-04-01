@@ -18,7 +18,6 @@ class Player extends Ship {
         this.fireRate = PLAYER_FIRE_RATE;
         this.hp = PLAYER_HP;
         this.speed = PLAYER_SPEED;
-        this.score = 0;
     }
 
     // All operations to do per tick
@@ -99,7 +98,12 @@ class Player extends Ship {
 
     // Events
     onDeath() {
-        reloadLevel();
+        lives--;
+        if (lives > 0) {
+            reloadLevel();
+        } else {
+            gameOver();
+        }
     }
     onHitBottom() {
         this.pos.y = this.mapBottom - this.r * this.edgeRadius;

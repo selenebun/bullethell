@@ -49,8 +49,10 @@ let ps;
 
 // Game state
 let curLevel;
-let level = 0;
+let level;
+let lives;
 let paused = false;
+let score;
 let toSpawn;
 let toSpawnBoss;
 
@@ -129,6 +131,12 @@ function drawHeart(x, y, empty) {
     rect(x, y, 20, 20);
 }
 
+// Stuff to do on game over
+// TODO some kind of game over animation
+function gameOver() {
+    resetGame();
+}
+
 // Load a level
 function loadLevel() {
     if (LEVEL[level + 1]) {
@@ -166,6 +174,15 @@ function reloadLevel() {
     slowdownReady = true;
 }
 
+// Reset game to first level
+function resetGame() {
+    // Game state
+    level = 0;
+    lives = 3;
+    score = 0;
+    reloadLevel();
+}
+
 // Spawn a boss
 function spawnBoss() {
     boss = new Boss(width/2, WORLD_CEILING);
@@ -192,7 +209,8 @@ function spawnPlayer() {
 // Update game status on displays
 function status() {
     document.getElementById('level').innerHTML = 'Level: ' + (level + 1);
-    document.getElementById('score').innerHTML = 'Score: ' + (pl.score);
+    document.getElementById('score').innerHTML = 'Score: ' + score;
+    document.getElementById('lives').innerHTML = 'Lives: ' + lives;
 
     // Debugging
     if (showFPS) calculateFPS();
@@ -295,7 +313,7 @@ function setup() {
     starfield = new Starfield(NUM_STARS);
 
     // Begin level
-    reloadLevel();
+    resetGame();
 }
 
 function draw() {
