@@ -14,9 +14,9 @@ const PLAYER_RADIUS = 8;
 const PLAYER_SPEED = 5;
 const SLOWDOWN_ALPHA = 95;
 const SLOWDOWN_ALPHA_FULL = 127;
-const SLOWDOWN_DT = 0.5;
-const SLOWDOWN_DURATION = 80;
-const SLOWDOWN_WAIT_NEXT = 900;
+const SLOWDOWN_DT = 0.4;
+const SLOWDOWN_DURATION = 120;
+const SLOWDOWN_WAIT_NEXT = 600;
 const SPAWN_GRACE_PERIOD = 60;
 const UI_PANEL_HEIGHT = 100;
 const WORLD_CEILING = -50;
@@ -108,7 +108,7 @@ function dt() {
     if (paused) {
         return 0;
     } else if (slowTime > 0) {
-        return 0.5;
+        return SLOWDOWN_DT;
     }
     return 1;
 }
