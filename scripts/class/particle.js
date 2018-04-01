@@ -6,8 +6,8 @@ class Particle extends Entity {
         this.color = [236, 240, 241];
 
         // Misc
-        this.decayMax = 2;
-        this.decayMin = 1;
+        this.decayMax = 4;
+        this.decayMin = 2;
         this.lifespan = 255;
         this.type = 'particle';
         

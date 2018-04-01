@@ -51,8 +51,8 @@ MODEL.particle.square = function() {
     translate(this.pos.x, this.pos.y);
     rotate(this.angle);
 
-    fill(this.color.concat(this.lifespan * MODEL_LINE_ALPHA/255));
-    stroke(0, this.lifespan);
+    fill(this.color.concat(this.lifespan));
+    stroke(0, this.lifespan * MODEL_LINE_ALPHA/255);
     rectMode(RADIUS);
     rect(0, 0, this.r, this.r);
 

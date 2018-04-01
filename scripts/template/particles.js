@@ -22,8 +22,8 @@ PARTICLE.fire = {
     // Display
     model: MODEL.particle.square,
     // Misc
-    decayMax: 4,
-    decayMin: 2,
+    decayMax: 8,
+    decayMin: 4,
     // Methods
     init() {
         this.angVel = random(-90, 90);
