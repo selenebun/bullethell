@@ -18,6 +18,7 @@ class Player extends Ship {
         this.fireRate = PLAYER_FIRE_RATE;
         this.hp = PLAYER_HP;
         this.speed = PLAYER_SPEED;
+        this.weapon = 'basic';
     }
 
     // All operations to do per tick
@@ -28,7 +29,7 @@ class Player extends Ship {
 
     // The attack being used when firing
     attack() {
-        emitBullets(this.pos.x, this.pos.y, -90, [0], 5, 5, BULLET.small, true);
+        WEAPON[this.weapon](this);
     }
 
     // Check for keypresses

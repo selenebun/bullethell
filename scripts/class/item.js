@@ -20,11 +20,16 @@ class Item extends Entity {
         super.act();
     }
 
+    // Check if able to pick up
+    canPickUp(e) {
+        return true;
+    }
+
     // Check for collision with player
     collidePlayer() {
-        if (this.collide(pl)) {
+        if (this.collide(pl) && this.canPickUp(pl)) {
             this.dead = true;
-            this.onPickup();
+            this.onPickup(pl);
         }
     }
 

@@ -4,7 +4,7 @@ ITEM.bomb = {
     // Display
     color: '#007C21',
     // Methods
-    onPickup() {
+    onPickup(pl) {
         bombs++;
     }
 };
@@ -13,12 +13,12 @@ ITEM.dualFire = {
     // Display
     color: '#F1C40F',
     // Methods
-    onPickup() {
+    canPickUp(pl) {
+        return pl.weapon !== 'dualFire';
+    },
+    onPickup(pl) {
         pl.fireRate = 10;
-        pl.attack = function() {
-            emitBullets(this.pos.x - 5, this.pos.y, -90, [0], 5, 5, BULLET.small, true);
-            emitBullets(this.pos.x + 5, this.pos.y, -90, [0], 5, 5, BULLET.small, true);
-        }
+        pl.weapon = 'dualFire';
     }
 };
 
@@ -29,7 +29,10 @@ ITEM.health = {
     // Physics
     r: 16,
     // Methods
-    onPickup() {
+    canPickUp(pl) {
+        return pl.hp < pl.maxHp;
+    },
+    onPickup(pl) {
         pl.heal();
     }
 };
@@ -38,7 +41,7 @@ ITEM.points = {
     // Display
     color: '#22A7F0',
     // Methods
-    onPickup() {
+    onPickup(pl) {
         addScore(100);
     }
 };
@@ -47,7 +50,7 @@ ITEM.points2x = {
     // Display
     color: '#FF6CA8',
     // Methods
-    onPickup() {
+    onPickup(pl) {
         addScore(200);
     }
 };
