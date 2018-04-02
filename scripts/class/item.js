@@ -20,8 +20,8 @@ class Item extends Entity {
         super.act();
     }
 
-    // Check if able to pick up
-    canPickUp(e) {
+    // Check if player is able to pick up
+    canPickUp(pl) {
         return true;
     }
 
@@ -51,5 +51,5 @@ class Item extends Entity {
     }
 
     // Events
-    onPickup(e) {}
+    onPickup(pl) {}
 }
