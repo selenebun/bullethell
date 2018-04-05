@@ -16,5 +16,5 @@ LEVEL[0] = {
     // Items
     dropChance: 0.3,
     item: ['points', 'points2x', 'dualFire', 'health', 'bomb'],
-    itemWeight: [0.5, 0.3, 0.1, 0.08, 0.02]
+    itemWeight: [0.45, 0.25, 0.1, 0.18, 0.02]
 };
