@@ -216,9 +216,13 @@ function setScoreStyle(color, weight) {
 
 // Spawn a boss
 function spawnBoss() {
-    boss = new Boss(width/2, WORLD_CEILING);
-    applyTemplate(boss, BOSS[curLevel.boss]);
-    boss.init();
+    if (curLevel.boss) {
+        boss = new Boss(width/2, WORLD_CEILING);
+        applyTemplate(boss, BOSS[curLevel.boss]);
+        boss.init();
+    } else {
+        loadLevel();
+    }
 }
 
 // Spawn an enemy

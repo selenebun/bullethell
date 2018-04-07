@@ -1,5 +1,34 @@
 const ENEMY = {};
 
+ENEMY.aimer = {
+    // Display
+    boomSize: 64,
+    boomSpeedMax: 5,
+    color: '#F39C12',
+    model: MODEL.ship.aimer,
+    // Physics
+    r: 18,
+    // Stats
+    hp: 1,
+    maxSpeed: 2,
+    minSpeed: 1,
+    points: 150,
+    // Methods
+    ai() {
+        if (random() < 0.006) this.fire();
+    },
+    attack() {
+        let a = this.angleTo(pl);
+        emitBullets(this.pos.x, this.pos.y, a, [0], 3, 4, BULLET.shrapnel);
+    },
+    onKilled() {
+        addScore(this.points);
+        emitBullets(this.pos.x, this.pos.y, random(360), [0, 60, 120, 180, 240, 300], 4, 4, BULLET.basic);
+        this.dropItem();
+        this.explode();
+    }
+};
+
 ENEMY.basic = {
     // Display
     color: '#E74C3C',
@@ -12,11 +41,6 @@ ENEMY.basic = {
     },
     attack() {
         emitBullets(this.pos.x, this.pos.y, 90, [0], 4, 4, BULLET.basic);
-    },
-    init() {
-        this.maxHp = this.hp;
-        this.speed = random(this.minSpeed, this.maxSpeed);
-        this.vel = createVector(0, this.speed);
     }
 };
 
@@ -30,7 +54,7 @@ ENEMY.bomber = {
     hp: 1,
     maxSpeed: 3,
     minSpeed: 1,
-    points: 200,
+    points: 300,
     // Methods
     ai() {
         if (random() < 0.005) this.vel.x *= -1;

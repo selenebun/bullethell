@@ -1,6 +1,6 @@
 const BOSS = {};
 
-BOSS.boss0 = {
+BOSS.boss1 = {
     // AI
     nextStage: 'enter',
     stages: {
@@ -168,15 +168,15 @@ BOSS.boss0 = {
                 emitBullets(b.pos.x, b.pos.y, a, [0, 120, 240], 3, 4, BULLET.twoStage);
             },
             init(b) {
-                b.fireRate = 45;
+                b.fireRate = 50;
             }
         }
     },
     // Display
     color: '#009B90',
-    model: MODEL.ship.boss0,
+    model: MODEL.ship.boss1,
     // Stats
-    hp: 360,
+    hp: 380,
     points: 2000,
     // Methods
     onHitLeft() {

@@ -15,6 +15,14 @@ BULLET.bomb = {
         emitBullets(this.pos.x, this.pos.y, 0, [-45, -90, -135], 5, 5, BULLET.basic, this.fromPlayer);
         ps.push(new ParticleSystem(this.pos.x, this.pos.y, 0, 3, 32, PS.explosion));
     },
+    onHitLeft() {
+        this.pos.x = this.mapLeft + this.r * this.edgeRadius;
+        this.angle = 180 - this.angle;
+    },
+    onHitRight() {
+        this.pos.x = this.mapRight - this.r * this.edgeRadius;
+        this.angle = 180 - this.angle;
+    },
     onHit() {
         ps.push(new ParticleSystem(this.pos.x, this.pos.y, 0, 3, 32, PS.explosion));
     }
@@ -77,6 +85,19 @@ BULLET.twoStage = {
     // Methods
     onOldAge() {
         emitBullets(this.pos.x, this.pos.y, this.angle, [60, 150, 180, 210, 300], 3, 4, BULLET.needle);
+    }
+};
+
+BULLET.shrapnel = {
+    // Display
+    color: '#29C5FF',
+    // Misc
+    maxAge: 60,
+    // Physics
+    r: 8,
+    // Methods
+    onOldAge() {
+        emitBullets(this.pos.x, this.pos.y, this.angle, [-30, 0, 30], 3, 4, BULLET.basic);
     }
 };
 

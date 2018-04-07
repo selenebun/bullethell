@@ -38,7 +38,9 @@ class Enemy extends Ship {
 
     // Any dynamic initializations to do
     init() {
+        super.init();
         this.speed = random(this.minSpeed, this.maxSpeed);
+        this.vel = createVector(0, this.speed);
     }
 
     // Events
