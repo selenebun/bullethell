@@ -82,14 +82,27 @@ class Boss extends Ship {
     switchStage() {
         this.healthCooldown = -1;
         this.nextStageTime = -1;
+
+        // Finish stage
         if (this.stage && this.stages[this.stage] && this.stages[this.stage].finish) {
             this.stages[this.stage].finish(this);
         }
+
+        // Start the next stage
         if (this.nextStage in this.stages) {
             this.stage = this.nextStage;
             let curStage = this.stages[this.stage];
             if (curStage.init) curStage.init(this);
-            this.nextStage = curStage.nextStage;
+
+            // Set next stage
+            if (Array.isArray(curStage.nextStage)) {
+                // Pick random stage from array
+                this.nextStage = random(curStage.nextStage);
+            } else {
+                this.nextStage = curStage.nextStage;
+            }
+
+            // Set limits for switching stage
             let t = curStage.timeLimit;
             this.nextStageTime = t ? t : -1;
             let h = curStage.healthLimit;
