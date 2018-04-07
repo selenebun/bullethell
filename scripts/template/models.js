@@ -53,7 +53,6 @@ MODEL.particle.square = function() {
 
     fill(this.color.concat(this.lifespan));
     stroke(0, this.lifespan * MODEL_LINE_ALPHA/255);
-    //strokeWeight(2);
     rectMode(RADIUS);
     rect(0, 0, this.r, this.r);
 
