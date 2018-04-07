@@ -67,7 +67,7 @@ BOSS.boss0 = {
             }
         },
         center: {
-            nextStage: 'spiral',
+            nextStage: ['spiral', 'needle'],
             ai(b) {
                 if (b.pos.y >= MAP_HEIGHT/2) {
                     b.pos.y = MAP_HEIGHT/2;
@@ -154,6 +154,21 @@ BOSS.boss0 = {
                 if (pl.pos.y < MAP_HEIGHT * 3/4) {
                     pl.pos.y = lerp(pl.pos.y, MAP_HEIGHT * 3/4, 0.05 * dt());
                 }
+            }
+        },
+        needle: {
+            healthLimit: 0.2,
+            nextStage: 'up',
+            timeLimit: 1000,
+            ai(b) {
+                b.fire();
+            },
+            attack(b) {
+                let a = random(360);
+                emitBullets(b.pos.x, b.pos.y, a, [0, 120, 240], 3, 4, BULLET.twoStage);
+            },
+            init(b) {
+                b.fireRate = 45;
             }
         }
     },

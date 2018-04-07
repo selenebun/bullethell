@@ -20,6 +20,13 @@ BULLET.bomb = {
     }
 };
 
+BULLET.needle = {
+    // Display
+    model: MODEL.bullet.needle,
+    // Physics
+    r: 2
+};
+
 BULLET.ricochet = {
     // Display
     color: '#2ECC71',
@@ -57,6 +64,19 @@ BULLET.ricochet = {
         this.pos.y = this.mapTop + this.r * this.edgeRadius;
         this.angle = -this.angle;
         this.bounces--;
+    }
+};
+
+BULLET.twoStage = {
+    // Display
+    color: '#EA4C88',
+    // Misc
+    maxAge: 60,
+    // Physics
+    r: 12,
+    // Methods
+    onOldAge() {
+        emitBullets(this.pos.x, this.pos.y, this.angle, [60, 150, 180, 210, 300], 3, 4, BULLET.needle);
     }
 };
 

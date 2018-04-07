@@ -19,6 +19,21 @@ MODEL.bullet.egg = function() {
     ellipse(this.pos.x, this.pos.y, this.r, this.r * 4/3);
 };
 
+MODEL.bullet.needle = function() {
+    push();
+    translate(this.pos.x, this.pos.y);
+    rotate(this.angle);
+
+    fill(this.color);
+    noStroke();
+    let back = -this.r * 3/2;
+    let front = this.r * 4;
+    let side = this.r * 3/2;
+    triangle(back, side, back, -side, front, 0);
+
+    pop();
+};
+
 
 // Item models
 
