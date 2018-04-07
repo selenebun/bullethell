@@ -1,7 +1,7 @@
 // Config
 const BOMB_COUNT = 2;
 const BOMB_FLASH_DURATION = 4;
-const BOMBS_PER_LEVEL = 2;
+const BOMBS_PER_LEVEL = 1;
 const BOSS_GRACE_PERIOD = 120;
 const BOSS_SPAWN_DELAY = 120;
 const INVULN_TIME = 20;
