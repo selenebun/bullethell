@@ -9,13 +9,13 @@ MODEL.ship = {};
 
 MODEL.bullet.basic = function() {
     fill(this.color);
-    noStroke();
+    stroke(0, MODEL_LINE_ALPHA);
     ellipse(this.pos.x, this.pos.y, this.r, this.r);
 };
 
 MODEL.bullet.egg = function() {
     fill(this.color);
-    noStroke();
+    stroke(0, MODEL_LINE_ALPHA);
     ellipse(this.pos.x, this.pos.y, this.r, this.r * 4/3);
 };
 
@@ -25,7 +25,7 @@ MODEL.bullet.needle = function() {
     rotate(this.angle);
 
     fill(this.color);
-    noStroke();
+    stroke(0, MODEL_LINE_ALPHA);
     let back = -this.r * 3/2;
     let front = this.r * 4;
     let side = this.r * 3/2;
