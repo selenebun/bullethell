@@ -53,6 +53,7 @@ MODEL.particle.square = function() {
 
     fill(this.color.concat(this.lifespan));
     stroke(0, this.lifespan * MODEL_LINE_ALPHA/255);
+    //strokeWeight(2);
     rectMode(RADIUS);
     rect(0, 0, this.r, this.r);
 
@@ -75,6 +76,7 @@ MODEL.ship.basic = function(isPlayer) {
     // Thruster
     fill('#7C8A99');
     stroke(0, MODEL_LINE_ALPHA);
+    strokeWeight(2);
     rectMode(RADIUS);
     rect(-0.5, 3.5, 6, 10);
 
@@ -108,6 +110,7 @@ MODEL.ship.bomber = function(isPlayer) {
     // Thruster
     fill('#7C8A99');
     stroke(0, MODEL_LINE_ALPHA);
+    strokeWeight(2);
     rectMode(RADIUS);
     rect(-0.5, 3.5, 6, 10);
 
@@ -145,6 +148,7 @@ MODEL.ship.boss0 = function(isPlayer) {
     // Thrusters
     fill('#7C8A99');
     stroke(0, MODEL_LINE_ALPHA);
+    strokeWeight(2);
     rectMode(RADIUS);
     rect(15.5, 26, 8, 3);
     rect(-16.5, 26, 8, 3);
