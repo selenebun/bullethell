@@ -50,6 +50,7 @@ let enemies;
 let items;
 let pl;
 let ps;
+let walls;
 
 // Game state
 let curLevel;
@@ -99,6 +100,7 @@ function clearEntities() {
     enemies = [];
     items = [];
     ps = [];
+    walls = [];
 }
 
 // Update all cooldowns
@@ -270,9 +272,11 @@ function uiPanel() {
     rect(0, height - UI_PANEL_HEIGHT, width, UI_PANEL_HEIGHT);
 
     // Draw all UI panel elements
+    strokeWeight(2);
     uiBombs();
     uiHealth();
     uiSlowdown();
+    strokeWeight(1);
 }
 
 // Draw indicator of slowdown recharge status
@@ -280,6 +284,7 @@ function uiSlowdown() {
     push();
     translate(width - 50, height - 50);
     rotate(180);
+    stroke(0, MODEL_LINE_ALPHA);
 
     let loadPercent = (SLOWDOWN_WAIT_NEXT - nextSlowdownTime) / SLOWDOWN_WAIT_NEXT;
     let angle = 360 * loadPercent;
@@ -291,14 +296,12 @@ function uiSlowdown() {
         } else {
             fill(55, 219, 208, SLOWDOWN_ALPHA);
         }
-        stroke(0, MODEL_LINE_ALPHA);
         arc(0, 0, 40, 40, 90, 90 + angle);
     }
 
     // Draw red portion
     if (angle < 360) {
         fill(231, 76, 60, SLOWDOWN_ALPHA);
-        stroke(0, MODEL_LINE_ALPHA);
         arc(0, 0, 40, 40, 90 + angle, 90);
     }
 
@@ -381,6 +384,7 @@ function draw() {
     loopOver(enemies);
     if (boss) boss.act();
     pl.act();
+    loopOver(walls);
     loopOver(ps);
 
     // Update all cooldowns

@@ -31,17 +31,6 @@ BOSS.boss0 = {
                 b.speed = lerp(b.speed, 3, 0.05 * dt());
                 b.vel.setMag(b.speed);
 
-                // Draw a lightning wall
-                noFill();
-                stroke('#F9B32F');
-                strokeWeight(4);
-                beginShape();
-                for (let i = 0; i < 21; i++) {
-                    vertex(width/20 * i, MAP_HEIGHT/4 + random(-10, 10));
-                }
-                endShape();
-                strokeWeight(1);
-
                 // Destroy player's bullets that go above wall
                 for (let i = 0; i < bullets.length; i++) {
                     let e = bullets[i];
@@ -57,11 +46,17 @@ BOSS.boss0 = {
             finish(b) {
                 b.vel.x = 0;
                 pl.mapTop = 0;
+
+                // Clear lightning walls
+                walls = [];
             },
             init(b) {
                 b.fireRate = 35;
                 b.vel = createVector(randSign(), 0);
                 pl.mapTop = MAP_HEIGHT/4;
+
+                // Create a lightning wall
+                walls.push(new Wall(MAP_HEIGHT/4, 20, true));
             }
         },
         wait: {
