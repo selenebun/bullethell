@@ -11,7 +11,8 @@
 /* Colors */
 
 :root {
-    --accent: #F1C40F;
+    --accent1: #F1C40F;
+    --accent2: #37DBD0;
     --bg: #1E003D;
     --fg: #ECF0F1;
     --sidebar: #4E046D;
@@ -45,6 +46,7 @@ body {
     display: flex;
     flex-direction: column;
     max-height: 100vh;
+    max-width: 260px;
     overflow-y: scroll;
 }
 
@@ -54,6 +56,8 @@ header, main, footer {
 
 main {
     flex: 1;
+    padding-bottom: 0;
+    padding-top: 0;
 }
 
 footer {
@@ -64,15 +68,29 @@ footer {
 /* Page content */
 
 canvas {
-    border: 1px solid var(--accent);
+    border: 1px solid var(--accent1);
     display: block;
     margin: 0 auto;
 }
 
 h1, h2, h3, h4, h5, h6 {
-    color: var(--accent);
+    color: var(--accent1);
     line-height: 1.2;
     text-align: center;
+}
+
+ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+li {
+    margin: 10px 0;
+}
+
+.control {
+    color: var(--accent2);
+    font-weight: bold;
 }
 
 #debug {
