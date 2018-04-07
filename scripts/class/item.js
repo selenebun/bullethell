@@ -6,6 +6,9 @@ class Item extends Entity {
         this.model = MODEL.item.square;
         this.type = 'item';
 
+        // Map boundaries
+        this.mapTop = WORLD_CEILING;
+
         // Physics
         this.fallSpeed = 2;
         this.r = 12;

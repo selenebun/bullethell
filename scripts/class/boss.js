@@ -17,6 +17,7 @@ class Boss extends Ship {
         this.boomType = PS.confetti;
 
         // Misc
+        this.dropRate = 0.002;
         this.emitters = [];
         this.type = 'boss';
 
@@ -32,6 +33,7 @@ class Boss extends Ship {
         if (!paused) {
             if (this.stage) this.stages[this.stage].ai(this);
             this.collidePlayer();
+            this.spawnItem();
         }
         super.act();
     }
@@ -76,6 +78,11 @@ class Boss extends Ship {
         bullets = [];
         loadLevel();
         this.explode();
+    }
+
+    // Spawn an item above the map
+    spawnItem() {
+        if (random() < this.dropRate * dt()) spawnItem();
     }
 
     // Trigger next stage of boss fight

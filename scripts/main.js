@@ -231,6 +231,16 @@ function spawnEnemy() {
     enemies.push(e);
 }
 
+// Spawn an item
+function spawnItem(x, y) {
+    if (typeof x === 'undefined' || typeof y === 'undefined') {
+        x = random(width);
+        y = WORLD_CEILING;
+    }
+    let type = randWeight(curLevel.item, curLevel.itemWeight);
+    items.push(new Item(x, y, ITEM[type]));
+}
+
 // Spawn the player at the correct coords
 function spawnPlayer() {
     pl = new Player(width/2, MAP_HEIGHT * 3/4);

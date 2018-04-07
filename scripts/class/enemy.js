@@ -33,10 +33,7 @@ class Enemy extends Ship {
 
     // Try to drop an item
     dropItem() {
-        if (random() < curLevel.dropChance) {
-            let type = randWeight(curLevel.item, curLevel.itemWeight);
-            items.push(new Item(this.pos.x, this.pos.y, ITEM[type]));
-        }
+        if (random() < curLevel.dropChance) spawnItem(this.pos.x, this.pos.y);
     }
 
     // Any dynamic initializations to do
