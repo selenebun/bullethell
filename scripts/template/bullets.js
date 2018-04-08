@@ -84,7 +84,7 @@ BULLET.twoStage = {
     r: 12,
     // Methods
     onOldAge() {
-        emitBullets(this.pos.x, this.pos.y, this.angle, [60, 150, 180, 210, 300], 3, 4, BULLET.needle);
+        emitBullets(this.pos.x, this.pos.y, this.angle, [60, 150, 180, 210, 300], 3, 4, BULLET.needle, this.fromPlayer);
     }
 };
 
@@ -99,7 +99,7 @@ BULLET.shrapnel = {
         this.maxAge = randInt(60, 80);
     },
     onOldAge() {
-        emitBullets(this.pos.x, this.pos.y, this.angle, [-30, 0, 30], 3, 4, BULLET.basic);
+        emitBullets(this.pos.x, this.pos.y, this.angle, [-30, 0, 30], 3, 4, BULLET.basic, this.fromPlayer);
     }
 };
 

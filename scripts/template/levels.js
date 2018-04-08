@@ -8,7 +8,7 @@ LEVEL[0] = {
     // Boss
     boss: null,
     // Enemies
-    enemy: ['basic', 'aimer'],
+    enemy: ['basic', 'shrapnel'],
     enemyWeight: [0.8, 0.2],
     spawnCount: 60,
     spawnTimeMax: 100,
@@ -29,6 +29,25 @@ LEVEL[1] = {
     // Enemies
     enemy: ['basic', 'bomber'],
     enemyWeight: [0.85, 0.15],
+    spawnCount: 80,
+    spawnTimeMax: 100,
+    spawnTimeMin: 20,
+    // Items
+    dropChance: 0.3,
+    item: ['points', 'points2x', 'dualFire', 'health', 'bomb'],
+    itemWeight: [0.45, 0.25, 0.1, 0.18, 0.02]
+};
+
+LEVEL[2] = {
+    // Background
+    alpha: 127,
+    bg: '#330000',
+    color: '#F39C12',
+    // Boss
+    boss: null,
+    // Enemies
+    enemy: ['basic', 'bomber', 'shotgunner'],
+    enemyWeight: [0.5, 0.2, 0.3],
     spawnCount: 80,
     spawnTimeMax: 100,
     spawnTimeMin: 20,

@@ -5,6 +5,9 @@ class Enemy extends Ship {
         // Map boundaries
         this.mapTop = WORLD_CEILING;
 
+        // Misc
+        this.type = 'enemy';
+
         // Physics
         this.r = 14;
 
