@@ -10,12 +10,13 @@ ENEMY.aimer = {
     r: 18,
     // Stats
     hp: 1,
+    fireRate: 20,
     maxSpeed: 2,
     minSpeed: 1,
     points: 150,
     // Methods
     ai() {
-        if (random() < 0.006) this.fire();
+        if (random() < 0.009) this.fire();
     },
     attack() {
         let a = this.angleTo(pl);

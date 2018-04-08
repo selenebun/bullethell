@@ -91,11 +91,13 @@ BULLET.twoStage = {
 BULLET.shrapnel = {
     // Display
     color: '#29C5FF',
-    // Misc
-    maxAge: 60,
     // Physics
     r: 8,
     // Methods
+    init() {
+        this.grav = createVector(this.gravX, this.gravY);
+        this.maxAge = randInt(60, 80);
+    },
     onOldAge() {
         emitBullets(this.pos.x, this.pos.y, this.angle, [-30, 0, 30], 3, 4, BULLET.basic);
     }
