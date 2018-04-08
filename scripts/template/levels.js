@@ -10,7 +10,7 @@ LEVEL[0] = {
     // Enemies
     enemy: ['basic', 'shrapnel'],
     enemyWeight: [0.8, 0.2],
-    spawnCount: 60,
+    spawnCount: 80,
     spawnTimeMax: 100,
     spawnTimeMin: 20,
     // Items
@@ -22,8 +22,8 @@ LEVEL[0] = {
 LEVEL[1] = {
     // Background
     alpha: 127,
-    bg: '#020E35',
-    color: '#39D5FF',
+    bg: 0,
+    color: 255,
     // Boss
     boss: 'boss1',
     // Enemies
@@ -41,8 +41,8 @@ LEVEL[1] = {
 LEVEL[2] = {
     // Background
     alpha: 127,
-    bg: '#330000',
-    color: '#F39C12',
+    bg: '#002000',
+    color: '#00FF00',
     // Boss
     boss: null,
     // Enemies
@@ -56,3 +56,27 @@ LEVEL[2] = {
     item: ['points', 'points2x', 'dualFire', 'health', 'bomb'],
     itemWeight: [0.45, 0.25, 0.1, 0.18, 0.02]
 };
+
+LEVEL[3] = {
+    // Background
+    alpha: 127,
+    bg: '#002000',
+    color: '#00FF00',
+    // Boss
+    boss: 'heavyBomber',
+    // Enemies
+    enemy: ['bomber', 'shotgunner', 'turret'],
+    enemyWeight: [0.15, 0.55, 0.3],
+    spawnCount: 80,
+    spawnTimeMax: 100,
+    spawnTimeMin: 20,
+    // Items
+    dropChance: 0.3,
+    item: ['points', 'points2x', 'dualFire', 'health', 'bomb'],
+    itemWeight: [0.45, 0.25, 0.1, 0.18, 0.02]
+};
+
+// level 0-1 bg=0, color=255
+// level 2-3 bg='#001600', color='#00FF00'
+// level 4-5 bg='#020E35', color='#39D5FF'
+// level 6-7 bg='#330000', color='#F39C12'

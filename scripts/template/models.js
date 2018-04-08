@@ -221,6 +221,74 @@ MODEL.ship.shrapnel = function(isPlayer) {
     pop();
 };
 
+MODEL.ship.turret = function(isPlayer) {
+    push();
+    translate(this.pos.x, this.pos.y);
+    if (!isPlayer) rotate(180);
+
+
+    // Exhaust
+    fill('#E74C3C');
+    noStroke();
+    triangle(-5, -17, 5, -17, random(-2, 2), random(-23, -29));
+
+    stroke(0, MODEL_LINE_ALPHA);
+    strokeWeight(2);
+    rectMode(RADIUS);
+    
+
+    // Turret barrel
+    push();
+    let a = this.angleTo(pl);
+    if (a > -180 && a < 0) {
+        rotate(a);
+    } else if (a >= 90) {
+        rotate(180);
+    }
+
+    // Barrel
+    fill('#ACBAC9');
+    rect(-26, 0, 10, 4);
+
+    // Connector
+    fill('#657576');
+    rect(-16, 0, 4, 7);
+
+    // Nozzle
+    fill('#657576');
+    rect(-36, 0, 3, 6);
+
+    pop();
+
+
+    // Turret body
+    fill('#7F8C8D');
+    ellipse(0, 0, 16, 16);
+
+    // Thruster
+    fill('#7C8A99');
+    rect(0, -12, 10, 5);
+
+    // Frame
+    fill('#ACBAC9');
+    beginShape();
+    vertex(-19, -3);
+    vertex(19, -3);
+    vertex(16, -12);
+    vertex(-16, -12);
+    endShape(CLOSE);
+
+    // Border
+    fill('#657576');
+    rect(0, 0, 21, 3);
+
+    // Canopy
+    fill(this.color);
+    ellipse(0, 0, 6, 8);
+
+    pop();
+};
+
 
 // Boss models
 
@@ -266,6 +334,48 @@ MODEL.ship.boss1 = function(isPlayer) {
     // Canopy
     fill(this.color);
     ellipse(0, 4, 15, 17);
+
+    pop();
+};
+
+MODEL.ship.heavyBomber = function(isPlayer) {
+    push();
+    translate(this.pos.x, this.pos.y);
+    if (!isPlayer) rotate(180);
+
+    // Exhaust
+    fill('#E74C3C');
+    noStroke();
+    triangle(8, 48, -8, 48, random(-4, 4), random(52, 56));
+    triangle(40, 52, 24, 52, random(28, 36), random(56, 60));
+    triangle(-40, 52, -24, 52, -random(28, 36), random(56, 60));
+
+    // Thrusters
+    fill('#7C8A99');
+    stroke(0, MODEL_LINE_ALPHA);
+    strokeWeight(2);
+    rectMode(RADIUS);
+    rect(0, 42, 12, 6);
+    rect(32, 44, 12, 8);
+    rect(-32, 44, 12, 8);
+
+    // Front wings
+    fill('#7F8C8D');
+    triangle(0, -10, 10, 40, 80, -40);
+    triangle(0, -10, -10, 40, -80, -40);
+
+    // Rear wings
+    fill('#657576');
+    triangle(6, -50, 6, 30, 70, 60);
+    triangle(-6, -50, -6, 30, -70, 60);
+
+    // Frame
+    fill('#95A5A6');
+    arc(0, -22, 64, 64, 20, 160, CHORD);
+
+    // Canopy
+    fill(this.color);
+    ellipse(0, 4, 20, 26);
 
     pop();
 };

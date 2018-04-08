@@ -6,6 +6,7 @@ class Enemy extends Ship {
         this.mapTop = WORLD_CEILING;
 
         // Misc
+        this.spawnAboveMap = true;
         this.type = 'enemy';
 
         // Physics

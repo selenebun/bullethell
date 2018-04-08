@@ -31,7 +31,9 @@ class Boss extends Ship {
     // All operations to do per tick
     act() {
         if (!paused) {
-            if (this.stage) this.stages[this.stage].ai(this);
+            if (this.stage && this.stages[this.stage].ai) {
+                this.stages[this.stage].ai(this);
+            }
             this.collidePlayer();
             this.spawnItem();
         }

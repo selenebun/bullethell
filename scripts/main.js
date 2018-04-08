@@ -232,6 +232,12 @@ function spawnEnemy() {
     let e = new Enemy(random(width), WORLD_CEILING);
     applyTemplate(e, ENEMY[type]);
     e.init();
+
+    // Determine spawn location
+    if (!e.spawnAboveMap) {
+        e.pos.y = MAP_HEIGHT - WORLD_CEILING;
+    }
+    
     enemies.push(e);
 }
 
@@ -395,8 +401,8 @@ function draw() {
     // Update and draw all entities
     loopOver(items);
     loopOver(bullets);
-    loopOver(enemies);
     if (boss) boss.act();
+    loopOver(enemies);
     pl.act();
     loopOver(walls);
     loopOver(ps);

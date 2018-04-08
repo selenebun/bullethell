@@ -116,3 +116,42 @@ ENEMY.shrapnel = {
         this.explode();
     }
 };
+
+ENEMY.turret = {
+    // Display
+    color: '#F39C12',
+    model: MODEL.ship.turret,
+    // Map boundaries
+    mapTop: 0,
+    // Misc
+    spawnAboveMap: false,
+    type: 'turret',
+    // Physics
+    r: 17,
+    // Stats
+    fireRate: 20,
+    maxSpeed: 2,
+    minSpeed: 1,
+    // Methods
+    ai() {
+        if (pl.pos.y < this.pos.y && random() < 0.02) this.fire();
+    },
+    attack() {
+        let a = this.angleTo(pl);
+        emitBullets(this.pos.x, this.pos.y, a, [0], 3, 4, BULLET.basic);
+    },
+    init() {
+        this.maxHp = this.hp;
+        this.speed = random(this.minSpeed, this.maxSpeed);
+        this.vel = createVector(this.speed * randSign(), -this.speed);
+        this.mapBottom = MAP_HEIGHT - WORLD_CEILING;
+    },
+    onHitLeft() {
+        this.pos.x = this.mapLeft + this.r * this.edgeRadius;
+        this.vel.x *= -1;
+    },
+    onHitRight() {
+        this.pos.x = this.mapRight - this.r * this.edgeRadius;
+        this.vel.x *= -1;
+    },
+};

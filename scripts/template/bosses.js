@@ -43,13 +43,6 @@ BOSS.boss1 = {
             attack(b) {
                 emitBullets(b.pos.x, b.pos.y, 90, [-45, 0, 45], 5, 5, BULLET.ricochet);
             },
-            finish(b) {
-                b.vel.x = 0;
-                pl.mapTop = 0;
-
-                // Clear lightning walls
-                walls = [];
-            },
             init(b) {
                 b.fireRate = 35;
                 b.vel = createVector(randSign(), 0);
@@ -57,6 +50,13 @@ BOSS.boss1 = {
 
                 // Create a lightning wall
                 walls.push(new Wall(MAP_HEIGHT/4, 20, true));
+            },
+            finish(b) {
+                b.vel.x = 0;
+                pl.mapTop = 0;
+
+                // Clear lightning walls
+                walls = [];
             }
         },
         wait: {
@@ -177,6 +177,151 @@ BOSS.boss1 = {
     model: MODEL.ship.boss1,
     // Stats
     hp: 380,
+    points: 2000,
+    // Methods
+    onHitLeft() {
+        this.pos.x = this.mapLeft + this.r * this.edgeRadius;
+        this.vel.x *= -1;
+    },
+    onHitRight() {
+        this.pos.x = this.mapRight - this.r * this.edgeRadius;
+        this.vel.x *= -1;
+    }
+};
+
+BOSS.heavyBomber = {
+    // AI
+    nextStage: 'enter',
+    stages: {
+        enter: {
+            nextStage: 'bombs',
+            ai(b) {
+                // Move to next stage once positioned correctly
+                if (b.pos.y >= MAP_HEIGHT/6) {
+                    b.pos.y = MAP_HEIGHT/6;
+                    b.vel.y = 0;
+                    b.switchStage();
+                }
+            },
+            init(b) {
+                b.speed = 1;
+                b.vel = createVector(0, b.speed);
+            }
+        },
+        bombs: {
+            nextStage: 'center',
+            timeLimit: 900,
+            ai(b) {
+                b.speed = lerp(b.speed, 2, 0.05 * dt());
+                b.vel.setMag(b.speed);
+                if (random() < 0.003) b.vel.x *= -1;
+
+                // Fire large bombs
+                b.fire();
+            },
+            attack(b) {
+                let a = random() < 0.5 ? 0 : 180;
+                emitBullets(b.pos.x, b.pos.y, a, [0], 3, 5, BULLET.largeBomb);
+            },
+            init(b) {
+                b.fireRate = 60;
+                b.vel = createVector(randSign(), 0);
+            },
+            finish(b) {
+                b.vel.x = 0;
+            }
+        },
+        center: {
+            nextStage: 'repel',
+            timeLimit: 240,
+            ai(b) {
+                b.pos.x = lerp(b.pos.x, width/2, 0.05 * dt());
+            }
+        },
+        repel: {
+            nextStage: 'enemies',
+            timeLimit: 60,
+            ai(b) {
+                // Force player back
+                if (pl.pos.y < MAP_HEIGHT * 3/4) {
+                    pl.pos.y = lerp(pl.pos.y, MAP_HEIGHT * 3/4, 0.05*dt());
+                }
+            }
+        },
+        enemies: {
+            nextStage: 'wait',
+            timeLimit: 1200,
+            ai(b) {
+                // Destroy player's bullets that go above wall
+                for (let i = 0; i < bullets.length; i++) {
+                    let e = bullets[i];
+                    if (e.fromPlayer) e.mapTop = MAP_HEIGHT/3;
+                }
+
+                // Spawn enemies
+                b.fire();
+            },
+            attack(b) {
+                spawnEnemy();
+            },
+            init(b) {
+                b.fireRate = 80;
+                pl.mapTop = MAP_HEIGHT/3;
+
+                // Create a lightning wall
+                walls.push(new Wall(MAP_HEIGHT/3, 20, true));
+            }
+        },
+        wait: {
+            nextStage: 'delay',
+            ai(b) {
+                // Destroy player's bullets that go above wall
+                for (let i = 0; i < bullets.length; i++) {
+                    let e = bullets[i];
+                    if (e.fromPlayer) e.mapTop = MAP_HEIGHT/3;
+                }
+                
+                if (enemies.length === 0) b.switchStage();
+            },
+            finish(b) {
+                pl.mapTop = 0;
+
+                // Clear lightning walls
+                walls = [];
+            }
+        },
+        delay: {
+            nextStage: 'bullets',
+            timeLimit: 60
+        },
+        bullets: {
+            nextStage: 'bombs',
+            timeLimit: 1200,
+            ai(b) {
+                b.fire();
+            },
+            attack(b) {
+                let a = random(30, 150);
+                emitBullets(b.pos.x, b.pos.y, a, [0], 4, 5, BULLET.large);
+                
+                if (random() < 0.1) {
+                    let a = random(30, 150);
+                    emitBullets(b.pos.x, b.pos.y, a, [0], 0, 3, BULLET.bomb);
+                }
+            },
+            init(b) {
+                b.fireRate = 50;
+            },
+            finish(b) {}
+        }
+    },
+    // Display
+    color: '#009C41',
+    model: MODEL.ship.heavyBomber,
+    // Physics
+    r: 54,
+    // Stats
+    hp: 440,
     points: 2000,
     // Methods
     onHitLeft() {
