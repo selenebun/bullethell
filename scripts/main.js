@@ -180,12 +180,14 @@ function loadLevel() {
 function reloadLevel() {
     curLevel = LEVEL[level];
     toSpawn = curLevel.spawnCount;
+    toSpawnBoss = false;
 
     // Clear all entities
     clearEntities();
     spawnPlayer();
 
     // Reset cooldowns
+    bossTime = 0;
     flashTime = 0;
     nextSlowdownTime = 0;
     slowTime = 0;
