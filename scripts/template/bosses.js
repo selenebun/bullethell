@@ -210,6 +210,7 @@ BOSS.heavyBomber = {
         },
         bombs: {
             nextStage: 'center',
+            healthLimit: 0.2,
             timeLimit: 900,
             ai(b) {
                 b.speed = lerp(b.speed, 2, 0.05 * dt());
@@ -224,7 +225,7 @@ BOSS.heavyBomber = {
                 emitBullets(b.pos.x, b.pos.y, a, [0], 3, 5, BULLET.largeBomb);
             },
             init(b) {
-                b.fireRate = 60;
+                b.fireRate = 70;
                 b.vel = createVector(randSign(), 0);
             },
             finish(b) {
@@ -296,6 +297,7 @@ BOSS.heavyBomber = {
         },
         bullets: {
             nextStage: 'bombs',
+            healthLimit: 0.2,
             timeLimit: 1200,
             ai(b) {
                 b.fire();
