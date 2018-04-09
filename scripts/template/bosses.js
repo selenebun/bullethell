@@ -22,6 +22,8 @@ BOSS.boss1 = {
             init(b) {
                 b.speed = 1;
                 b.vel = createVector(0, b.speed);
+                // Whether to do needle stage next
+                b.needleStage = random() < 0.5;
             }
         },
         ricochet: {
@@ -67,11 +69,12 @@ BOSS.boss1 = {
             }
         },
         center: {
-            nextStage: ['spiral', 'needle'],
             ai(b) {
                 if (b.pos.y >= MAP_HEIGHT/2) {
                     b.pos.y = MAP_HEIGHT/2;
                     b.vel.y = 0;
+                    b.nextStage = b.needleStage ? 'needle' : 'spiral';
+                    b.needleStage = !b.needleStage;
                     b.switchStage();
                 }
             },

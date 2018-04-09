@@ -49,7 +49,7 @@ class Boss extends Ship {
     cooldown() {
         super.cooldown();
         if (this.nextStageTime > 0) this.nextStageTime -= dt();
-        if (this.nextStageTime <= 0 && this.nextStageTime > -1) this.switchStage(this.nextStage);
+        if (this.nextStageTime <= 0 && this.nextStageTime > -1) this.switchStage();
     }
 
     // Deal damage
