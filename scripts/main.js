@@ -39,6 +39,7 @@ let avgFPS = 0;
 let numFPS = 0;
 
 // Debug mode
+let defaultStarfield = false
 let showFPS = false;
 let showHitboxes = false;
 let showStarfield = true;
@@ -429,6 +430,9 @@ function draw() {
 }
 
 function keyPressed() {
+    // Toggle starfield color override
+    if (key === 'B') defaultStarfield = !defaultStarfield;
+    
     // Use a bomb
     if (key === 'C') useBomb();
 
