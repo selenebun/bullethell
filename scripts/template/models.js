@@ -83,9 +83,23 @@ MODEL.ship.basic = function(isPlayer) {
     if (!isPlayer) rotate(180);
 
     // Exhaust
+    let xOff = 0;
+    let yOff = 0;
+    if (isPlayer) {
+        if (this.vel.x > 0) {
+            xOff = -2;
+        } else if (this.vel.x < 0) {
+            xOff = 2;
+        }
+        if (this.vel.y > 0) {
+            yOff = -4;
+        } else if (this.vel.y < 0) {
+            yOff = 4;
+        }
+    }
     fill('#E74C3C');
     noStroke();
-    triangle(-3, 14, 3, 14, random(-2, 2), random(20, 24));
+    triangle(-3, 14, 3, 14, random(-2, 2) + xOff, random(20, 24) + yOff);
 
     // Thruster
     fill('#7C8A99');
