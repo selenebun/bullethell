@@ -39,25 +39,25 @@ class Player extends Ship {
         
         // Movement (arrow keys)
         let diag = this.speed / sqrt(2);
-        if (keyIsDown(RIGHT_ARROW)) {
-            if (keyIsDown(UP_ARROW)) {
+        if (keyIsDown(RIGHT_ARROW) || keyIsDown(68)) {
+            if (keyIsDown(UP_ARROW) || keyIsDown(87)) {
                 this.vel = createVector(diag, -diag);
-            } else if (keyIsDown(DOWN_ARROW)) {
+            } else if (keyIsDown(DOWN_ARROW) || keyIsDown(83)) {
                 this.vel = createVector(diag, diag);
             } else {
                 this.vel = createVector(diag, 0);
             }
-        } else if (keyIsDown(LEFT_ARROW)) {
-            if (keyIsDown(UP_ARROW)) {
+        } else if (keyIsDown(LEFT_ARROW) || keyIsDown(65)) {
+            if (keyIsDown(UP_ARROW) || keyIsDown(87)) {
                 this.vel = createVector(-diag, -diag);
-            } else if (keyIsDown(DOWN_ARROW)) {
+            } else if (keyIsDown(DOWN_ARROW) || keyIsDown(83)) {
                 this.vel = createVector(-diag, diag);
             } else {
                 this.vel = createVector(-diag, 0);
             }
-        } else if (keyIsDown(DOWN_ARROW)) {
+        } else if (keyIsDown(DOWN_ARROW) || keyIsDown(83)) {
             this.vel = createVector(0, diag);
-        } else if (keyIsDown(UP_ARROW)) {
+        } else if (keyIsDown(UP_ARROW) || keyIsDown(87)) {
             this.vel = createVector(0, -diag);
         } else {
             this.vel.mult(0);

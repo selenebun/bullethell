@@ -446,14 +446,14 @@ function keyPressed() {
         }
     }
 
+    // Toggle starfield
+    if (key === 'G') showStarfield = !showStarfield;
+
     // Toggle hitbox display
     if (key === 'H') showHitboxes = !showHitboxes;
 
     // Pause
     if (key === 'P') paused = !paused;
-
-    // Toggle starfield
-    if (key === 'S') showStarfield = !showStarfield;
 
     // Use a slowdown
     if (key === 'X') useSlowdown();
