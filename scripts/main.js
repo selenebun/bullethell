@@ -430,11 +430,8 @@ function draw() {
 }
 
 function keyPressed() {
-    // Toggle starfield color override
-    if (key === 'B') defaultStarfield = !defaultStarfield;
-    
     // Use a bomb
-    if (key === 'C') useBomb();
+    if (key === 'C' || key === 'M') useBomb();
 
     // Toggle FPS display
     if (key === 'F') {
@@ -446,8 +443,8 @@ function keyPressed() {
         }
     }
 
-    // Toggle starfield
-    if (key === 'G') showStarfield = !showStarfield;
+    // Toggle starfield color override
+    if (key === 'G') defaultStarfield = !defaultStarfield;
 
     // Toggle hitbox display
     if (key === 'H') showHitboxes = !showHitboxes;
@@ -455,6 +452,9 @@ function keyPressed() {
     // Pause
     if (key === 'P') paused = !paused;
 
+    // Toggle starfield
+    if (key === 'T') showStarfield = !showStarfield;
+
     // Use a slowdown
-    if (key === 'X') useSlowdown();
+    if (key === 'X' || key === 'N') useSlowdown();
 }
