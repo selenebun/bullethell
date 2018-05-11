@@ -99,12 +99,7 @@ class Player extends Ship {
 
     // Events
     onDeath() {
-        lives--;
-        if (lives > 0) {
-            reloadLevel();
-        } else {
-            gameOver();
-        }
+        reloadLevel();
     }
     onHitBottom() {
         this.pos.y = this.mapBottom - this.r * this.edgeRadius;

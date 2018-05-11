@@ -56,7 +56,7 @@ let walls;
 // Game state
 let curLevel;
 let level;
-let lives;
+let levelScore;
 let paused = false;
 let score;
 let scoreMult;
@@ -156,12 +156,6 @@ function drawHeart(x, y, empty) {
     rect(x, y, 20, 20);
 }
 
-// Stuff to do on game over
-// TODO some kind of game over animation
-function gameOver() {
-    resetGame();
-}
-
 // Load a level
 function loadLevel() {
     if (LEVEL[level + 1]) {
@@ -174,6 +168,9 @@ function loadLevel() {
 
         // Reset powerups
         bombs += BOMBS_PER_LEVEL;
+
+        // Save score
+        levelScore = score + scoreToAdd;
     }
 }
 
@@ -197,13 +194,17 @@ function reloadLevel() {
     // Reset powerups
     bombs = BOMB_COUNT;
     slowdownReady = true;
+
+    // Reset score
+    score = levelScore;
+    scoreToAdd = 0;
 }
 
 // Reset game to first level
 function resetGame() {
     // Game state
     level = 0;
-    lives = 3;
+    levelScore = 0;
     score = 0;
     scoreMult = 1;
     scoreToAdd = 0;
@@ -265,7 +266,6 @@ function status() {
     document.getElementById('level').innerHTML = 'Level: ' + (level + 1);
     document.getElementById('score').innerHTML = 'Score: ' + score;
     document.getElementById('scoremult').innerHTML = 'Multiplier: ' + scoreMult + 'x';
-    document.getElementById('lives').innerHTML = 'Lives: ' + lives;
 
     // Debugging
     if (showFPS) calculateFPS();
