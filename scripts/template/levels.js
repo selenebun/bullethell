@@ -72,8 +72,8 @@ LEVEL[3] = {
     spawnTimeMin: 20,
     // Items
     dropChance: 0.3,
-    item: ['points', 'points2x', 'dualFire', 'health', 'bomb'],
-    itemWeight: [0.45, 0.25, 0.1, 0.18, 0.02]
+    item: ['points', 'points2x', 'dualFire', 'tripleFire', 'health', 'bomb'],
+    itemWeight: [0.45, 0.25, 0.09, 0.01, 0.18, 0.02]
 };
 
 // level 0-1 bg=0, color=255
