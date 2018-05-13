@@ -159,6 +159,54 @@ MODEL.ship.bomber = function(isPlayer) {
     pop();
 };
 
+MODEL.ship.ricochet = function(isPlayer) {
+    push();
+    translate(this.pos.x, this.pos.y);
+    if (!isPlayer) rotate(180);
+
+    // Exhaust
+    fill('#E74C3C');
+    noStroke();
+    triangle(-6, 22, 6, 22, random(-2, 2), random(28, 32));
+    triangle(-26.5, 14, -14.5, 14, random(-18.5, -22.5), random(20, 24));
+    triangle(26.5, 14, 14.5, 14, random(18.5, 22.5), random(20, 24));
+
+    // Thrusters
+    fill('#657576');
+    stroke(0, MODEL_LINE_ALPHA);
+    strokeWeight(2);
+    rectMode(CENTER);
+    rect(0, 15.5, 14, 16);
+    rect(-20.5, 12.5, 14, 8);
+    rect(20.5, 12.5, 14, 8);
+
+    // Wings
+    fill('#7F8C8D');
+    beginShape();
+    vertex(-2, 8);
+    vertex(-2, -12);
+    vertex(-28, -2);
+    vertex(-38, 14);
+    endShape(CLOSE);
+    beginShape();
+    vertex(2, 8);
+    vertex(2, -12);
+    vertex(28, -2);
+    vertex(38, 14);
+    endShape(CLOSE);
+
+    // Frame
+    fill('#ACBAC9');
+    arc(-1.5, 0, 13, 19, 90, 270, CHORD);
+    arc(1.5, 0, 13, 19, 270, 450, CHORD);
+
+    // Canopy
+    fill(this.color);
+    ellipse(0, 1, 6, 8);
+
+    pop();
+};
+
 MODEL.ship.shotgunner = function(isPlayer) {
     push();
     translate(this.pos.x, this.pos.y);

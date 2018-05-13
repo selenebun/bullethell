@@ -59,6 +59,49 @@ ENEMY.bomber = {
     }
 };
 
+ENEMY.ricochet = {
+    // Display
+    boomSize: 64,
+    boomSpeedMax: 5,
+    color: '#8E44AD',
+    model: MODEL.ship.ricochet,
+    // Misc
+    type: 'ricochet',
+    // Physics
+    r: 24,
+    // Stats
+    hp: 1,
+    maxSpeed: 1.5,
+    minSpeed: 0.5,
+    points: 200,
+    // Methods
+    ai() {
+        if (random() < 0.007) this.fire();
+    },
+    attack() {
+        emitBullets(this.pos.x, this.pos.y, random(360), [0, 120, 240], 4, 4, BULLET.ricochet);
+    },
+    init() {
+        this.maxHp = this.hp;
+        this.speed = random(this.minSpeed, this.maxSpeed);
+        this.vel = createVector(this.speed * randSign(), this.speed);
+    },
+    onHitLeft() {
+        this.pos.x = this.mapLeft + this.r * this.edgeRadius;
+        this.vel.x *= -1;
+    },
+    onHitRight() {
+        this.pos.x = this.mapRight - this.r * this.edgeRadius;
+        this.vel.x *= -1;
+    },
+    onKilled() {
+        addScore(this.points);
+        emitBullets(this.pos.x, this.pos.y, random(360), [0, 45, 90, 135, 180, 225, 270, 315], 5, 5, BULLET.needle);
+        this.dropItem();
+        this.explode();
+    }
+};
+
 ENEMY.shotgunner = {
     // Display
     boomSize: 64,
@@ -74,7 +117,7 @@ ENEMY.shotgunner = {
     fireRate: 120,
     maxSpeed: 1.5,
     minSpeed: 0.5,
-    points: 200,
+    points: 300,
     // Methods
     ai() {
         if (random() < 0.005) this.fire();
