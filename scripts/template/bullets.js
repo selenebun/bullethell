@@ -86,28 +86,31 @@ BULLET.ricochet = {
             this.dead = true;
             this.onOldAge();
         }
-        if (this.bounces < 0) this.dead = true;
     },
     init() {
         this.bounces = 1;
         this.grav = createVector(this.gravX, this.gravY);
     },
     onHitBottom() {
+        if (this.bounces === 0) return;
         this.pos.y = this.mapBottom - this.r * this.edgeRadius;
         this.angle = -this.angle;
         this.bounces--;
     },
     onHitLeft() {
+        if (this.bounces === 0) return;
         this.pos.x = this.mapLeft + this.r * this.edgeRadius;
         this.angle = 180 - this.angle;
         this.bounces--;
     },
     onHitRight() {
+        if (this.bounces === 0) return;
         this.pos.x = this.mapRight - this.r * this.edgeRadius;
         this.angle = 180 - this.angle;
         this.bounces--;
     },
     onHitTop() {
+        if (this.bounces === 0) return;
         this.pos.y = this.mapTop + this.r * this.edgeRadius;
         this.angle = -this.angle;
         this.bounces--;
