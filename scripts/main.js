@@ -39,10 +39,10 @@ let avgFPS = 0;
 let numFPS = 0;
 
 // Debug mode
-let defaultStarfield = false
+let blackStarfield = false;
+let lowGraphics = false;
 let showFPS = false;
 let showHitboxes = false;
-let showStarfield = true;
 
 // Entities
 let boss;
@@ -388,7 +388,7 @@ function setup() {
 function draw() {
     // Draw the background and starfield
     flashTime > 0 ? background(255) : background(starfield.bg);
-    if (showStarfield) starfield.display();
+    starfield.display();
 
     // Update game status display
     if (!paused) updateScore();
@@ -443,8 +443,11 @@ function keyPressed() {
         }
     }
 
-    // Toggle starfield color override
-    if (key === 'G') defaultStarfield = !defaultStarfield;
+    // Toggle low graphics settings
+    if (key === 'G') {
+        lowGraphics = !lowGraphics;
+        ps = [];
+    }
 
     // Toggle hitbox display
     if (key === 'H') showHitboxes = !showHitboxes;
@@ -452,8 +455,8 @@ function keyPressed() {
     // Pause
     if (key === 'P') paused = !paused;
 
-    // Toggle starfield
-    if (key === 'T') showStarfield = !showStarfield;
+    // Toggle black starfield
+    if (key === 'T') blackStarfield = !blackStarfield;
 
     // Use a slowdown
     if (key === 'X' || key === 'N') useSlowdown();

@@ -17,6 +17,6 @@ A bullet hell game in HTML5 and JS, using the p5.js library. You can play it [he
 
 #### Debugging controls
 * F to toggle FPS display.
-* G to force black background.
+* G to toggle low graphics settings for slower computers.
 * H to toggle displaying hitboxes.
-* T to toggle starfield.
+* T to toggle black background.

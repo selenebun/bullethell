@@ -58,7 +58,7 @@ class Ship extends Entity {
 
     // Create explosion particle effect
     explode() {
-        ps.push(new ParticleSystem(this.pos.x, this.pos.y, this.boomSpeedMin, this.boomSpeedMax, this.boomSize, this.boomType));
+        addParticleSystem(this.pos.x, this.pos.y, this.boomSpeedMin, this.boomSpeedMax, this.boomSize, this.boomType);
     }
 
     // Fire weapon

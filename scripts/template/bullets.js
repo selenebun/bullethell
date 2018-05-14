@@ -13,7 +13,7 @@ BULLET.bomb = {
     onHitBottom() {
         this.dead = true;
         emitBullets(this.pos.x, this.pos.y, 0, [-45, -90, -135], 5, 5, BULLET.basic, this.fromPlayer);
-        ps.push(new ParticleSystem(this.pos.x, this.pos.y, 0, 3, 32, PS.explosion));
+        addParticleSystem(this.pos.x, this.pos.y, 0, 3, 32, PS.explosion);
     },
     onHitLeft() {
         this.pos.x = this.mapLeft + this.r * this.edgeRadius;
@@ -24,7 +24,7 @@ BULLET.bomb = {
         this.angle = 180 - this.angle;
     },
     onHit() {
-        ps.push(new ParticleSystem(this.pos.x, this.pos.y, 0, 3, 32, PS.explosion));
+        addParticleSystem(this.pos.x, this.pos.y, 0, 3, 32, PS.explosion);
     }
 };
 
@@ -52,7 +52,7 @@ BULLET.largeBomb = {
     onHitBottom() {
         this.dead = true;
         emitBullets(this.pos.x, this.pos.y, 0, [-45, -90, -135], 3, 5, BULLET.bomb, this.fromPlayer);
-        ps.push(new ParticleSystem(this.pos.x, this.pos.y, 0, 5, 64, PS.explosion));
+        addParticleSystem(this.pos.x, this.pos.y, 0, 5, 64, PS.explosion);
     },
     onHitLeft() {
         this.pos.x = this.mapLeft + this.r * this.edgeRadius;
@@ -63,7 +63,7 @@ BULLET.largeBomb = {
         this.angle = 180 - this.angle;
     },
     onHit() {
-        ps.push(new ParticleSystem(this.pos.x, this.pos.y, 0, 5, 64, PS.explosion));
+        addParticleSystem(this.pos.x, this.pos.y, 0, 5, 64, PS.explosion);
     }
 };
 
