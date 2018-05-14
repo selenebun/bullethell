@@ -117,6 +117,49 @@ BULLET.ricochet = {
     }
 };
 
+BULLET.ricochet2 = {
+    // Display
+    color: '#2ECC71',
+    // Physics
+    r: 8,
+    // Methods
+    cooldown() {
+        this.age += dt();
+        if (this.maxAge !== -1 && this.age >= this.maxAge) {
+            this.dead = true;
+            this.onOldAge();
+        }
+    },
+    init() {
+        this.bounces = 2;
+        this.grav = createVector(this.gravX, this.gravY);
+    },
+    onHitBottom() {
+        if (this.bounces === 0) return;
+        this.pos.y = this.mapBottom - this.r * this.edgeRadius;
+        this.angle = -this.angle;
+        this.bounces--;
+    },
+    onHitLeft() {
+        if (this.bounces === 0) return;
+        this.pos.x = this.mapLeft + this.r * this.edgeRadius;
+        this.angle = 180 - this.angle;
+        this.bounces--;
+    },
+    onHitRight() {
+        if (this.bounces === 0) return;
+        this.pos.x = this.mapRight - this.r * this.edgeRadius;
+        this.angle = 180 - this.angle;
+        this.bounces--;
+    },
+    onHitTop() {
+        if (this.bounces === 0) return;
+        this.pos.y = this.mapTop + this.r * this.edgeRadius;
+        this.angle = -this.angle;
+        this.bounces--;
+    }
+};
+
 BULLET.twoStage = {
     // Display
     color: '#EA4C88',
@@ -130,7 +173,7 @@ BULLET.twoStage = {
     }
 };
 
-BULLET.shrapnel = {
+BULLET.splitter = {
     // Display
     color: '#29C5FF',
     // Physics

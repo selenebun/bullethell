@@ -245,7 +245,7 @@ MODEL.ship.shotgunner = function(isPlayer) {
     pop();
 };
 
-MODEL.ship.shrapnel = function(isPlayer) {
+MODEL.ship.splitter = function(isPlayer) {
     push();
     translate(this.pos.x, this.pos.y);
     if (!isPlayer) rotate(180);

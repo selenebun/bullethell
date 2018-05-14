@@ -79,7 +79,7 @@ ENEMY.ricochet = {
         if (random() < 0.007) this.fire();
     },
     attack() {
-        emitBullets(this.pos.x, this.pos.y, random(360), [0, 120, 240], 4, 4, BULLET.ricochet);
+        emitBullets(this.pos.x, this.pos.y, random(360), [0, 120, 240], 4, 4, BULLET.ricochet2);
     },
     init() {
         this.maxHp = this.hp;
@@ -124,18 +124,18 @@ ENEMY.shotgunner = {
     },
     attack() {
         let a = this.angleTo(pl) + random(-60, 60);
-        emitBullets(this.pos.x, this.pos.y, a, [-30, 0, 30], 2, 3, BULLET.shrapnel);
+        emitBullets(this.pos.x, this.pos.y, a, [-30, 0, 30], 2, 3, BULLET.splitter);
     }
 };
 
-ENEMY.shrapnel = {
+ENEMY.splitter = {
     // Display
     boomSize: 64,
     boomSpeedMax: 5,
     color: '#F39C12',
-    model: MODEL.ship.shrapnel,
+    model: MODEL.ship.splitter,
     // Misc
-    type: 'shrapnelEnemy',
+    type: 'splitter',
     // Physics
     r: 18,
     // Stats
@@ -150,7 +150,7 @@ ENEMY.shrapnel = {
     },
     attack() {
         let a = this.angleTo(pl);
-        emitBullets(this.pos.x, this.pos.y, a, [0], 3, 4, BULLET.shrapnel);
+        emitBullets(this.pos.x, this.pos.y, a, [0], 3, 4, BULLET.splitter);
     },
     onKilled() {
         addScore(this.points);

@@ -8,7 +8,7 @@ LEVEL[0] = {
     // Boss
     boss: null,
     // Enemies
-    enemy: ['basic', 'shrapnel'],
+    enemy: ['basic', 'splitter'],
     enemyWeight: [0.8, 0.2],
     spawnCount: 80,
     spawnTimeMax: 100,
@@ -84,7 +84,7 @@ LEVEL[4] = {
     // Boss
     boss: null,
     // Enemies
-    enemy: ['turret', 'shrapnel', 'ricochet'],
+    enemy: ['turret', 'splitter', 'ricochet'],
     enemyWeight: [0.4, 0.3, 0.3],
     spawnCount: 80,
     spawnTimeMax: 100,
@@ -103,7 +103,7 @@ LEVEL[5] = {
     // Boss
     boss: null,
     // Enemies
-    enemy: ['turret', 'shrapnel', 'shotgunner', 'ricochet'],
+    enemy: ['turret', 'splitter', 'shotgunner', 'ricochet'],
     enemyWeight: [0.2, 0.2, 0.1, 0.5],
     spawnCount: 80,
     spawnTimeMax: 100,
