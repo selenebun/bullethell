@@ -1,10 +1,6 @@
 // Add a new particle system
 function addParticleSystem(x, y, minSpeed, maxSpeed, num, template) {
-    if (lowGraphics) {
-        ;
-    } else {
-        ps.push(new ParticleSystem(x, y, minSpeed, maxSpeed, num, template));
-    }
+    if (showParticles) ps.push(new ParticleSystem(x, y, minSpeed, maxSpeed, num, template));
 }
 
 // Substitute properties from a template

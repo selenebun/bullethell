@@ -43,6 +43,8 @@ let blackStarfield = false;
 let lowGraphics = false;
 let showFPS = false;
 let showHitboxes = false;
+let showParticles = true;
+let showStars = true;
 
 // Entities
 let boss;
@@ -446,7 +448,9 @@ function keyPressed() {
     // Toggle low graphics settings
     if (key === 'G') {
         lowGraphics = !lowGraphics;
-        ps = [];
+        showParticles = !lowGraphics;
+        showStars = !lowGraphics;
+        if (lowGraphics) ps = [];
     }
 
     // Toggle hitbox display
@@ -460,4 +464,7 @@ function keyPressed() {
 
     // Use a slowdown
     if (key === 'X' || key === 'N') useSlowdown();
+
+    // Toggle rendering stars
+    if (key === 'Y') showStars = !showStars;
 }

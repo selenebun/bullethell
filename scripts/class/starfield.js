@@ -35,7 +35,7 @@ class Starfield {
         }
 
         // Skip rendering stars if low graphics mode
-        if (lowGraphics) return;
+        if (!showStars) return;
 
         // Render stars
         for (let i = 0; i < this.stars.length; i++) {
