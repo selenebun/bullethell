@@ -43,7 +43,6 @@ let blackStarfield = false;
 let lowGraphics = false;
 let showFPS = false;
 let showHitboxes = false;
-let showParticles = true;
 let showStars = true;
 
 // Entities
@@ -447,9 +446,8 @@ function keyPressed() {
 
     // Toggle low graphics settings
     if (key === 'G') {
+        showStars = lowGraphics;
         lowGraphics = !lowGraphics;
-        showParticles = !lowGraphics;
-        showStars = !lowGraphics;
         if (lowGraphics) ps = [];
     }
 
