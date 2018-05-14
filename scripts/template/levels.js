@@ -95,6 +95,25 @@ LEVEL[4] = {
     itemWeight: [0.45, 0.25, 0.1, 0.18, 0.02]
 };
 
+LEVEL[5] = {
+    // Background
+    alpha: 127,
+    bg: '#020E35',
+    color: '#39D5FF',
+    // Boss
+    boss: null,
+    // Enemies
+    enemy: ['turret', 'shrapnel', 'shotgunner', 'ricochet'],
+    enemyWeight: [0.2, 0.2, 0.1, 0.5],
+    spawnCount: 80,
+    spawnTimeMax: 100,
+    spawnTimeMin: 20,
+    // Items
+    dropChance: 0.3,
+    item: ['points', 'points2x', 'tripleFire', 'health', 'bomb'],
+    itemWeight: [0.45, 0.25, 0.1, 0.18, 0.02]
+};
+
 // level 0-1 bg=0, color=255
 // level 2-3 bg='#001600', color='#00FF00'
 // level 4-5 bg='#020E35', color='#39D5FF'
