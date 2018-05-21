@@ -4,8 +4,6 @@ class Starfield {
         this.bg = color(LEVEL[0].bg);
         this.color = color(LEVEL[0].color);
         this.speed = starSpeed;
-        this.delta = [];
-        this.noise = [];
         this.stars = [];
 
         // Create stars
