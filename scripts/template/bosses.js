@@ -237,7 +237,7 @@ BOSS.heavyBomber = {
         },
         center: {
             nextStage: 'repel',
-            timeLimit: 240,
+            timeLimit: 260,
             ai(b) {
                 b.pos.x = lerp(b.pos.x, width/2, 0.05 * dt());
             }
