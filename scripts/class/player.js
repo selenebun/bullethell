@@ -45,7 +45,7 @@ class Player extends Ship {
             } else if (keyIsDown(DOWN_ARROW) || keyIsDown(83)) {
                 this.vel = createVector(diag, diag);
             } else {
-                this.vel = createVector(diag, 0);
+                this.vel = createVector(this.speed, 0);
             }
         } else if (keyIsDown(LEFT_ARROW) || keyIsDown(65)) {
             if (keyIsDown(UP_ARROW) || keyIsDown(87)) {
@@ -53,12 +53,12 @@ class Player extends Ship {
             } else if (keyIsDown(DOWN_ARROW) || keyIsDown(83)) {
                 this.vel = createVector(-diag, diag);
             } else {
-                this.vel = createVector(-diag, 0);
+                this.vel = createVector(-this.speed, 0);
             }
         } else if (keyIsDown(DOWN_ARROW) || keyIsDown(83)) {
-            this.vel = createVector(0, diag);
+            this.vel = createVector(0, this.speed);
         } else if (keyIsDown(UP_ARROW) || keyIsDown(87)) {
-            this.vel = createVector(0, -diag);
+            this.vel = createVector(0, -this.speed);
         } else {
             this.vel.mult(0);
         }
