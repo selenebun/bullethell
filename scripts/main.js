@@ -3,6 +3,7 @@ const GAME_HEIGHT = 640;
 const PANEL_HEIGHT = 40;
 
 let flash; // Flash layer.
+let panel; // UI panel.
 let starfield; // Starfield background.
 
 function setup() {
@@ -12,7 +13,12 @@ function setup() {
 
     // Create graphics buffers.
     flash = new Flash(GAME_WIDTH, GAME_HEIGHT);
+    panel = new Panel(GAME_WIDTH, PANEL_HEIGHT);
     starfield = new Starfield(GAME_WIDTH, GAME_HEIGHT, 200);
+
+    // Display UI panel.
+    panel.update();
+    panel.display(0, height - PANEL_HEIGHT);
 }
 
 function draw() {
