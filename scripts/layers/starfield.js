@@ -1,3 +1,5 @@
+'use strict';
+
 const STAR_ALPHA = 95;
 const STAR_MIN_SPEED = 0.5;
 const STAR_MAX_SPEED = 3;

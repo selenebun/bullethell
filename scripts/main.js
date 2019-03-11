@@ -1,3 +1,5 @@
+'use strict';
+
 const GAME_WIDTH = 640;
 const GAME_HEIGHT = 640;
 const PANEL_HEIGHT = 40;

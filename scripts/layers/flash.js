@@ -1,3 +1,5 @@
+'use strict';
+
 // Flash layer used for visual effects.
 class Flash {
     constructor(width, height) {

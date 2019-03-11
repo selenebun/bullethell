@@ -1,3 +1,5 @@
+'use strict';
+
 // Bottom UI panel.
 class Panel {
     constructor(width, height) {
