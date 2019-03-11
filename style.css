@@ -1,0 +1,102 @@
+@font-face {
+    font-family: 'Open Sans';
+    src: url('fonts/OpenSans-Regular.ttf');
+    font-weight: normal;
+}
+
+@font-face {
+    font-family: 'Open Sans';
+    src: url('fonts/OpenSans-Bold.ttf');
+    font-weight: bold;
+}
+
+body {
+    background-color: #1E003D;
+    color: #ECF0F1;
+    display: flex;
+    flex-direction: row;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 16px;
+    margin: 0;
+    min-height: 100vh;
+}
+
+#game {
+    flex: 1;
+}
+
+canvas {
+    border: 1px solid #F1C40F;
+    display: block;
+    margin: 0 auto;
+}
+
+#sidebar {
+    background-color: #4E046D;
+    display: flex;
+    flex-direction: column;
+    overflow-y: scroll;
+}
+
+header,
+section,
+nav,
+footer {
+    padding: 16px;
+}
+
+h1,
+h2 {
+    color: #F1C40F;
+    text-align: center;
+}
+
+h1 {
+    font-size: 32px;
+}
+
+h2 {
+    font-size: 24px;
+}
+
+section {
+    flex: 1;
+}
+
+ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+li {
+    margin: 8px 0;
+}
+
+.control {
+    color: #39D5FF;
+    font-weight: bold;
+}
+
+nav,
+footer {
+    text-align: center;
+}
+
+nav {
+    font-size: 20px;
+}
+
+a,
+a:visited {
+    color: #BDC3C7;
+    text-decoration: none;
+}
+
+a:hover {
+    color: #ECF0F1;
+    text-decoration: underline;
+}
+
+small {
+    font-size: 14px;
+}
