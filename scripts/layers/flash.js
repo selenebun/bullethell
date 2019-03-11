@@ -11,18 +11,11 @@ class Flash {
         this.graphics.background(color);
     }
 
-    // Render flash layer at a particular coordinate.
-    display(x, y) {
-        image(this.graphics, x, y);
-    }
-
-    // Update flash layer and calculate duration.
-    update() {
-        if (this.duration > -1) {
+    // Update flash layer and render at a particular coordinate.
+    update(x, y) {
+        if (this.duration > 0) {
             this.duration--;
-            if (this.duration === -1) {
-                this.graphics.clear();
-            }
+            image(this.graphics, x, y);
         }
     }
 }

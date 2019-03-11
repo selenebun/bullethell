@@ -10,23 +10,6 @@ function setup() {
     let canvas = createCanvas(GAME_WIDTH, totalHeight);
     canvas.parent('game');
 
-    background(0);
-    fill(60);
-    noStroke();
-    rect(0, height, width, -PANEL_HEIGHT);
-
-    stroke('#F1C40F');
-    line(0, height - PANEL_HEIGHT, width, height - PANEL_HEIGHT);
-
-    fill('#C0392B');
-    stroke(0);
-    rectMode(CENTER);
-    let hw = 20;
-    let dist = 10;
-    for (let i = 0; i < 10; i++) {
-        rect(20 + i * (hw + dist), height - PANEL_HEIGHT / 2, hw, hw);
-    }
-
     // Create graphics buffers.
     flash = new Flash(GAME_WIDTH, GAME_HEIGHT);
     starfield = new Starfield(GAME_WIDTH, GAME_HEIGHT, 200);
@@ -38,6 +21,5 @@ function draw() {
     starfield.display(0, 0);
 
     // Draw and update flash layer.
-    flash.update();
-    flash.display(0, 0);
+    flash.update(0, 0);
 }
