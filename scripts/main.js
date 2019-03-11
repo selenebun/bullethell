@@ -6,6 +6,8 @@ let flash; // Flash layer.
 let panel; // UI panel.
 let starfield; // Starfield background.
 
+let paused = false;
+
 function setup() {
     let totalHeight = min(GAME_HEIGHT + PANEL_HEIGHT, windowHeight - 2);
     let canvas = createCanvas(GAME_WIDTH, totalHeight);
@@ -23,9 +25,14 @@ function setup() {
 
 function draw() {
     // Draw and update the starfield in the background.
-    starfield.update(1);
+    if (!paused) starfield.update(1);
     starfield.display(0, 0);
 
     // Draw and update flash layer.
     flash.display(0, 0);
+}
+
+function keyPressed() {
+    // Use spacebar to pause.
+    if (key === ' ') paused = !paused;
 }
