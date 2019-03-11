@@ -27,5 +27,5 @@ function draw() {
     starfield.display(0, 0);
 
     // Draw and update flash layer.
-    flash.update(0, 0);
+    flash.display(0, 0);
 }
